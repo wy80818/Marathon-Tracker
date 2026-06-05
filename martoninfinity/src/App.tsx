@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css'
 import marathonLogo from './assets/Marathon_Logo_WordMark_Green.png'
 
-type TabId = 'home' | 'player-lookup' | 'shells' | 'weapons' | 'items' | 'maps' | 'leaderboard'
+type TabId = 'home' | 'player-lookup' | 'shells' | 'weapons' | 'items' | 'maps' | 'leaderboard' | 'patch-notes'
 
 interface TabConfig {
     id: TabId
@@ -19,6 +19,7 @@ const TABS: TabConfig[] = [
     { id: 'items', label: 'Items', ariaLabel: 'Go to Items tab' },
     { id: 'maps', label: 'Maps', ariaLabel: 'Go to Maps tab' },
     { id: 'leaderboard', label: 'Leaderboard', ariaLabel: 'Go to Leaderboard tab' },
+    { id: 'patch-notes', label: 'Patch Notes', ariaLabel: 'Go to Patch Notes tab' },
 ]
 
 function App() {
@@ -105,6 +106,8 @@ function App() {
                 return <MapsTab />
             case 'leaderboard':
                 return <LeaderboardTab />
+            case 'patch-notes':
+                return <PatchNotesTab />
         }
     }
 
@@ -161,47 +164,7 @@ function HomeTab() {
         <div className="tab-content-inner">
             <h2>Home Screen</h2>
             <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
-            <p>Select a tab to navigate through the application.</p>
+
         </div>
     )
 }
@@ -256,6 +219,36 @@ function LeaderboardTab() {
         <div className="tab-content-inner">
             <h2>Leaderboard</h2>
             <p>View the leaderboard standings.</p>
+        </div>
+    )
+}
+
+function PatchNotesTab() {
+    const bungieUpdatesUrl = 'https://www.bungie.net/7/en/News/MarathonUpdates'
+
+    return (
+        <div className="tab-content-inner">
+            <h2>Patch Notes</h2>
+            <p>Latest Marathon Updates from Bungie</p>
+            <div className="patch-notes-container">
+                <div className="patch-notes-info">
+                    <p className="patch-notes-description">
+                        Marathon Updates are published on Bungie's official website. Click the button below to view the latest patch notes and announcements.
+                    </p>
+                    <a
+                        href={bungieUpdatesUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="patch-notes-button"
+                    >
+                        View Marathon Updates on Bungie.net →
+                    </a>
+                </div>
+                <div className="patch-notes-info-section">
+                    <h3>Coming Soon</h3>
+                    <p>We're working on integrating live patch notes directly into this tracker. Check back soon for updates!</p>
+                </div>
+            </div>
         </div>
     )
 }
