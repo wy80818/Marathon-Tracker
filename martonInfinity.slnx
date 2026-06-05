@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="martonInfinity/martoninfinity.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+</Solution>
