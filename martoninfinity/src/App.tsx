@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 import marathonLogo from './assets/Marathon_Logo_WordMark_Green.png'
+import RunnerIcon from './assets/Icons/RunnerIcon.svg?react'
+import WeaponIcon from './assets/Icons/SwordIcon.svg?react'
+import Placeholder from './assets/Icons/Placeholder.svg?react'
 
 type TabId = 'home' | 'player-lookup' | 'shells' | 'weapons' | 'items' | 'maps' | 'leaderboard' | 'patch-notes'
 
@@ -8,18 +11,18 @@ interface TabConfig {
     id: TabId
     label: string
     ariaLabel: string
+    iconSvg: React.ElementType
 }
 
-
 const TABS: TabConfig[] = [
-    { id: 'home', label: 'Home', ariaLabel: 'Go to Home tab' },
-    { id: 'player-lookup', label: 'Player Lookup', ariaLabel: 'Go to Player Lookup tab' },
-    { id: 'shells', label: 'Shells', ariaLabel: 'Go to Shells tab' },
-    { id: 'weapons', label: 'Weapons', ariaLabel: 'Go to Weapons tab' },
-    { id: 'items', label: 'Items', ariaLabel: 'Go to Items tab' },
-    { id: 'maps', label: 'Maps', ariaLabel: 'Go to Maps tab' },
-    { id: 'leaderboard', label: 'Leaderboard', ariaLabel: 'Go to Leaderboard tab' },
-    { id: 'patch-notes', label: 'Patch Notes', ariaLabel: 'Go to Patch Notes tab' },
+    { id: 'home', label: 'Home', ariaLabel: 'Go to Home tab', iconSvg: Placeholder },
+    { id: 'player-lookup', label: 'Player Lookup', ariaLabel: 'Go to Player Lookup tab', iconSvg: Placeholder },
+    { id: 'shells', label: 'Shells', ariaLabel: 'Go to Shells tab', iconSvg: RunnerIcon },
+    { id: 'weapons', label: 'Weapons', ariaLabel: 'Go to Weapons tab', iconSvg: WeaponIcon },
+    { id: 'items', label: 'Items', ariaLabel: 'Go to Items tab', iconSvg: Placeholder },
+    { id: 'maps', label: 'Maps', ariaLabel: 'Go to Maps tab', iconSvg: Placeholder },
+    { id: 'leaderboard', label: 'Leaderboard', ariaLabel: 'Go to Leaderboard tab', iconSvg: Placeholder },
+    { id: 'patch-notes', label: 'Patch Notes', ariaLabel: 'Go to Patch Notes tab', iconSvg: Placeholder },
 ]
 
 function App() {
@@ -57,39 +60,6 @@ function App() {
         setActiveTab(tabId)
     }
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>, tabId: TabId) => {
-        const currentIndex = TABS.findIndex(tab => tab.id === tabId)
-        let nextIndex = currentIndex
-
-        switch (e.key) {
-            case 'ArrowLeft':
-                e.preventDefault()
-                nextIndex = currentIndex === 0 ? TABS.length - 1 : currentIndex - 1
-                break
-            case 'ArrowRight':
-                e.preventDefault()
-                nextIndex = currentIndex === TABS.length - 1 ? 0 : currentIndex + 1
-                break
-            case 'Home':
-                e.preventDefault()
-                nextIndex = 0
-                break
-            case 'End':
-                e.preventDefault()
-                nextIndex = TABS.length - 1
-                break
-            default:
-                return
-        }
-
-        setActiveTab(TABS[nextIndex].id)
-        // Focus the newly selected tab button
-        setTimeout(() => {
-            const tabElement = document.querySelector(`[data-tab-id="${TABS[nextIndex].id}"]`) as HTMLButtonElement | null
-            tabElement?.focus()
-        }, 0)
-    }
-
     const renderTabContent = () => {
         switch (activeTab) {
             case 'home':
@@ -121,28 +91,32 @@ function App() {
             </header>
 
             <div className="tabs-wrapper" style={{ transform: `translateY(${tabsOffset}%)` }}>
-                <div
-                    role="tablist"
-                    className="tabs-list"
-                    aria-label="Main navigation tabs"
+    <div
+        role="tablist"
+        className="tabs-list"
+        aria-label="Main navigation tabs"
+    >
+        {TABS.map((tab) => {
+            const Icon = tab.iconSvg;
+
+            return (
+                <button
+                    key={tab.id}
+                    role="tab"
+                    aria-selected={activeTab === tab.id}
+                    aria-controls={`${tab.id}-panel`}
+                    aria-label={tab.ariaLabel}
+                    data-tab-id={tab.id}
+                    className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
+                    onClick={() => handleTabClick(tab.id)}
                 >
-                    {TABS.map((tab) => (
-                        <button
-                            key={tab.id}
-                            role="tab"
-                            aria-selected={activeTab === tab.id}
-                            aria-controls={`${tab.id}-panel`}
-                            aria-label={tab.ariaLabel}
-                            data-tab-id={tab.id}
-                            className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
-                            onClick={() => handleTabClick(tab.id)}
-                            onKeyDown={(e) => handleKeyDown(e, tab.id)}
-                        >
-                            {tab.label}
-                        </button>
-                    ))}
-                </div>
-            </div>
+                    <Icon />
+                    {tab.label}
+                </button>
+            );
+        })}
+    </div>
+</div>
 
             <div className="tab-content">
                 <div

@@ -93,7 +93,7 @@ body {
     background-color: transparent;
     color: var(--color-text-light);
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 550;
     font-family: 'Courier New', monospace;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -103,7 +103,18 @@ body {
     margin-bottom: 0;
     text-transform: uppercase;
     letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
+
+    .tab-button svg {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+        display: block;
+    }
 
     .tab-button:focus {
         outline: 2px solid var(--color-lime);
@@ -118,9 +129,8 @@ body {
         border-color: rgba(1, 255, 255, 0.3);
     }
 
-    /* Active tab styling - Marathon inspired sci-fi look */
     .tab-button.active {
-        color: #000000;
+        color: black;
         background-color: var(--color-lime);
         border: 2px solid var(--color-lime);
         margin-bottom: 0;
@@ -186,7 +196,7 @@ body {
     max-width: 1200px;
 }
 
-    .tab-content-inner h2 {
+    .tab-content-inner h2, h3 {
         font-size: 1.75rem;
         margin-bottom: 1rem;
         color: var(--color-lime);
@@ -292,115 +302,115 @@ body {
 
 /* Improved focus management for keyboard navigation */
 :focus-visible {
-  outline: 2px solid var(--color-lime);
-  outline-offset: 2px;
+    outline: 2px solid var(--color-lime);
+    outline-offset: 2px;
 }
 
 /* Patch Notes Styles */
 .patch-notes-container {
-  margin-top: 2rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
 }
 
 .patch-notes-info {
-  background: linear-gradient(135deg, rgba(1, 255, 255, 0.1) 0%, rgba(194, 254, 11, 0.05) 100%);
-  border: 1px solid var(--color-cyan);
-  border-radius: 8px;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+    background: linear-gradient(135deg, rgba(1, 255, 255, 0.1) 0%, rgba(194, 254, 11, 0.05) 100%);
+    border: 1px solid var(--color-cyan);
+    border-radius: 8px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .patch-notes-description {
-  color: var(--color-text-light);
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
+    color: var(--color-text-light);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
 }
 
 .patch-notes-button {
-  display: inline-block;
-  padding: 1rem 2rem;
-  background-color: var(--color-lime);
-  color: #000000;
-  text-decoration: none;
-  border-radius: 4px;
-  font-weight: 700;
-  font-family: 'Space Mono', 'Courier New', monospace;
-  text-align: center;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 10px rgba(194, 254, 11, 0.5);
-  border: 2px solid var(--color-lime);
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: var(--color-lime);
+    color: #000000;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 700;
+    font-family: 'Space Mono', 'Courier New', monospace;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(194, 254, 11, 0.5);
+    border: 2px solid var(--color-lime);
 }
 
-.patch-notes-button:hover {
-  background-color: #000000;
-  color: var(--color-lime);
-  box-shadow: 0 0 20px rgba(194, 254, 11, 0.8);
-  transform: translateY(-2px);
-}
+    .patch-notes-button:hover {
+        background-color: #000000;
+        color: var(--color-lime);
+        box-shadow: 0 0 20px rgba(194, 254, 11, 0.8);
+        transform: translateY(-2px);
+    }
 
-.patch-notes-button:focus {
-  outline: 2px solid var(--color-cyan);
-  outline-offset: 2px;
-}
+    .patch-notes-button:focus {
+        outline: 2px solid var(--color-cyan);
+        outline-offset: 2px;
+    }
 
 .patch-notes-info-section {
-  background: linear-gradient(135deg, rgba(194, 254, 11, 0.05) 0%, rgba(1, 255, 255, 0.1) 100%);
-  border: 1px solid var(--color-lime);
-  border-radius: 8px;
-  padding: 2rem;
+    background: linear-gradient(135deg, rgba(194, 254, 11, 0.05) 0%, rgba(1, 255, 255, 0.1) 100%);
+    border: 1px solid var(--color-lime);
+    border-radius: 8px;
+    padding: 2rem;
 }
 
-.patch-notes-info-section h3 {
-  color: var(--color-lime);
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
-  text-shadow: 0 0 5px rgba(194, 254, 11, 0.3);
-}
+    .patch-notes-info-section h3 {
+        color: var(--color-lime);
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+        text-shadow: 0 0 5px rgba(194, 254, 11, 0.3);
+    }
 
-.patch-notes-info-section p {
-  color: var(--color-text-light);
-  font-size: 1rem;
-  line-height: 1.6;
-}
+    .patch-notes-info-section p {
+        color: var(--color-text-light);
+        font-size: 1rem;
+        line-height: 1.6;
+    }
 
 @media (max-width: 768px) {
-  .patch-notes-container {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
+    .patch-notes-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
 
-  .patch-notes-info,
-  .patch-notes-info-section {
-    padding: 1.5rem;
-  }
+    .patch-notes-info,
+    .patch-notes-info-section {
+        padding: 1.5rem;
+    }
 
-  .patch-notes-button {
-    padding: 0.85rem 1.5rem;
-    font-size: 0.95rem;
-  }
+    .patch-notes-button {
+        padding: 0.85rem 1.5rem;
+        font-size: 0.95rem;
+    }
 }
 
 @media (max-width: 480px) {
-  .patch-notes-container {
-    gap: 1rem;
-  }
+    .patch-notes-container {
+        gap: 1rem;
+    }
 
-  .patch-notes-info,
-  .patch-notes-info-section {
-    padding: 1rem;
-  }
+    .patch-notes-info,
+    .patch-notes-info-section {
+        padding: 1rem;
+    }
 
-  .patch-notes-button {
-    padding: 0.75rem 1.25rem;
-    font-size: 0.9rem;
-  }
+    .patch-notes-button {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.9rem;
+    }
 
-  .patch-notes-info-section h3 {
-    font-size: 1.2rem;
-  }
+    .patch-notes-info-section h3 {
+        font-size: 1.2rem;
+    }
 }
