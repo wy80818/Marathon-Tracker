@@ -11,7 +11,7 @@ import PlayerLookupTab from './Components/Tabs/PlayerLookupTab';
 import ShellsTab from './Components/Tabs/ShellsTab';
 import WeaponsTab from './Components/Tabs/WeaponsTab';
 import ItemsTab from './Components/Tabs/ItemsTab';
-import MapsTab from './Components/Tabs/MapsTab';
+import MapsTab from './Components/Tabs/Maps/MapsTab';
 import LeaderboardTab from './Components/Tabs/LeaderboardTab';
 import PatchNotesTab from './Components/Tabs/PatchNotesTab';
 

@@ -1,5 +1,5 @@
 import React from "react";
-import type { Marker, GameMap } from "../Data/MapsData.ts";
+import type { Marker, GameMap } from "../../../Data/MapsData.ts";
 
 interface Props {
     map: GameMap;
@@ -16,7 +16,7 @@ export const MapCanvas: React.FC<Props> = ({ map }) => {
                 draggable={false}
                 style={{
                     width: "100%",
-                    height: "auto",
+                    height: "100%",
                     display: "block"
                 }}
             />

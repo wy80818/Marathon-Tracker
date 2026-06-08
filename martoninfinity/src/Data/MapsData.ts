@@ -43,8 +43,24 @@ export const maps: GameMap[] = [
         id: "outpost",
         name: "Outpost",
         image: outpost,
-        width: 3840,
-        height: 2160,
+        width: 2224,
+        height: 1744,
+        markers: []
+    },
+    {
+        id: "perimiter",
+        name: "Perimiter",
+        image: perimiter,
+        width: 2224,
+        height: 1744,
+        markers: []
+    },
+    {
+        id: "cryo-archive.png",
+        name: "Cryo Archive",
+        image: cryoArchive,
+        width: 2048,
+        height: 1453,
         markers: []
     }
 ];
