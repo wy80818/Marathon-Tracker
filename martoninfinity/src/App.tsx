@@ -6,14 +6,14 @@ import RunnerIcon from './assets/Icons/RunnerIcon.svg?react'
 import WeaponIcon from './assets/Icons/SwordIcon.svg?react'
 import Placeholder from './assets/Icons/Placeholder.svg?react'
 
-import HomeTab from './Components/Tabs/HomeTab';
-import PlayerLookupTab from './Components/Tabs/PlayerLookupTab';
-import ShellsTab from './Components/Tabs/ShellsTab';
-import WeaponsTab from './Components/Tabs/WeaponsTab';
-import ItemsTab from './Components/Tabs/ItemsTab';
+import HomeTab from './Components/Tabs/Home/HomeTab';
+import PlayerLookupTab from './Components/Tabs/PlayerLookup/PlayerLookupTab';
+import ShellsTab from './Components/Tabs/Shells/ShellsTab';
+import WeaponsTab from './Components/Tabs/Weapons/WeaponsTab';
+import ItemsTab from './Components/Tabs/Items/ItemsTab';
 import MapsTab from './Components/Tabs/Maps/MapsTab';
-import LeaderboardTab from './Components/Tabs/LeaderboardTab';
-import PatchNotesTab from './Components/Tabs/PatchNotesTab';
+import LeaderboardTab from './Components/Tabs/Leaderboard/LeaderboardTab';
+import PatchNotesTab from './Components/Tabs/PatchNotes/PatchNotesTab';
 
 type TabId = 'home' | 'player-lookup' | 'shells' | 'weapons' | 'items' | 'maps' | 'leaderboard' | 'patch-notes'
 
