@@ -35,11 +35,14 @@
     }
 
 .map-container {
-    flex: 1;
-    position: relative;
+    height: 700px; /* fixed height */
+    width: 100%;
     overflow: hidden;
     background: #0b0b0b;
     border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .zoom-buttons {
@@ -61,3 +64,4 @@
         color: white;
         cursor: pointer;
     }
+

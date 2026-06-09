@@ -32,8 +32,8 @@ export const maps: GameMap[] = [
         markers: [
             {
                 id: 1,
-                x: 0.72,
-                y: 0.45,
+                x: .748,
+                y: .385,
                 label: "Crew Exfil",
                 icon: exfilIcon
             }

@@ -71,7 +71,6 @@ function App() {
 
     return (
         <div className="app-container">
-
             <header className="app-header">
                 <div className="header-content">
                     <img src={marathonLogo} alt="Marathon Logo" className="marathon-logo" />
@@ -107,6 +106,14 @@ function App() {
                 </div>
             </div>
 
+            <footer className="footer-content">
+                <p>
+                    Marathon Tracker is an unofficial fan project created to help players tracker others, explore maps, game information and more.
+                </p>
+                <a>
+                    Marathon™, Bungie™, and all associated logos, images, and trademarks are property of Bungie, Inc.
+                </a>
+            </footer>
         </div>
     )
 }
