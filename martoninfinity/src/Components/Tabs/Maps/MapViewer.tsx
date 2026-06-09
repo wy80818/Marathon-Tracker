@@ -11,10 +11,11 @@ import { maps } from "../../../Data/MapsData";
 
 const MapViewer = () => {
     const [selectedMapId, setSelectedMapId] = useState(maps[0].id);
+    const [scale, setScale] = useState(0.85);
     const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
     const [isHoveringMap, setIsHoveringMap] = useState(false);
-    const containerRef = useRef<HTMLDivElement>(null);
 
+    const containerRef = useRef<HTMLDivElement>(null);
     const currentMap = maps.find(m => m.id === selectedMapId)!;
 
     return (
@@ -49,6 +50,9 @@ const MapViewer = () => {
                         }}
                         doubleClick={{ step: 1.5 }}
                         velocityAnimation={{ animationTime: 400 }}
+                        onTransform={({ state }) => {
+                            setScale(state.scale);
+                        }}
                     >
                         {({ resetTransform }) => (
                             <div
@@ -57,65 +61,58 @@ const MapViewer = () => {
                                     width: "100%",
                                     height: "700px"
                                 }}
+                                onMouseEnter={() => setIsHoveringMap(true)}
+                                onMouseLeave={() => setIsHoveringMap(false)}
                             >
-                                <div
-                                    style={{
-                                        position: "relative",
+                                <TransformComponent
+                                    wrapperStyle={{
                                         width: "100%",
-                                        height: "700px"
+                                        height: "100%"
                                     }}
-                                    onMouseEnter={() => setIsHoveringMap(true)}
-                                    onMouseLeave={() => setIsHoveringMap(false)}
+                                    contentStyle={{
+                                        width: "100%",
+                                        height: "100%",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center"
+                                    }}
                                 >
-                                    <TransformComponent
-                                        wrapperStyle={{
-                                            width: "100%",
-                                            height: "100%"
-                                        }}
-                                        contentStyle={{
-                                            width: "100%",
-                                            height: "100%",
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignItems: "center"
-                                        }}
-                                    >
-                                        <MapCanvas
-                                            map={currentMap}
-                                            onMouseMove={setCursorPos}
-                                        />
-                                    </TransformComponent>
-                                    {isHoveringMap && (
-                                        <div
-                                            style={{
-                                                position: "absolute",
-                                                top: "10px",
-                                                left: "10px",
-                                                zIndex: 10,
-                                                background: "rgba(0, 0, 0, 0.7)",
-                                                color: "white",
-                                                padding: "6px 10px",
-                                                borderRadius: "6px",
-                                                fontFamily: "monospace"
-                                            }}
-                                        >
-                                            x: {cursorPos.x}<br />
-                                            y: {cursorPos.y}
-                                        </div>
-                                    )}
+                                    <MapCanvas
+                                        map={currentMap}
+                                        scale={scale}
+                                        onMouseMove={setCursorPos}
+                                    />
+                                </TransformComponent>
+                                {isHoveringMap && (
                                     <div
-                                        className="zoom-buttons"
                                         style={{
                                             position: "absolute",
                                             top: "10px",
-                                            right: "10px",
-                                            zIndex: 10
+                                            left: "10px",
+                                            zIndex: 10,
+                                            background: "rgba(0, 0, 0, 0.7)",
+                                            color: "white",
+                                            padding: "6px 10px",
+                                            borderRadius: "6px",
+                                            fontFamily: "monospace"
                                         }}
                                     >
-                                        <button onClick={() => resetTransform()}>
-                                            Reset
-                                        </button>
+                                        x: {cursorPos.x}<br />
+                                        y: {cursorPos.y}
                                     </div>
+                                )}
+                                <div
+                                    className="zoom-buttons"
+                                    style={{
+                                        position: "absolute",
+                                        top: "10px",
+                                        right: "10px",
+                                        zIndex: 10
+                                    }}
+                                >
+                                    <button onClick={() => resetTransform()}>
+                                        Reset
+                                    </button>
                                 </div>
                             </div>
                         )}

@@ -4,12 +4,11 @@ import { useTransformContext } from "react-zoom-pan-pinch";
 
 interface Props {
     map: GameMap;
+    scale: number;
     onMouseMove: (pos: { x: number; y: number }) => void;
 }
 
-export const MapCanvas: React.FC<Props> = ({ map, onMouseMove }) => {
-    const { state } = useTransformContext();
-    const scale = state.scale;
+export const MapCanvas: React.FC<Props> = ({ map, scale, onMouseMove }) => {
 
     const baseSize = 30;
     const markerSize = baseSize / scale;
@@ -53,9 +52,11 @@ export const MapCanvas: React.FC<Props> = ({ map, onMouseMove }) => {
                     <img
                         src={marker.icon}
                         alt={marker.label}
-                        width={markerSize}
-                        height={markerSize}
+                        width={30}
+                        height={30}
                         style={{
+                            transform: `scale(${1 / scale})`,
+                            transformOrigin: "center",
                             filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.6))"
                         }}
                     />
