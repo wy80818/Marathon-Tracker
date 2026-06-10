@@ -10,6 +10,6 @@ The website features multiple tabs in which the user can peruse through and util
 
 Sample images, subject to change:
 
-!(Home tab)[<img width="1919" height="1199" alt="image" src="https://github.com/user-attachments/assets/da0db233-95ca-4d42-8dfb-82254f1fde11" />]
+<img width="1919" height="1199" alt="image" src="https://github.com/user-attachments/assets/da0db233-95ca-4d42-8dfb-82254f1fde11" />
 
-!(Maps tab)[<img width="1919" height="1199" alt="image" src="https://github.com/user-attachments/assets/c462ec57-bb5a-42a9-aaea-7f9e49c98ef5" />]
+<img width="1919" height="1199" alt="image" src="https://github.com/user-attachments/assets/c462ec57-bb5a-42a9-aaea-7f9e49c98ef5" />
