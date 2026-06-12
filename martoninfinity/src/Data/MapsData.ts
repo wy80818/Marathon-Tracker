@@ -5,12 +5,25 @@ import outpost from "../assets/Maps/outpost.png";
 
 import exfilIcon from "../assets/Markers/Crew_Exfil.png";
 
+export type MarkerType =
+    | "crewExfil"
+    | "vault"
+    | "uplink";
+
 export interface Marker {
-    id: number;
+    id: string;
+    type: MarkerType;
     x: number;
     y: number;
     label: string;
     icon: string;
+}
+
+export interface MarkerGroup {
+    type: MarkerType;
+    label: string;
+    icon: string;
+    positions: [number, number][];
 }
 
 export interface GameMap {
@@ -22,6 +35,37 @@ export interface GameMap {
     markers: Marker[];
 }
 
+const markerGroups_DireMarsh: MarkerGroup[] = [
+    {
+        type: "crewExfil",
+        label: "Crew Exfil",
+        icon: exfilIcon,
+        positions: [
+            [0.748, 0.385],
+            [0.686, 0.672],
+            [0.585, 0.692],
+            [0.446, 0.581],
+            [0.481, 0.358],
+            [0.329, 0.701],
+            [0.223, 0.516],
+            [0.594, 0.254]
+        ]
+    }
+];
+
+function createMarkers(groups: MarkerGroup[]): Marker[] {
+    return groups.flatMap(group =>
+        group.positions.map(([x, y], index) => ({
+            id: `${group.type}-${index}`,
+            type: group.type,
+            x,
+            y,
+            label: group.label,
+            icon: group.icon
+        }))
+    );
+}
+
 export const maps: GameMap[] = [
     {
         id: "marsh",
@@ -29,64 +73,7 @@ export const maps: GameMap[] = [
         image: direMarsh,
         width: 2224,
         height: 1744,
-        markers: [
-            {
-                id: 1,
-                x: .748,
-                y: .385,
-                label: "Crew Exfil",
-                icon: exfilIcon
-            },
-            {
-                id: 2,
-                x: .686,
-                y: .672,
-                label: "Crew Exfil",
-                icon: exfilIcon
-            },            
-            {
-                id: 3,
-                x: .585,
-                y: .692,
-                label: "Crew Exfil",
-                icon: exfilIcon
-            },
-            {
-                id: 4,
-                x: .446,
-                y: .581,
-                label: "Crew Exfil",
-                icon: exfilIcon
-            },
-            {
-                id: 5,
-                x: .481,
-                y: .358,
-                label: "Crew Exfil",
-                icon: exfilIcon
-            },
-            {
-                id: 5,
-                x: .329,
-                y: .701,
-                label: "Crew Exfil",
-                icon: exfilIcon
-            },
-            {
-                id: 5,
-                x: .223,
-                y: .516,
-                label: "Crew Exfil",
-                icon: exfilIcon
-            },
-            {
-                id: 6,
-                x: .594,
-                y: .254,
-                label: "Crew Exfil",
-                icon: exfilIcon
-            }
-        ]
+        markers: createMarkers(markerGroups_DireMarsh)
     },
     {
         id: "outpost",
@@ -98,15 +85,15 @@ export const maps: GameMap[] = [
         ]
     },
     {
-        id: "perimiter",
-        name: "Perimiter",
+        id: "perimeter",
+        name: "Perimeter",
         image: perimiter,
         width: 2224,
         height: 1744,
         markers: []
     },
     {
-        id: "cryo-archive.png",
+        id: "cryo-archive",
         name: "Cryo Archive",
         image: cryoArchive,
         width: 2048,
