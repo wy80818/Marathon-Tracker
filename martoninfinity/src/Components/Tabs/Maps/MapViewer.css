@@ -1,12 +1,20 @@
 .map-layout {
     display: flex;
     gap: 20px;
-    width: 100%;
-    height: 100%;
+    max-width:1200px;
+    align-items: flex-start;
+}
+
+.map-side-column {
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* Prevent this column from stretching to map height */
+    align-self: flex-start;
 }
 
 .map-sidebar {
-    width: 220px;
     background: #161616;
     border-radius: 12px;
     padding: 16px;
@@ -35,8 +43,9 @@
     }
 
 .map-container {
-    height: 700px; /* fixed height */
-    width: 100%;
+    flex: 1;
+    min-width: 0;
+    height: 700px;
     overflow: hidden;
     background: #0b0b0b;
     border-radius: 12px;
@@ -65,3 +74,62 @@
         cursor: pointer;
     }
 
+.map-key {
+    background: #161616;
+    border-radius: 12px;
+    padding: 16px;
+    max-height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+    .map-key::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .map-key::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 8px;
+    }
+
+    .map-key::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .map-key h2 {
+        margin: 0 0 10px 0;
+    }
+
+.marker-toggle {
+    background: #252525;
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+    .marker-toggle:hover {
+        background: #333;
+    }
+
+    .marker-toggle input {
+        margin: 0;
+        cursor: pointer;
+    }
+
+    .marker-toggle img {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+    }
+
+    .marker-toggle span {
+        color: white;
+        font-size: 14px;
+    }

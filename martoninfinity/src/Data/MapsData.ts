@@ -3,12 +3,15 @@ import cryoArchive from "../assets/Maps/cryo-archive.png";
 import perimiter from "../assets/Maps/perimeter.png";
 import outpost from "../assets/Maps/outpost.png";
 
-import exfilIcon from "../assets/Markers/Crew_Exfil.png";
+import crewExfilIcon from "../assets/Markers/Crew_Exfil.png";
+import finalExfilIcon from "../assets/Markers/Final_Exfil.png";
+import guardedExfilIcon from "../assets/Markers/Guarded_Exfil.png";
 
+// Add new markers here in camelCase
 export type MarkerType =
     | "crewExfil"
-    | "vault"
-    | "uplink";
+    | "finalExfil"
+    | "guardedExfil";
 
 export interface Marker {
     id: string;
@@ -35,11 +38,13 @@ export interface GameMap {
     markers: Marker[];
 }
 
+// Make a new MarkerGroup[] for every map named appropriately, 
+// and copy and paste structure inside for every new marker type.
 const markerGroups_DireMarsh: MarkerGroup[] = [
     {
         type: "crewExfil",
         label: "Crew Exfil",
-        icon: exfilIcon,
+        icon: crewExfilIcon,
         positions: [
             [0.748, 0.385],
             [0.686, 0.672],
@@ -49,6 +54,24 @@ const markerGroups_DireMarsh: MarkerGroup[] = [
             [0.329, 0.701],
             [0.223, 0.516],
             [0.594, 0.254]
+        ]
+    },
+    {
+        type: "finalExfil",
+        label: "Final Exfil",
+        icon: finalExfilIcon,
+        positions: [
+        ]
+    },
+    {
+        type: "guardedExfil",
+        label: "Guarded Exfil",
+        icon: guardedExfilIcon,
+        positions: [
+            [.33, .564],
+            [.509, .664],
+            [.673, .429],
+            [.426, .376]
         ]
     }
 ];
@@ -66,6 +89,7 @@ function createMarkers(groups: MarkerGroup[]): Marker[] {
     );
 }
 
+// Add for every new map added.
 export const maps: GameMap[] = [
     {
         id: "marsh",
@@ -81,8 +105,7 @@ export const maps: GameMap[] = [
         image: outpost,
         width: 2224,
         height: 1744,
-        markers: [
-        ]
+        markers: []
     },
     {
         id: "perimeter",

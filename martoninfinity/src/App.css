@@ -236,7 +236,7 @@ body {
 
 /* Tab content inner */
 .tab-content-inner {
-    max-width: 1200px;
+    width: 100%;
 }
 
     .tab-content-inner h2, h3 {

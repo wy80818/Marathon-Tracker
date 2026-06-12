@@ -1,18 +1,19 @@
 import React from "react";
 import type { Marker, GameMap } from "../../../Data/MapsData.ts";
-import { useTransformContext } from "react-zoom-pan-pinch";
 
 interface Props {
     map: GameMap;
     scale: number;
     onMouseMove: (pos: { x: number; y: number }) => void;
+    visibleMarkers: Record<string, boolean>;
 }
 
-export const MapCanvas: React.FC<Props> = ({ map, scale, onMouseMove }) => {
-
-    const baseSize = 30;
-    const markerSize = baseSize / scale;
-
+export const MapCanvas: React.FC<Props> = ({
+    map,
+    scale,
+    onMouseMove,
+    visibleMarkers
+}) => {
     return (
         <div
             style={{
@@ -39,29 +40,31 @@ export const MapCanvas: React.FC<Props> = ({ map, scale, onMouseMove }) => {
                 }}
             />
 
-            {map.markers.map(marker => (
-                <div
-                    key={marker.id}
-                    style={{
-                        position: "absolute",
-                        left: `${marker.x * 100}%`,
-                        top: `${marker.y * 100}%`,
-                        transform: "translate(-50%, -50%)"
-                    }}
-                >
-                    <img
-                        src={marker.icon}
-                        alt={marker.label}
-                        width={30}
-                        height={30}
+            {map.markers
+                .filter(marker => visibleMarkers[marker.type])
+                .map(marker => (
+                    <div
+                        key={marker.id}
                         style={{
-                            transform: `scale(${1 / scale})`,
-                            transformOrigin: "center",
-                            filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.6))"
+                            position: "absolute",
+                            left: `${marker.x * 100}%`,
+                            top: `${marker.y * 100}%`,
+                            transform: "translate(-50%, -50%)"
                         }}
-                    />
-                </div>
-            ))}
+                    >
+                        <img
+                            src={marker.icon}
+                            alt={marker.label}
+                            width={30}
+                            height={30}
+                            style={{
+                                transform: `scale(${1 / scale})`,
+                                transformOrigin: "center",
+                                filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.6))"
+                            }}
+                        />
+                    </div>
+                ))}
         </div>
     );
 };

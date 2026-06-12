@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
     TransformWrapper,
     TransformComponent
@@ -18,24 +18,70 @@ const MapViewer = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const currentMap = maps.find(m => m.id === selectedMapId)!;
 
+    const markerTypes = [...new Set(currentMap.markers.map(m => m.type))];
+
+    const [visibleMarkers, setVisibleMarkers] = useState<Record<string, boolean>>({});
+
+    useEffect(() => {
+        const defaults: Record<string, boolean> = {};
+
+        currentMap.markers.forEach(marker => {
+            defaults[marker.type] = true;
+        });
+
+        setVisibleMarkers(defaults);
+    }, [selectedMapId]);
+
     return (
         <div className="map-window">
             <div className="map-layout">
+                <div className="map-side-column">
+                    <div className="map-sidebar">
+                        <h2>Maps</h2>
+                        {maps.map(map => (
+                            <button
+                                key={map.id}
+                                className={`map-button ${selectedMapId === map.id ? "active" : ""}`}
+                                onClick={() => setSelectedMapId(map.id)}
+                            >
+                                {map.name}
+                            </button>
+                        ))}
+                    </div>
+                    <div className="map-key">
+                        {markerTypes.map(type => {
+                            const exampleMarker = currentMap.markers.find(
+                                marker => marker.type === type
+                            );
 
-                <div className="map-sidebar">
-                    <h2>Maps</h2>
-                    {maps.map(map => (
-                        <button
-                            key={map.id}
-                            className={`map-button ${selectedMapId === map.id ? "active" : ""
-                                }`}
-                            onClick={() => setSelectedMapId(map.id)}
-                        >
-                            {map.name}
-                        </button>
-                    ))}
+                            if (!exampleMarker) return null;
+
+                            return (
+                                <label key={type} className="marker-toggle">
+                                    <input
+                                        type="checkbox"
+                                        checked={visibleMarkers[type] ?? true}
+                                        onChange={() =>
+                                            setVisibleMarkers(prev => ({
+                                                ...prev,
+                                                [type]: !prev[type]
+                                            }))
+                                        }
+                                    />
+
+                                    <img
+                                        src={exampleMarker.icon}
+                                        alt={exampleMarker.label}
+                                        width={24}
+                                        height={24}
+                                    />
+
+                                    <span>{exampleMarker.label}</span>
+                                </label>
+                            );
+                        })}
+                    </div>
                 </div>
-
                 <div ref={containerRef} className="map-container">
                     <TransformWrapper
                         initialScale={.85}
@@ -81,6 +127,7 @@ const MapViewer = () => {
                                         map={currentMap}
                                         scale={scale}
                                         onMouseMove={setCursorPos}
+                                        visibleMarkers={visibleMarkers}
                                     />
                                 </TransformComponent>
                                 {isHoveringMap && (
@@ -118,7 +165,7 @@ const MapViewer = () => {
                         )}
                     </TransformWrapper>
                 </div>
-                Shift + Scroll over map to Zoom In/Out.
+
             </div>
         </div>
     );
