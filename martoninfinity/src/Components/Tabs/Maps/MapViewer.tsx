@@ -20,6 +20,26 @@ const MapViewer = () => {
 
     const markerTypes = [...new Set(currentMap.markers.map(m => m.type))];
 
+    const showAllMarkers = () => {
+        const allVisible: Record<string, boolean> = {};
+
+        markerTypes.forEach(type => {
+            allVisible[type] = true;
+        });
+
+        setVisibleMarkers(allVisible);
+    };
+
+    const hideAllMarkers = () => {
+        const allHidden: Record<string, boolean> = {};
+
+        markerTypes.forEach(type => {
+            allHidden[type] = false;
+        });
+
+        setVisibleMarkers(allHidden);
+    };
+
     const [visibleMarkers, setVisibleMarkers] = useState<Record<string, boolean>>({});
 
     useEffect(() => {
@@ -38,48 +58,63 @@ const MapViewer = () => {
                 <div className="map-side-column">
                     <div className="map-sidebar">
                         <h2>Maps</h2>
-                        {maps.map(map => (
-                            <button
-                                key={map.id}
-                                className={`map-button ${selectedMapId === map.id ? "active" : ""}`}
-                                onClick={() => setSelectedMapId(map.id)}
-                            >
-                                {map.name}
-                            </button>
-                        ))}
+
+                        <div className="map-list">
+                            {maps.map(map => (
+                                <button
+                                    key={map.id}
+                                    className={`map-button ${selectedMapId === map.id ? "active" : ""}`}
+                                    onClick={() => setSelectedMapId(map.id)}
+                                >
+                                    <p>{map.name}</p>
+                                </button>
+                            ))}
+                        </div>
                     </div>
                     <div className="map-key">
-                        {markerTypes.map(type => {
-                            const exampleMarker = currentMap.markers.find(
-                                marker => marker.type === type
-                            );
+                        <div className="marker-controls">
+                            <button onClick={showAllMarkers}>
+                                Show All
+                            </button>
 
-                            if (!exampleMarker) return null;
+                            <button onClick={hideAllMarkers}>
+                                Hide All
+                            </button>
+                        </div>
 
-                            return (
-                                <label key={type} className="marker-toggle">
-                                    <input
-                                        type="checkbox"
-                                        checked={visibleMarkers[type] ?? true}
-                                        onChange={() =>
-                                            setVisibleMarkers(prev => ({
-                                                ...prev,
-                                                [type]: !prev[type]
-                                            }))
-                                        }
-                                    />
+                        <div className="marker-list">
+                            {markerTypes.map(type => {
+                                const exampleMarker = currentMap.markers.find(
+                                    marker => marker.type === type
+                                );
 
-                                    <img
-                                        src={exampleMarker.icon}
-                                        alt={exampleMarker.label}
-                                        width={24}
-                                        height={24}
-                                    />
+                                if (!exampleMarker) return null;
 
-                                    <span>{exampleMarker.label}</span>
-                                </label>
-                            );
-                        })}
+                                return (
+                                    <label key={type} className="marker-toggle">
+                                        <input
+                                            type="checkbox"
+                                            checked={visibleMarkers[type] ?? true}
+                                            onChange={() =>
+                                                setVisibleMarkers(prev => ({
+                                                    ...prev,
+                                                    [type]: !prev[type]
+                                                }))
+                                            }
+                                        />
+
+                                        <img
+                                            src={exampleMarker.icon}
+                                            alt={exampleMarker.label}
+                                            width={24}
+                                            height={24}
+                                        />
+
+                                        <span>{exampleMarker.label}</span>
+                                    </label>
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
                 <div ref={containerRef} className="map-container">

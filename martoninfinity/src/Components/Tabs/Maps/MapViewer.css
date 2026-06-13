@@ -1,12 +1,12 @@
 .map-layout {
     display: flex;
     gap: 20px;
-    max-width:1200px;
+    /*    max-width:1200px;*/
     align-items: flex-start;
 }
 
 .map-side-column {
-    width: 220px;
+    width: 500px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -18,18 +18,28 @@
     background: #161616;
     border-radius: 12px;
     padding: 16px;
+}
+
+.map-list {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 10px;
 }
 
+    .map-sidebar p {
+        font-size: 15px;
+        font-weight: bold;
+    }
+
 .map-button {
+    width: calc(50% - 5px);
+    box-sizing: border-box;
     background: #252525;
     color: white;
     border: none;
     border-radius: 8px;
     padding: 12px;
-    text-align: left;
+    text-align: center;
     cursor: pointer;
     transition: background 0.2s;
 }
@@ -82,7 +92,6 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 10px;
 }
 
     .map-key::-webkit-scrollbar {
@@ -102,7 +111,41 @@
         margin: 0 0 10px 0;
     }
 
+.marker-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.marker-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+    .marker-controls button {
+        background: none;
+        border: none;
+        color: #888;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 0;
+        transition: color 0.2s;
+    }
+
+        .marker-controls button:hover {
+            color: white;
+        }
+
+        .marker-controls button:active {
+            transform: scale(0.97);
+        }
+
 .marker-toggle {
+    width: calc(50% - 5px); /* two per row */
+    box-sizing: border-box;
     background: #252525;
     border-radius: 8px;
     padding: 10px 12px;

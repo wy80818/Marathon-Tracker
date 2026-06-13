@@ -6,12 +6,14 @@ import outpost from "../assets/Maps/outpost.png";
 import crewExfilIcon from "../assets/Markers/Crew_Exfil.png";
 import finalExfilIcon from "../assets/Markers/Final_Exfil.png";
 import guardedExfilIcon from "../assets/Markers/Guarded_Exfil.png";
+import playerSpawnIcon from "../assets/Markers/Player_Spawn.png"
 
 // Add new markers here in camelCase
 export type MarkerType =
     | "crewExfil"
     | "finalExfil"
-    | "guardedExfil";
+    | "guardedExfil"
+    | "playerSpawn";
 
 export interface Marker {
     id: string;
@@ -61,6 +63,7 @@ const markerGroups_DireMarsh: MarkerGroup[] = [
         label: "Final Exfil",
         icon: finalExfilIcon,
         positions: [
+            [.608, .606]
         ]
     },
     {
@@ -72,6 +75,23 @@ const markerGroups_DireMarsh: MarkerGroup[] = [
             [.509, .664],
             [.673, .429],
             [.426, .376]
+        ]
+    },
+    {
+        type: "playerSpawn",
+        label: "Player Spawn",
+        icon: playerSpawnIcon,
+        positions: [
+            [.503, .814],
+            [.145, .437],
+            [.545, .197],
+            [.357, .818],
+            [.728, .151],
+            [.864, .329],
+            [.901, .582],
+            [.906, .46],
+            [.834, .722],
+            [.59, .683]
         ]
     }
 ];
