@@ -6,13 +6,17 @@ interface Props {
     scale: number;
     onMouseMove: (pos: { x: number; y: number }) => void;
     visibleMarkers: Record<string, boolean>;
+    selectedMarker: Marker | null;
+    onMarkerClick: (marker: Marker | null) => void;
 }
 
 export const MapCanvas: React.FC<Props> = ({
     map,
     scale,
     onMouseMove,
-    visibleMarkers
+    visibleMarkers,
+    selectedMarker,
+    onMarkerClick
 }) => {
     return (
         <div
@@ -45,11 +49,13 @@ export const MapCanvas: React.FC<Props> = ({
                 .map(marker => (
                     <div
                         key={marker.id}
+                        onClick={() => onMarkerClick(marker)}
                         style={{
                             position: "absolute",
                             left: `${marker.x * 100}%`,
                             top: `${marker.y * 100}%`,
-                            transform: "translate(-50%, -50%)"
+                            transform: "translate(-50%, -50%)",
+                            cursor: "pointer"
                         }}
                     >
                         <img
@@ -57,6 +63,7 @@ export const MapCanvas: React.FC<Props> = ({
                             alt={marker.label}
                             width={30}
                             height={30}
+                            className="map-marker"
                             style={{
                                 transform: `scale(${1 / scale})`,
                                 transformOrigin: "center",

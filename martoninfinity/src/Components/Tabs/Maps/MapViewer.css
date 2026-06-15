@@ -26,10 +26,10 @@
     gap: 10px;
 }
 
-    .map-sidebar p {
-        font-size: 15px;
-        font-weight: bold;
-    }
+.map-sidebar p {
+    font-size: 15px;
+    font-weight: bold;
+}
 
 .map-button {
     width: calc(50% - 5px);
@@ -62,6 +62,98 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.marker-overlay {
+    position: absolute;
+    z-index: 9999;
+    pointer-events: auto;
+}
+
+.marker-overlay-card {
+    background: rgba(20, 20, 20, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 12px 14px;
+    width: 220px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    backdrop-filter: blur(6px);
+    animation: fadeIn 0.12s ease-out;
+    position: relative;
+}
+
+.marker-overlay-close {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #d0d0d0;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+    .marker-overlay-close:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: white;
+    }
+
+    .marker-overlay-close:active {
+        transform: scale(0.92);
+    }
+
+.marker-overlay-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+    .marker-overlay-header h4 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+.marker-overlay-card p {
+    margin: 0;
+    font-size: 13px;
+    color: #cfcfcf;
+    line-height: 1.4;
+}
+
+.marker-overlay-close {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+    .marker-overlay-close:hover {
+        color: white;
+    }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .zoom-buttons {

@@ -8,17 +8,35 @@ import "./MapViewer.css"
 
 import MapCanvas from "./MapCanvas";
 import { maps } from "../../../Data/MapsData";
+import type { Marker } from "../../../Data/MapsData";
 
 const MapViewer = () => {
+    const [selectedMarker, setSelectedMarker] = useState<Marker | null>(null);
     const [selectedMapId, setSelectedMapId] = useState(maps[0].id);
     const [scale, setScale] = useState(0.85);
-    const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+    const [position, setPosition] = useState({ x: 0, y: 0 });
     const [isHoveringMap, setIsHoveringMap] = useState(false);
+    const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
 
     const containerRef = useRef<HTMLDivElement>(null);
     const currentMap = maps.find(m => m.id === selectedMapId)!;
 
     const markerTypes = [...new Set(currentMap.markers.map(m => m.type))];
+
+    const getPopupPosition = (marker: Marker) => {
+        const container = containerRef.current;
+        if (!container) return { left: 0, top: 0 };
+
+        const rect = container.getBoundingClientRect();
+
+        const worldX = rect.width * marker.x;
+        const worldY = rect.height * marker.y;
+
+        return {
+            left: worldX * scale + position.x,
+            top: worldY * scale + position.y
+        };
+    };
 
     const showAllMarkers = () => {
         const allVisible: Record<string, boolean> = {};
@@ -50,6 +68,9 @@ const MapViewer = () => {
         });
 
         setVisibleMarkers(defaults);
+
+        // clear currently selected marker
+        setSelectedMarker(null);
     }, [selectedMapId]);
 
     return (
@@ -133,6 +154,10 @@ const MapViewer = () => {
                         velocityAnimation={{ animationTime: 400 }}
                         onTransform={({ state }) => {
                             setScale(state.scale);
+                            setPosition({
+                                x: state.positionX,
+                                y: state.positionY
+                            });
                         }}
                     >
                         {({ resetTransform }) => (
@@ -155,7 +180,8 @@ const MapViewer = () => {
                                         height: "100%",
                                         display: "flex",
                                         justifyContent: "center",
-                                        alignItems: "center"
+                                        alignItems: "center",
+                                        pointerEvents: "auto"
                                     }}
                                 >
                                     <MapCanvas
@@ -163,8 +189,42 @@ const MapViewer = () => {
                                         scale={scale}
                                         onMouseMove={setCursorPos}
                                         visibleMarkers={visibleMarkers}
+                                        selectedMarker={selectedMarker}
+                                        onMarkerClick={setSelectedMarker}
                                     />
                                 </TransformComponent>
+                                {selectedMarker && (() => {
+                                    const pos = getPopupPosition(selectedMarker);
+
+                                    return (
+                                        <div
+                                            className="marker-overlay"
+                                            style={{
+                                                position: "absolute",
+                                                left: pos.left,
+                                                top: pos.top,
+                                                transform: "translate(20px, -50%)",
+                                                zIndex: 9999
+                                            }}
+                                        >
+                                            <div className="marker-overlay-card">
+                                                <div className="marker-overlay-header">
+                                                    <img src={selectedMarker.icon} width={28} height={28} />
+                                                    <h4>{selectedMarker.label}</h4>
+                                                </div>
+
+                                                <p>{selectedMarker.description}</p>
+
+                                                <button
+                                                    onClick={() => setSelectedMarker(null)}
+                                                    className="marker-overlay-close"
+                                                >
+                                                    ×
+                                                </button>
+                                            </div>
+                                        </div>
+                                    );
+                                })()}
                                 {isHoveringMap && (
                                     <div
                                         style={{

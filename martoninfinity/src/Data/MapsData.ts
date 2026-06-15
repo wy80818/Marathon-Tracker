@@ -22,12 +22,14 @@ export interface Marker {
     y: number;
     label: string;
     icon: string;
+    description: string;
 }
 
 export interface MarkerGroup {
     type: MarkerType;
     label: string;
     icon: string;
+    description: string;
     positions: [number, number][];
 }
 
@@ -47,6 +49,11 @@ const markerGroups_DireMarsh: MarkerGroup[] = [
         type: "crewExfil",
         label: "Crew Exfil",
         icon: crewExfilIcon,
+        description: "Potential exfil location necessary for players to extract. \
+        When initialized by a Runner, exfil takes around 45 seconds to warm up. Eventually, \
+        an auditory que will occur as well as a ring appearing around the exfil indicating that \
+        it is ready to be used. At least one runner must step inside to initiate a 10 second countdown \
+        in which extraction takes place. Countdown can be reset once there are no runners within the ring.",
         positions: [
             [0.748, 0.385],
             [0.686, 0.672],
@@ -62,6 +69,9 @@ const markerGroups_DireMarsh: MarkerGroup[] = [
         type: "finalExfil",
         label: "Final Exfil",
         icon: finalExfilIcon,
+        description: "Potential exfil location. Only appears once the match timer reaches 0. \
+        Afterwards, all Runners are given exactly 1 minute to reach the location before they are \
+        eliminated by the match time limit. There is only 1 exfil ever.",
         positions: [
             [.608, .606]
         ]
@@ -70,6 +80,8 @@ const markerGroups_DireMarsh: MarkerGroup[] = [
         type: "guardedExfil",
         label: "Guarded Exfil",
         icon: guardedExfilIcon,
+        description: "Potential exfil location. \
+        Functions exactly like a Crew Exfil, but when initialized by a Runner, spawns 1 UESC wave which includes a Commander.",
         positions: [
             [.33, .564],
             [.509, .664],
@@ -81,6 +93,7 @@ const markerGroups_DireMarsh: MarkerGroup[] = [
         type: "playerSpawn",
         label: "Player Spawn",
         icon: playerSpawnIcon,
+        description: "Potential Runner spawn point. There are a maximum of 6 crews on this map.",
         positions: [
             [.503, .814],
             [.145, .437],
@@ -104,7 +117,8 @@ function createMarkers(groups: MarkerGroup[]): Marker[] {
             x,
             y,
             label: group.label,
-            icon: group.icon
+            icon: group.icon,
+            description: group.description
         }))
     );
 }
