@@ -98,42 +98,42 @@ const MapViewer = () => {
                         </div>
                     </div>
                     <div className="map-key">
-                        <div className="marker-controls">
-                            <button onClick={showAllMarkers}>
-                                Show All
-                            </button>
+                        <div className="map-key-header">
+                            <h2>Markers</h2>
 
-                            <button onClick={hideAllMarkers}>
-                                Hide All
-                            </button>
+                            <div className="marker-controls">
+                                <button onClick={showAllMarkers}>Show All</button>
+                                <button onClick={hideAllMarkers}>Hide All</button>
+                            </div>
                         </div>
+                        <div className="map-key-content">
+                            <div className="marker-list">
+                                {markerTypeMeta.map(meta => {
+                                    const type = meta.type;
 
-                        <div className="marker-list">
-                            {markerTypeMeta.map(meta => {
-                                const type = meta.type;
+                                    return (
+                                        <div
+                                            key={type}
+                                            className={`marker-toggle ${visibleMarkers[type] ?? true ? "active" : ""}`}
+                                            onClick={() =>
+                                                setVisibleMarkers(prev => ({
+                                                    ...prev,
+                                                    [type]: !(prev[type] ?? true)
+                                                }))
+                                            }
+                                        >
+                                            <img
+                                                src={meta.icon}
+                                                alt={meta.label}
+                                                width={24}
+                                                height={24}
+                                            />
 
-                                return (
-                                    <div
-                                        key={type}
-                                        className={`marker-toggle ${visibleMarkers[type] ?? true ? "active" : ""}`}
-                                        onClick={() =>
-                                            setVisibleMarkers(prev => ({
-                                                ...prev,
-                                                [type]: !(prev[type] ?? true)
-                                            }))
-                                        }
-                                    >
-                                        <img
-                                            src={meta.icon}
-                                            alt={meta.label}
-                                            width={24}
-                                            height={24}
-                                        />
-
-                                        <span>{meta.label}</span>
-                                    </div>
-                                );
-                            })}
+                                            <span>{meta.label}</span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -165,7 +165,6 @@ const MapViewer = () => {
                                     width: "100%",
                                     height: "700px"
                                 }}
-                                onClick={() => setSelectedMarker(null)}
                                 onMouseEnter={() => setIsHoveringMap(true)}
                                 onMouseLeave={() => setIsHoveringMap(false)}
                             >

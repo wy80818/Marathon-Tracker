@@ -206,7 +206,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         type: "keyLockbox",
         icon: keyLockboxIcon,
         defaultLabel: "Lockbox Spawn",
-        defaultDescription: "Possible Lockbox location. Excatly one random location every match. Indicated by red flares.",
+        defaultDescription: "Possible Lockbox location. Exactly one random location every match. Indicated by red flares. Room will contain multiple lockboxes.",
         markers: [
             { x: 0.749, y: 0.643 },
             { x: 0.175, y: 0.580 }
