@@ -54,7 +54,8 @@ export const MapCanvas: React.FC<Props> = ({
                             position: "absolute",
                             left: `${marker.x * 100}%`,
                             top: `${marker.y * 100}%`,
-                            transform: "translate(-50%, -50%)",
+                            transform: `translate(-50%, -50%) scale(${1 / scale})`,
+                            transformOrigin: "center",
                             cursor: "pointer"
                         }}
                     >
@@ -63,10 +64,8 @@ export const MapCanvas: React.FC<Props> = ({
                             alt={marker.label}
                             width={30}
                             height={30}
-                            className="map-marker"
                             style={{
-                                transform: `scale(${1 / scale})`,
-                                transformOrigin: "center",
+                                display: "block",
                                 filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.6))"
                             }}
                         />

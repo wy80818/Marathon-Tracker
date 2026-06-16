@@ -1,14 +1,14 @@
-import { useRef, useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
-    TransformWrapper,
-    TransformComponent
+    TransformComponent,
+    TransformWrapper
 } from "react-zoom-pan-pinch";
 
-import "./MapViewer.css"
+import "./MapViewer.css";
 
-import MapCanvas from "./MapCanvas";
-import { maps } from "../../../Data/MapsData";
 import type { Marker } from "../../../Data/MapsData";
+import { maps } from "../../../Data/MapsData";
+import MapCanvas from "./MapCanvas";
 
 const MapViewer = () => {
     const [selectedMarker, setSelectedMarker] = useState<Marker | null>(null);
@@ -112,18 +112,16 @@ const MapViewer = () => {
                                 if (!exampleMarker) return null;
 
                                 return (
-                                    <label key={type} className="marker-toggle">
-                                        <input
-                                            type="checkbox"
-                                            checked={visibleMarkers[type] ?? true}
-                                            onChange={() =>
-                                                setVisibleMarkers(prev => ({
-                                                    ...prev,
-                                                    [type]: !prev[type]
-                                                }))
-                                            }
-                                        />
-
+                                    <div
+                                        key={type}
+                                        className={`marker-toggle ${visibleMarkers[type] ?? true ? "active" : ""}`}
+                                        onClick={() =>
+                                            setVisibleMarkers(prev => ({
+                                                ...prev,
+                                                [type]: !(prev[type] ?? true)
+                                            }))
+                                        }
+                                    >
                                         <img
                                             src={exampleMarker.icon}
                                             alt={exampleMarker.label}
@@ -132,7 +130,7 @@ const MapViewer = () => {
                                         />
 
                                         <span>{exampleMarker.label}</span>
-                                    </label>
+                                    </div>
                                 );
                             })}
                         </div>
@@ -146,8 +144,7 @@ const MapViewer = () => {
                         minScale={.85}
                         maxScale={4}
                         wheel={{
-                            step: 0.001,
-                            activationKeys: ["Shift"]
+                            step: 0.005
 
                         }}
                         doubleClick={{ step: 1.5 }}
@@ -195,6 +192,12 @@ const MapViewer = () => {
                                 </TransformComponent>
                                 {selectedMarker && (() => {
                                     const pos = getPopupPosition(selectedMarker);
+                                    const container = containerRef.current;
+
+                                    const isRightSide =
+                                        container
+                                            ? (pos.left / container.getBoundingClientRect().width) > 0.5
+                                            : false;
 
                                     return (
                                         <div
@@ -203,7 +206,9 @@ const MapViewer = () => {
                                                 position: "absolute",
                                                 left: pos.left,
                                                 top: pos.top,
-                                                transform: "translate(20px, -50%)",
+                                                transform: isRightSide
+                                                    ? "translate(calc(-100% - 20px), -50%)"
+                                                    : "translate(20px, -50%)",
                                                 zIndex: 9999
                                             }}
                                         >
