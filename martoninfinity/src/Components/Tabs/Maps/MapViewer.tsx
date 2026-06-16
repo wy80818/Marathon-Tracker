@@ -23,6 +23,12 @@ const MapViewer = () => {
 
     const markerTypes = [...new Set(currentMap.markers.map(m => m.type))];
 
+    const markerTypeMeta = currentMap.markerGroups.map(group => ({
+        type: group.type,
+        label: group.defaultLabel,
+        icon: group.icon
+    }));
+
     const getPopupPosition = (marker: Marker) => {
         const container = containerRef.current;
         if (!container) return { left: 0, top: 0 };
@@ -69,7 +75,6 @@ const MapViewer = () => {
 
         setVisibleMarkers(defaults);
 
-        // clear currently selected marker
         setSelectedMarker(null);
     }, [selectedMapId]);
 
@@ -104,12 +109,8 @@ const MapViewer = () => {
                         </div>
 
                         <div className="marker-list">
-                            {markerTypes.map(type => {
-                                const exampleMarker = currentMap.markers.find(
-                                    marker => marker.type === type
-                                );
-
-                                if (!exampleMarker) return null;
+                            {markerTypeMeta.map(meta => {
+                                const type = meta.type;
 
                                 return (
                                     <div
@@ -123,13 +124,13 @@ const MapViewer = () => {
                                         }
                                     >
                                         <img
-                                            src={exampleMarker.icon}
-                                            alt={exampleMarker.label}
+                                            src={meta.icon}
+                                            alt={meta.label}
                                             width={24}
                                             height={24}
                                         />
 
-                                        <span>{exampleMarker.label}</span>
+                                        <span>{meta.label}</span>
                                     </div>
                                 );
                             })}
@@ -164,6 +165,7 @@ const MapViewer = () => {
                                     width: "100%",
                                     height: "700px"
                                 }}
+                                onClick={() => setSelectedMarker(null)}
                                 onMouseEnter={() => setIsHoveringMap(true)}
                                 onMouseLeave={() => setIsHoveringMap(false)}
                             >
@@ -200,34 +202,38 @@ const MapViewer = () => {
                                             : false;
 
                                     return (
-                                        <div
-                                            className="marker-overlay"
-                                            style={{
-                                                position: "absolute",
-                                                left: pos.left,
-                                                top: pos.top,
-                                                transform: isRightSide
-                                                    ? "translate(calc(-100% - 20px), -50%)"
-                                                    : "translate(20px, -50%)",
-                                                zIndex: 9999
-                                            }}
-                                        >
-                                            <div className="marker-overlay-card">
-                                                <div className="marker-overlay-header">
-                                                    <img src={selectedMarker.icon} width={28} height={28} />
-                                                    <h4>{selectedMarker.label}</h4>
-                                                </div>
-
-                                                <p>{selectedMarker.description}</p>
-
-                                                <button
-                                                    onClick={() => setSelectedMarker(null)}
-                                                    className="marker-overlay-close"
+                                        <>
+                                            <div
+                                                className="marker-overlay"
+                                                onClick={(e) => e.stopPropagation()}
+                                                style={{
+                                                    left: pos.left,
+                                                    top: pos.top,
+                                                    transform: isRightSide
+                                                        ? "translate(calc(-100% - 20px), -50%)"
+                                                        : "translate(20px, -50%)"
+                                                }}
+                                            >
+                                                <div
+                                                    className="marker-overlay-card"
+                                                    onClick={e => e.stopPropagation()}
                                                 >
-                                                    ×
-                                                </button>
+                                                    <div className="marker-overlay-header">
+                                                        <img src={selectedMarker.icon} width={28} height={28} />
+                                                        <h4>{selectedMarker.label}</h4>
+                                                    </div>
+
+                                                    <p>{selectedMarker.description}</p>
+
+                                                    <button
+                                                        className="marker-overlay-close"
+                                                        onClick={() => setSelectedMarker(null)}
+                                                    >
+                                                        ×
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </>
                                     );
                                 })()}
                                 {isHoveringMap && (

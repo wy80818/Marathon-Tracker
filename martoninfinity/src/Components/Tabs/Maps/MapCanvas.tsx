@@ -49,7 +49,10 @@ export const MapCanvas: React.FC<Props> = ({
                 .map(marker => (
                     <div
                         key={marker.id}
-                        onClick={() => onMarkerClick(marker)}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onMarkerClick(marker);
+                        }}
                         style={{
                             position: "absolute",
                             left: `${marker.x * 100}%`,

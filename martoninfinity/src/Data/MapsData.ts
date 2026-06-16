@@ -6,14 +6,22 @@ import outpost from "../assets/Maps/outpost.png";
 import crewExfilIcon from "../assets/Markers/Crew_Exfil.png";
 import finalExfilIcon from "../assets/Markers/Final_Exfil.png";
 import guardedExfilIcon from "../assets/Markers/Guarded_Exfil.png";
-import playerSpawnIcon from "../assets/Markers/Player_Spawn.png"
+import playerSpawnIcon from "../assets/Markers/Player_Spawn.png";
+import keyDeluxeIcon from "../assets/Markers/Key_Deluxe_Icon.png";
+import keyPrestigeIcon from "../assets/Markers/Key_Prestige_Icon.png";
+import keySuperiorIcon from "../assets/Markers/Key_Superior_Icon.png";
+import keyLockboxIcon from "../assets/Markers/Key_Lockbox_Icon.png";
 
 // Add new markers here in camelCase
 export type MarkerType =
     | "crewExfil"
     | "finalExfil"
     | "guardedExfil"
-    | "playerSpawn";
+    | "playerSpawn"
+    | "keyDeluxe"
+    | "keyPrestige"
+    | "keySuperior"
+    | "keyLockbox";
 
 export interface Marker {
     id: string;
@@ -27,10 +35,15 @@ export interface Marker {
 
 export interface MarkerGroup {
     type: MarkerType;
-    label: string;
     icon: string;
-    description: string;
-    positions: [number, number][];
+    defaultLabel: string;
+    defaultDescription: string;
+    markers: {
+        x: number;
+        y: number;
+        label?: string;
+        description?: string;
+    }[];
 }
 
 export interface GameMap {
@@ -39,87 +52,200 @@ export interface GameMap {
     image: string;
     width: number;
     height: number;
+    markerGroups: MarkerGroup[];
     markers: Marker[];
 }
 
 // Make a new MarkerGroup[] for every map named appropriately, 
 // and copy and paste structure inside for every new marker type.
-const markerGroups_DireMarsh: MarkerGroup[] = [
+export const markerGroups_DireMarsh: MarkerGroup[] = [
     {
         type: "crewExfil",
-        label: "Crew Exfil",
         icon: crewExfilIcon,
-        description: "Potential exfil location necessary for players to extract. \
-        When initialized by a Runner, exfil takes around 45 seconds to warm up. Eventually, \
-        an auditory que will occur as well as a ring appearing around the exfil indicating that \
-        it is ready to be used. At least one runner must step inside to initiate a 10 second countdown \
-        in which extraction takes place. Countdown can be reset once there are no runners within the ring.",
-        positions: [
-            [0.748, 0.385],
-            [0.686, 0.672],
-            [0.585, 0.692],
-            [0.446, 0.581],
-            [0.481, 0.358],
-            [0.329, 0.701],
-            [0.223, 0.516],
-            [0.594, 0.254]
+        defaultLabel: "Crew Exfil",
+        defaultDescription: "Potential exfil location necessary for players to extract. Once activated, an audio que is played as well as a beam of light appears \
+                in which it can be heard/seen by nearby Runners.",
+        markers: [
+            { x: 0.748, y: 0.385 },
+            { x: 0.686, y: 0.672 },
+            { x: 0.585, y: 0.692 },
+            { x: 0.446, y: 0.581 },
+            { x: 0.481, y: 0.358 },
+            { x: 0.329, y: 0.701 },
+            { x: 0.223, y: 0.516 },
+            { x: 0.594, y: 0.254 }
         ]
     },
     {
         type: "finalExfil",
-        label: "Final Exfil",
         icon: finalExfilIcon,
-        description: "Potential exfil location. Only appears once the match timer reaches 0. \
-        Afterwards, all Runners are given exactly 1 minute to reach the location before they are \
-        eliminated by the match time limit. There is only 1 exfil ever.",
-        positions: [
-            [.608, .606]
+        defaultLabel: "Final Exfil",
+        defaultDescription: "Potential exfil location. Only appears once the match timer reaches 0. Afterwards, \
+                    all Runners are given exactly 1 minute to reach the location before they are eliminated by \
+                    the match time limit. There is only 1 exfil ever.",
+        markers: [
+            { x: 0.608, y: 0.606 }
         ]
     },
     {
         type: "guardedExfil",
-        label: "Guarded Exfil",
         icon: guardedExfilIcon,
-        description: "Potential exfil location. \
-        Functions exactly like a Crew Exfil, but when initialized by a Runner, spawns 1 UESC wave which includes a Commander.",
-        positions: [
-            [.33, .564],
-            [.509, .664],
-            [.673, .429],
-            [.426, .376]
+        defaultLabel: "Guarded Exfil",
+        defaultDescription: "Potential exfil location. Functions exactly like a Crew Exfil, but when initialized by a Runner, spawns 1 UESC wave which includes a Commander.",
+        markers: [
+            { x: 0.33, y: 0.564 },
+            { x: 0.509, y: 0.664 },
+            { x: 0.673, y: 0.429 },
+            { x: 0.426, y: 0.376 }
         ]
     },
     {
         type: "playerSpawn",
-        label: "Player Spawn",
         icon: playerSpawnIcon,
-        description: "Potential Runner spawn point. There are a maximum of 6 crews on this map.",
-        positions: [
-            [.503, .814],
-            [.145, .437],
-            [.545, .197],
-            [.357, .818],
-            [.728, .151],
-            [.864, .329],
-            [.901, .582],
-            [.906, .46],
-            [.834, .722],
-            [.59, .683]
+        defaultLabel: "Player Spawn",
+        defaultDescription: "Potential Runner spawn point. There are a maximum of 6 crews on this map.",
+        markers: [
+            { x: 0.503, y: 0.814 },
+            { x: 0.145, y: 0.437 },
+            { x: 0.545, y: 0.197 },
+            { x: 0.369, y: 0.821 },
+            { x: 0.728, y: 0.151 },
+            { x: 0.864, y: 0.329 },
+            { x: 0.901, y: 0.582 },
+            { x: 0.906, y: 0.46 },
+            { x: 0.834, y: 0.722 },
+            { x: 0.59, y: 0.683 },
+            { x: 0.672, y: 0.794 },
+            { x: 0.157, y: 0.729 },
+            { x: 0.242, y: 0.844 },
+            { x: 0.118, y: 0.618 },
+            { x: 0.404, y: 0.257 },
+            { x: 0.481, y: 0.568 }
+        ]
+    },
+    {
+        type: "keyDeluxe",
+        icon: keyDeluxeIcon,
+        defaultLabel: "Deluxe Keyroom",
+        defaultDescription: "Keyroom location",
+        markers: [
+            {
+                x: 0.729,
+                y: 0.549,
+                label: "Complex Shed Keyroom",
+                description: "Located at the northermost shed in the vicinity. 2 doors for entry."
+            },
+            {
+                x: 0.355,
+                y: 0.754,
+                label: "Maintenance Pump Keyroom",
+                description: "Located on the first floor. One door for entry and a shutter can be opened from the inside."
+            },
+            {
+                x: 0.514,
+                y: 0.409,
+                label: "Greenhouse Lab Keyroom",
+                description: "Located inside on the first floor. Two doors as entry."
+            },
+            {
+                x: 0.454,
+                y: 0.571,
+                label: "Algae Ponds Office Keyroom",
+                description: "Located inside on the second floor. One door as entry and a shutter can be opened from the inside."
+            }
+        ]
+    },
+    {
+        type: "keySuperior",
+        icon: keySuperiorIcon,
+        defaultLabel: "Superior Keyroom",
+        defaultDescription: "Keyroom location",
+        markers: [
+            {
+                x: 0.355,
+                y: 0.733,
+                label: "Maintenance Canal Keyroom",
+                description: "Located in the underside of Maintenance. \
+                Multiple entryways and doors exist which all get unlocked once the key is used on any door."
+            },
+            {
+                x: 0.209,
+                y: 0.568,
+                label: "Quarantine Morgue Keyroom",
+                description: "Located under Quarantine, a stairway and ladder for two entryways to the room."
+            },
+            {
+                x: 0.666,
+                y: 0.249,
+                label: "Bio Research Lab Keyroom",
+                description: "Located on the second floor of Bio Research. Two doors as entry and a shutter can be opened from the inside."
+            },
+        ]
+    },
+    {
+        type: "keyPrestige",
+        icon: keyPrestigeIcon,
+        defaultLabel: "Prestige Keyroom",
+        defaultDescription: "Keyroom location",
+        markers: [
+            {
+                x: 0.617,
+                y: 0.708,
+                label: "AI Uplink Keyroom",
+                description: "Located undeground with 3 doors and bulletproof glass. Can be approached from the west and the east."
+            },
+            {
+                x: 0.517,   
+                y: 0.326,
+                label: "Greenhouse Operations Keyroom",
+                description: "Located on top of the greenhouses. Two doors as entry."
+            }
+        ]
+    },
+    {
+        type: "keyLockbox",
+        icon: keyLockboxIcon,
+        defaultLabel: "Lockbox Spawn",
+        defaultDescription: "Possible Lockbox location. Excatly one random location every match. Indicated by red flares.",
+        markers: [
+            { x: 0.749, y: 0.643 },
+            { x: 0.175, y: 0.580 }
         ]
     }
 ];
 
+export const markerGroups_Outpost: MarkerGroup[] = [
+];
+
+export const markerGroups_Perimiter: MarkerGroup[] = [
+];
+
+export const markerGroups_CryoArchive: MarkerGroup[] = [
+];
+
 function createMarkers(groups: MarkerGroup[]): Marker[] {
     return groups.flatMap(group =>
-        group.positions.map(([x, y], index) => ({
-            id: `${group.type}-${index}`,
-            type: group.type,
-            x,
-            y,
-            label: group.label,
-            icon: group.icon,
-            description: group.description
-        }))
+        group.markers.map((m, index) => {
+            const label =
+                typeof m.label === "string" && m.label.trim() !== ""
+                    ? m.label
+                    : group.defaultLabel ?? group.type;
+
+            const description =
+                typeof m.description === "string" && m.description.trim() !== ""
+                    ? m.description
+                    : group.defaultDescription ?? "";
+
+            return {
+                id: `${group.type}-${index}`,
+                type: group.type,
+                x: m.x,
+                y: m.y,
+                label,
+                icon: group.icon,
+                description
+            };
+        })
     );
 }
 
@@ -131,6 +257,7 @@ export const maps: GameMap[] = [
         image: direMarsh,
         width: 2224,
         height: 1744,
+        markerGroups: markerGroups_DireMarsh,
         markers: createMarkers(markerGroups_DireMarsh)
     },
     {
@@ -139,6 +266,7 @@ export const maps: GameMap[] = [
         image: outpost,
         width: 2224,
         height: 1744,
+        markerGroups: markerGroups_Outpost,
         markers: []
     },
     {
@@ -147,6 +275,7 @@ export const maps: GameMap[] = [
         image: perimiter,
         width: 2224,
         height: 1744,
+        markerGroups: markerGroups_Perimiter,
         markers: []
     },
     {
@@ -155,6 +284,7 @@ export const maps: GameMap[] = [
         image: cryoArchive,
         width: 2048,
         height: 1453,
+        markerGroups: markerGroups_CryoArchive,
         markers: []
     }
 ];
