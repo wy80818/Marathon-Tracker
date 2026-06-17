@@ -218,6 +218,148 @@ export const markerGroups_Outpost: MarkerGroup[] = [
 ];
 
 export const markerGroups_Perimiter: MarkerGroup[] = [
+    {
+        type: "crewExfil",
+        icon: crewExfilIcon,
+        defaultLabel: "Crew Exfil",
+        defaultDescription: "Potential exfil location necessary for players to extract. Once activated, an audio que is played as well as a beam of light appears \
+                in which it can be heard/seen by nearby Runners.",
+        markers: [
+            { x: 0.398, y: 0.691 },
+            { x: 0.366, y: 0.541 },
+            { x: 0.537, y: 0.238 },
+            { x: 0.661, y: 0.436 },
+            { x: 0.669, y: 0.593 },
+            { x: 0.439, y: 0.256 }
+        ]
+    },
+    {
+        type: "finalExfil",
+        icon: finalExfilIcon,
+        defaultLabel: "Final Exfil",
+        defaultDescription: "Potential exfil location. Only appears once the match timer reaches 0. Afterwards, \
+                    all Runners are given exactly 1 minute to reach the location before they are eliminated by \
+                    the match time limit. There is only 1 exfil ever.",
+        markers: [
+            { x: 0.487, y: 0.529 }
+        ]
+    },
+    {
+        type: "guardedExfil",
+        icon: guardedExfilIcon,
+        defaultLabel: "Guarded Exfil",
+        defaultDescription: "Potential exfil location. Functions exactly like a Crew Exfil, but when initialized by a Runner, spawns 1 UESC wave which includes a Commander.",
+        markers: [
+            { x: 0.532, y: 0.377 },
+            { x: 0.532, y: 0.377 },
+            { x: 0.41, y: 0.394 },
+            { x: 0.514, y: 0.508 }
+        ]
+    },
+    {
+        type: "playerSpawn",
+        icon: playerSpawnIcon,
+        defaultLabel: "Player Spawn",
+        defaultDescription: "Potential Runner spawn point. There are a maximum of 5 crews on this map.",
+        markers: [
+            { x: 0.786, y: 0.371 },
+            { x: 0.755, y: 0.275 },
+            { x: 0.529, y: 0.119 },
+            { x: 0.62, y: 0.209 },
+            { x: 0.364, y: 0.196 },
+            { x: 0.293, y: 0.428 },
+            { x: 0.294, y: 0.586 },
+            { x: 0.313, y: 0.792 },
+            { x: 0.471, y: 0.737 },
+            { x: 0.599, y: 0.85 },
+            { x: 0.732, y: 0.648 },
+            { x: 0.62, y: 0.209 },
+        ]
+    },
+    {
+        type: "keyDeluxe",
+        icon: keyDeluxeIcon,
+        defaultLabel: "Deluxe Keyroom",
+        defaultDescription: "Keyroom location",
+        markers: [
+            {
+                x: 0.465,
+                y: 0.199,
+                label: "North Relay Storage Keyroom",
+                description: "Located in the Northernmost part of the second floor in North Relay. 2 doors for entry."
+            },
+            {
+                x: 0.643,
+                y: 0.412,
+                label: "Station Security Keyroom",
+                description: "Located inside the main Station building. 2 doors for entry with bulletproof glass."
+            },
+            {
+                x: 0.615,
+                y: 0.542,
+                label: "Tunnels Office Keyroom",
+                description: "Located underground closest to the Southside entryway. 2 doors."
+            },
+            {
+                x: 0.308,
+                y: 0.416,
+                label: "Terrace Keyroom",
+                description: "Located underground closest to the Southside entryway. 2 doors."
+            }
+        ]
+    },
+    {
+        type: "keySuperior",
+        icon: keySuperiorIcon,
+        defaultLabel: "Superior Keyroom",
+        defaultDescription: "Keyroom location",
+        markers: [
+            {
+                x: 0.387,
+                y: 0.75,
+                label: "Overflow Laboratory Keyroom",
+                description: "Located on the second floor of Overflow. One door for entry and a shutter can be opened from the inside."
+            },
+            {
+                x: 0.58,
+                y: 0.451,
+                label: "Data Wall Upper Level Keyroom",
+                description: "Located inside on the Easternmost side of Data Wall on the highest level. One door for entry with a vent as escape."
+            }
+        ]
+    },
+    {
+        type: "keyPrestige",
+        icon: keyPrestigeIcon,
+        defaultLabel: "Prestige Keyroom",
+        defaultDescription: "Keyroom location",
+        markers: [
+            {
+                x: 0.626,
+                y: 0.681,
+                label: "South Relay Observation Keyroom",
+                description: "Located inside the large crane-like structure in the air. Can be approached normally with the stack of boxes \
+                    Southwest of the marker. One doorway with a vent as escape."
+            },
+            {
+                x: 0.356,
+                y: 0.521,
+                label: "Hauler Observation Keyroom",
+                description: "Located on the 2nd floor of Hauler. 2 doors for entry."
+            }
+        ]
+    },
+    {
+        type: "keyLockbox",
+        icon: keyLockboxIcon,
+        defaultLabel: "Lockbox Spawn",
+        defaultDescription: "Possible Lockbox location. Exactly one random location every match. Indicated by red flares. Room will contain multiple lockboxes.",
+        markers: [
+            { x: 0.635, y: 0.365 },
+            { x: 0.464, y: 0.222 },
+            { x: 0.649, y: 0.717 }
+        ]
+    }
 ];
 
 export const markerGroups_CryoArchive: MarkerGroup[] = [
@@ -276,7 +418,7 @@ export const maps: GameMap[] = [
         width: 2224,
         height: 1744,
         markerGroups: markerGroups_Perimiter,
-        markers: []
+        markers: createMarkers(markerGroups_Perimiter)
     },
     {
         id: "cryo-archive",
