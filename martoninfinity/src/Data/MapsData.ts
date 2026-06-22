@@ -7,6 +7,7 @@ import crewExfilIcon from "../assets/Markers/Crew_Exfil.png";
 import finalExfilIcon from "../assets/Markers/Final_Exfil.png";
 import hiddenFinalExfilIcon from "../assets/Markers/Hidden_Final_Exfil.png";
 import exfilStation from "../assets/Markers/Exfil_Station.png";
+import scanStation from "../assets/Markers/Scan_Station.png";
 import guardedExfilIcon from "../assets/Markers/Guarded_Exfil.png";
 import secretExfilIcon from "../assets/Markers/Secret_Exfil.png";
 import restrictedExfilIcon from "../assets/Markers/Restricted_Exfil.png";
@@ -23,6 +24,7 @@ export type MarkerType =
     | "finalExfil"
     | "hiddenFinalExfil"
     | "exfilStation"
+    | "scanStation"
     | "guardedExfil"
     | "restrictedExfil"
     | "playerSpawn"
@@ -582,6 +584,18 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
             { x: 0.644, y: 0.582 },
             { x: 0.644, y: 0.393 },
             { x: 0.51, y: 0.481 }
+        ]
+    },
+    {
+        type: "scanStation",
+        icon: scanStation,
+        defaultLabel: "Scan Station",
+        defaultDescription: "Scan Station necessary for discovering exfils, pickups, etc. Reveals more based on current crew security clearance level.",
+        markers: [
+            { x: 0.457, y: 0.396 },
+            { x: 0.296, y: 0.402 },
+            { x: 0.296, y: 0.576 },
+            { x: 0.457, y: 0.396 }
         ]
     },
 ];
