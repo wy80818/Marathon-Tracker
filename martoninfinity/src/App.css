@@ -16,6 +16,8 @@
     box-sizing: border-box;
 }
 
+/* Credit to https://github.com/Woysful/Marathon-cursor/tree/main for cursor styles*/
+
 body {
     font-family: "Fira Code", monospace, -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -24,6 +26,22 @@ body {
     color: var(--color-text-light);
     font-optical-sizing: auto;
     font-style: normal;
+    cursor: url("/cursors/cursor.svg") 0 0, auto;
+}
+
+a,
+button,
+input,
+textarea,
+select,
+label,
+[role="button"],
+.tab-button,
+[onclick],
+.marker-toggle,
+.marker-category-title,
+.map-button {
+    cursor: url("/cursors/pointer.svg") 2 0, pointer;
 }
 
 /* App container */
@@ -138,7 +156,6 @@ body {
     font-size: 1rem;
     font-weight: 550;
     font-family: 'Courier New', monospace;
-    cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
     white-space: nowrap;
@@ -252,43 +269,6 @@ body {
         line-height: 1.6;
         color: var(--color-text-light);
     }
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .app-header {
-        padding: 1rem 1.5rem;
-    }
-
-    .header-content {
-        gap: 1rem;
-    }
-
-    .marathon-logo {
-        height: 50px;
-    }
-
-    .app-header h1 {
-        font-size: 1.5rem;
-    }
-
-    .tabs-list {
-        padding: 0.5rem;
-        gap: 0.25rem;
-    }
-
-    .tab-button {
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
-    }
-
-    .tab-content {
-        padding: 1.5rem;
-    }
-
-    .tab-content-inner h2 {
-        font-size: 1.4rem;
-    }
-}
 
 @media (max-width: 480px) {
     .app-header {
@@ -421,22 +401,6 @@ body {
         line-height: 1.6;
     }
 
-@media (max-width: 768px) {
-    .patch-notes-container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    .patch-notes-info,
-    .patch-notes-info-section {
-        padding: 1.5rem;
-    }
-
-    .patch-notes-button {
-        padding: 0.85rem 1.5rem;
-        font-size: 0.95rem;
-    }
-}
 
 @media (max-width: 480px) {
     .patch-notes-container {

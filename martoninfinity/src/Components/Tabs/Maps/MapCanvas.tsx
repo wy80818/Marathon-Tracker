@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import type { Marker, GameMap } from "../../../Data/MapsData.ts";
 
 interface Props {
@@ -10,23 +10,15 @@ interface Props {
     onMarkerClick: (marker: Marker | null) => void;
 }
 
-export const MapCanvas: React.FC<Props> = ({
-    map,
-    scale,
-    onMouseMove,
-    visibleMarkers,
-    selectedMarker,
-    onMarkerClick
-}) => {
+export const MapCanvas = forwardRef<HTMLDivElement, Props>(({
+    map, scale, onMouseMove, visibleMarkers, selectedMarker, onMarkerClick
+}, ref) => {
     return (
         <div
-            style={{
-                position: "relative",
-                display: "inline-block"
-            }}
+            ref={ref}          // ← attach here
+            style={{ position: "relative", display: "inline-block" }}
             onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
-
                 onMouseMove({
                     x: Number(((e.clientX - rect.left) / rect.width).toFixed(3)),
                     y: Number(((e.clientY - rect.top) / rect.height).toFixed(3))
@@ -39,8 +31,9 @@ export const MapCanvas: React.FC<Props> = ({
                 draggable={false}
                 style={{
                     display: "block",
-                    maxWidth: "100%",
-                    height: "auto"
+                    width: "100%",    // ← was maxWidth: "100%"
+                    height: "600px",  // ← was height: "auto"
+                    objectFit: "contain"
                 }}
             />
 
@@ -60,7 +53,7 @@ export const MapCanvas: React.FC<Props> = ({
                             top: `${marker.y * 100}%`,
                             transform: `translate(-50%, -50%) scale(${1 / scale})`,
                             transformOrigin: "center",
-                            cursor: "pointer"
+                            cursor: 'url("/cursors/pointer.svg") 2 0, pointer'
                         }}
                     >
                         <img
@@ -77,6 +70,6 @@ export const MapCanvas: React.FC<Props> = ({
                 ))}
         </div>
     );
-};
+});
 
 export default MapCanvas;

@@ -19,9 +19,9 @@ import keyLockboxIcon from "../assets/Markers/Key_Lockbox_Icon.png";
 
 // Add new markers here in camelCase
 export type CategoryType =
-    | "Infils & Exfils"
-    | "Monitors & Stations"
-    | "Keyrooms"; 
+    | "infils_&_exfils"
+    | "monitors_&_stations"
+    | "keyrooms"; 
 
 export type MarkerType =
     | "crewExfil"
@@ -76,7 +76,7 @@ export interface GameMap {
 // and copy and paste structure inside for every new marker type.
 export const markerGroups_DireMarsh: MarkerGroup[] = [
     {
-        category: "Infils & Exfils",
+        category: "infils_&_exfils",
         type: "crewExfil",
         icon: crewExfilIcon,
         defaultLabel: "Crew Exfil",
@@ -94,7 +94,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         ]
     },
     {
-        category: "Infils & Exfils",
+        category: "infils_&_exfils",
         type: "finalExfil",
         icon: finalExfilIcon,
         defaultLabel: "Final Exfil",
@@ -106,7 +106,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         ]
     },
     {
-        category: "Infils & Exfils",
+        category: "infils_&_exfils",
         type: "guardedExfil",
         icon: guardedExfilIcon,
         defaultLabel: "Guarded Exfil",
@@ -119,7 +119,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         ]
     },
     {
-        category: "Infils & Exfils",
+        category: "infils_&_exfils",
         type: "playerSpawn",
         icon: playerSpawnIcon,
         defaultLabel: "Player Spawn",
@@ -144,7 +144,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         ]
     },
     {
-        category: "Keyrooms",
+        category: "keyrooms",
         type: "keyDeluxe",
         icon: keyDeluxeIcon,
         defaultLabel: "Deluxe Keyroom",
@@ -177,7 +177,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         ]
     },
     {
-        category: "Keyrooms",
+        category: "keyrooms",
         type: "keySuperior",
         icon: keySuperiorIcon,
         defaultLabel: "Superior Keyroom",
@@ -205,7 +205,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         ]
     },
     {
-        category: "Keyrooms",
+        category: "keyrooms",
         type: "keyPrestige",
         icon: keyPrestigeIcon,
         defaultLabel: "Prestige Keyroom",
@@ -226,7 +226,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         ]
     },
     {
-        category: "Keyrooms",
+        category: "keyrooms",
         type: "keyLockbox",
         icon: keyLockboxIcon,
         defaultLabel: "Lockbox Spawn",
@@ -240,7 +240,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
 
 export const markerGroups_Outpost: MarkerGroup[] = [
     {
-        category: "Infils & Exfils",
+        category: "infils_&_exfils",
         type: "restrictedExfil",
         icon: restrictedExfilIcon,
         defaultLabel: "Restricted Exfil",
@@ -254,7 +254,7 @@ export const markerGroups_Outpost: MarkerGroup[] = [
         ]
     }, 
     {
-        category: "Infils & Exfils",
+        category: "infils_&_exfils",
         type: "finalExfil",
         icon: finalExfilIcon,
         defaultLabel: "Final Exfil",
@@ -268,7 +268,7 @@ export const markerGroups_Outpost: MarkerGroup[] = [
         ]
     },
     {
-        category: "Infils & Exfils",
+        category: "infils_&_exfils",
         type: "guardedExfil",
         icon: guardedExfilIcon,
         defaultLabel: "Guarded Exfil",
@@ -284,7 +284,7 @@ export const markerGroups_Outpost: MarkerGroup[] = [
         ]
     },
     {
-        category: "Infils & Exfils",
+        category: "infils_&_exfils",
         type: "playerSpawn",
         icon: playerSpawnIcon,
         defaultLabel: "Player Spawn",
@@ -304,7 +304,7 @@ export const markerGroups_Outpost: MarkerGroup[] = [
         ]
     },
     {
-        category: "Keyrooms",
+        category: "keyrooms",
         type: "keyDeluxe",
         icon: keyDeluxeIcon,
         defaultLabel: "Deluxe Keyroom",
@@ -338,7 +338,7 @@ export const markerGroups_Outpost: MarkerGroup[] = [
         ]
     },
     {
-        category: "Keyrooms",
+        category: "keyrooms",
         type: "keySuperior",
         icon: keySuperiorIcon,
         defaultLabel: "Superior Keyroom",
@@ -365,7 +365,7 @@ export const markerGroups_Outpost: MarkerGroup[] = [
         ]
     },
     {
-        category: "Keyrooms",
+        category: "keyrooms",
         type: "keyPrestige",
         icon: keyPrestigeIcon,
         defaultLabel: "Prestige Keyroom",
@@ -389,7 +389,7 @@ export const markerGroups_Outpost: MarkerGroup[] = [
 
 export const markerGroups_Perimiter: MarkerGroup[] = [
     {
-        category: "Infils & Exfils",
+        category: "infils_&_exfils",
         type: "crewExfil",
         icon: crewExfilIcon,
         defaultLabel: "Crew Exfil",
@@ -405,7 +405,7 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         ]
     },
     {
-        category: "Infils & Exfils",
+        category: "infils_&_exfils",
         type: "finalExfil",
         icon: finalExfilIcon,
         defaultLabel: "Final Exfil",
@@ -417,7 +417,7 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         ]
     },
     {
-        category: "Infils & Exfils",
+        category: "infils_&_exfils",
         type: "guardedExfil",
         icon: guardedExfilIcon,
         defaultLabel: "Guarded Exfil",
@@ -430,7 +430,7 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         ]
     },
     {
-        category: "Infils & Exfils",
+        category: "infils_&_exfils",
         type: "playerSpawn",
         icon: playerSpawnIcon,
         defaultLabel: "Player Spawn",
@@ -451,7 +451,7 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         ]
     },
     {
-        category: "Keyrooms",
+        category: "keyrooms",
         type: "keyDeluxe",
         icon: keyDeluxeIcon,
         defaultLabel: "Deluxe Keyroom",
@@ -484,7 +484,7 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         ]
     },
     {
-        category: "Keyrooms",
+        category: "keyrooms",
         type: "keySuperior",
         icon: keySuperiorIcon,
         defaultLabel: "Superior Keyroom",
@@ -505,7 +505,7 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         ]
     },
     {
-        category: "Keyrooms",
+        category: "keyrooms",
         type: "keyPrestige",
         icon: keyPrestigeIcon,
         defaultLabel: "Prestige Keyroom",
@@ -527,7 +527,7 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         ]
     },
     {
-        category: "Keyrooms",
+        category: "keyrooms",
         type: "keyLockbox",
         icon: keyLockboxIcon,
         defaultLabel: "Lockbox Spawn",
@@ -542,7 +542,7 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
 
 export const markerGroups_CryoArchive: MarkerGroup[] = [
     {
-        category: "Infils & Exfils",
+        category: "infils_&_exfils",
         type: "secretExfil",
         icon: secretExfilIcon,
         defaultLabel: "Secret Exfil",
@@ -560,7 +560,7 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
         ]
     },
     {
-        category: "Infils & Exfils",
+        category: "infils_&_exfils",
         type: "hiddenFinalExfil",
         icon: hiddenFinalExfilIcon,
         defaultLabel: "Hidden Final Exfil",
@@ -579,7 +579,7 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
         ]
     },
     {
-        category: "Infils & Exfils",
+        category: "infils_&_exfils",
         type: "playerSpawn",
         icon: playerSpawnIcon,
         defaultLabel: "Player Spawn",
@@ -595,7 +595,7 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
         ]
     },
     {
-        category: "Monitors & Stations",
+        category: "monitors_&_stations",
         type: "exfilStation",
         icon: exfilStation,
         defaultLabel: "Exfil Station",
@@ -620,7 +620,7 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
         ]
     },
     {
-        category: "Monitors & Stations",
+        category: "monitors_&_stations",
         type: "scanStation",
         icon: scanStation,
         defaultLabel: "Scan Station",
