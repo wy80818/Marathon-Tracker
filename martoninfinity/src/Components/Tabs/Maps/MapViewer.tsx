@@ -17,17 +17,25 @@ const MapViewer = () => {
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [isHoveringMap, setIsHoveringMap] = useState(false);
     const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+    const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
 
     const containerRef = useRef<HTMLDivElement>(null);
     const currentMap = maps.find(m => m.id === selectedMapId)!;
 
     const markerTypes = [...new Set(currentMap.markers.map(m => m.type))];
 
-    const markerTypeMeta = currentMap.markerGroups.map(group => ({
-        type: group.type,
-        label: group.defaultLabel,
-        icon: group.icon
-    }));
+    const groupedMarkers = currentMap.markerGroups.reduce(
+        (acc, group) => {
+            if (!acc[group.category]) {
+                acc[group.category] = [];
+            }
+
+            acc[group.category].push(group);
+
+            return acc;
+        },
+        {} as Record<string, typeof currentMap.markerGroups>
+    );
 
     const getPopupPosition = (marker: Marker) => {
         const container = containerRef.current;
@@ -78,6 +86,16 @@ const MapViewer = () => {
         setSelectedMarker(null);
     }, [selectedMapId]);
 
+    useEffect(() => {
+        const initial: Record<string, boolean> = {};
+
+        Object.keys(groupedMarkers).forEach(category => {
+            initial[category] = true;
+        });
+
+        setOpenCategories(initial);
+    }, [selectedMapId]);
+
     return (
         <div className="map-window">
             <div className="map-layout">
@@ -107,32 +125,89 @@ const MapViewer = () => {
                             </div>
                         </div>
                         <div className="map-key-content">
-                            <div className="marker-list">
-                                {markerTypeMeta.map(meta => {
-                                    const type = meta.type;
+                            <div className="map-key-content">
+                                {Object.entries(groupedMarkers).map(([category, groups]) => (
+                                    <div className="marker-category">
+                                        <div className="marker-category-header">
+                                            <div
+                                                className="marker-category-title"
+                                                onClick={() =>
+                                                    setOpenCategories(prev => ({
+                                                        ...prev,
+                                                        [category]: !prev[category]
+                                                    }))
+                                                }
+                                            >
+                                                {openCategories[category] ? "▼" : "▶"} {category}
+                                            </div>
 
-                                    return (
-                                        <div
-                                            key={type}
-                                            className={`marker-toggle ${visibleMarkers[type] ?? true ? "active" : ""}`}
-                                            onClick={() =>
-                                                setVisibleMarkers(prev => ({
-                                                    ...prev,
-                                                    [type]: !(prev[type] ?? true)
-                                                }))
-                                            }
-                                        >
-                                            <img
-                                                src={meta.icon}
-                                                alt={meta.label}
-                                                width={24}
-                                                height={24}
-                                            />
+                                            <div className="category-controls">
+                                                <button
+                                                    onClick={() => {
+                                                        setVisibleMarkers(prev => {
+                                                            const updated = { ...prev };
 
-                                            <span>{meta.label}</span>
+                                                            groups.forEach(group => {
+                                                                updated[group.type] = true;
+                                                            });
+
+                                                            return updated;
+                                                        });
+                                                    }}
+                                                >
+                                                    Show All
+                                                </button>
+
+                                                <button
+                                                    onClick={() => {
+                                                        setVisibleMarkers(prev => {
+                                                            const updated = { ...prev };
+
+                                                            groups.forEach(group => {
+                                                                updated[group.type] = false;
+                                                            });
+
+                                                            return updated;
+                                                        });
+                                                    }}
+                                                >
+                                                    Hide All
+                                                </button>
+                                            </div>
                                         </div>
-                                    );
-                                })}
+
+                                        {openCategories[category] && (
+                                            <div className="marker-list">
+                                                {groups.map(group => {
+                                                    const type = group.type;
+
+                                                    return (
+                                                        <div
+                                                            key={type}
+                                                            className={`marker-toggle ${visibleMarkers[type] ?? true ? "active" : ""
+                                                                }`}
+                                                            onClick={() =>
+                                                                setVisibleMarkers(prev => ({
+                                                                    ...prev,
+                                                                    [type]: !(prev[type] ?? true)
+                                                                }))
+                                                            }
+                                                        >
+                                                            <img
+                                                                src={group.icon}
+                                                                alt={group.defaultLabel}
+                                                                width={24}
+                                                                height={24}
+                                                            />
+
+                                                            <span>{group.defaultLabel}</span>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>

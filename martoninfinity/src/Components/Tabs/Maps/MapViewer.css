@@ -6,6 +6,7 @@
 
 .map-side-column {
     width: 500px;
+    max-height: 700px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -179,9 +180,9 @@
 .map-key {
     background: #161616;
     border-radius: 12px;
-    max-height: 400px;
     display: flex;
     flex-direction: column;
+    overflow: hidden; /* important: keeps scroll inside clean edges */
 }
 
 /* NEW: header row */
@@ -206,25 +207,24 @@
 
 .map-key h2 {
     margin: 0;
-}ex-direction: column;
 }
 
-    .map-key::-webkit-scrollbar {
-        width: 8px;
-    }
+.map-key::-webkit-scrollbar {
+    width: 8px;
+}
 
-    .map-key::-webkit-scrollbar-thumb {
-        background: #333;
-        border-radius: 8px;
-    }
+.map-key::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 8px;
+}
 
-    .map-key::-webkit-scrollbar-track {
-        background: transparent;
-    }
+.map-key::-webkit-scrollbar-track {
+    background: transparent;
+}
 
-    .map-key h2 {
-        margin: 0 0 10px 0;
-    }
+.map-key h2 {
+    margin: 0 0 10px 0;
+}
 
 .marker-list {
     display: flex;
@@ -296,4 +296,94 @@
     .marker-toggle span {
         color: white;
         font-size: 14px;
+    }
+
+
+.marker-category {
+    margin-bottom: 16px;
+}
+
+    .marker-category summary {
+        cursor: pointer;
+        padding-bottom: 10px;
+        font-size: 15px;
+        font-weight: bold;
+        user-select: none;
+    }
+
+        .marker-category summary:hover {
+            color: #4a7cff;
+        }
+
+.category-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+    .category-controls button {
+        background: none;
+        border: none;
+        color: #888;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 0;
+        transition: color 0.2s;
+    }
+
+        .category-controls button:hover {
+            color: white;
+        }
+
+.marker-category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.marker-category-title {
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+}
+
+.category-controls {
+    display: flex;
+    gap: 10px;
+}
+
+    .category-controls button {
+        background: none;
+        border: none;
+        color: #888;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 0;
+    }
+
+        .category-controls button:hover {
+            color: white;
+        }
+
+.map-key-content::-webkit-scrollbar {
+    width: 14px;
+}
+
+.map-key-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.map-key-content::-webkit-scrollbar-thumb {
+    background: #2f2f2f;
+    border-radius: 10px;
+    transition: background 0.2s;
+}
+
+    .map-key-content::-webkit-scrollbar-thumb:hover {
+        background: #4a4a4a;
     }
