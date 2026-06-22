@@ -24,7 +24,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--color-dark-bg);
     color: var(--color-text-light);
-    font-optical-sizing: auto;
+    font-optical-sizing: auto; 
     font-style: normal;
     cursor: url("/cursors/cursor.svg") 0 0, auto;
 }
