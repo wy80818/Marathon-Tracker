@@ -143,7 +143,7 @@ const MapViewer = () => {
                         centerOnInit
                         limitToBounds
                         minScale={.85}
-                        maxScale={4}
+                        maxScale={8}
                         wheel={{
                             step: 0.005
 

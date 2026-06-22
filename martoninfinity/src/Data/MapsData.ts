@@ -5,7 +5,10 @@ import outpost from "../assets/Maps/outpost.png";
 
 import crewExfilIcon from "../assets/Markers/Crew_Exfil.png";
 import finalExfilIcon from "../assets/Markers/Final_Exfil.png";
+import hiddenFinalExfilIcon from "../assets/Markers/Hidden_Final_Exfil.png";
+import exfilStation from "../assets/Markers/Exfil_Station.png";
 import guardedExfilIcon from "../assets/Markers/Guarded_Exfil.png";
+import secretExfilIcon from "../assets/Markers/Secret_Exfil.png";
 import restrictedExfilIcon from "../assets/Markers/Restricted_Exfil.png";
 import playerSpawnIcon from "../assets/Markers/Player_Spawn.png";
 import keyDeluxeIcon from "../assets/Markers/Key_Deluxe_Icon.png";
@@ -16,7 +19,10 @@ import keyLockboxIcon from "../assets/Markers/Key_Lockbox_Icon.png";
 // Add new markers here in camelCase
 export type MarkerType =
     | "crewExfil"
+    | "secretExfil"
     | "finalExfil"
+    | "hiddenFinalExfil"
+    | "exfilStation"
     | "guardedExfil"
     | "restrictedExfil"
     | "playerSpawn"
@@ -105,7 +111,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         type: "playerSpawn",
         icon: playerSpawnIcon,
         defaultLabel: "Player Spawn",
-        defaultDescription: "Potential Runner spawn point. There are a maximum of 6 crews on this map.",
+        defaultDescription: "Potential Runner Crew spawn point. There are a maximum of 6 crews on this map.",
         markers: [
             { x: 0.503, y: 0.814 },
             { x: 0.145, y: 0.437 },
@@ -262,7 +268,7 @@ export const markerGroups_Outpost: MarkerGroup[] = [
         type: "playerSpawn",
         icon: playerSpawnIcon,
         defaultLabel: "Player Spawn",
-        defaultDescription: "Potential Runner spawn point. There are a maximum of 5 crews on this map.",
+        defaultDescription: "Potential Runner Crew spawn point. There are a maximum of 4 crews on this map.",
         markers: [
             { x: 0.473, y: 0.181 },
             { x: 0.313, y: 0.244 },
@@ -272,7 +278,9 @@ export const markerGroups_Outpost: MarkerGroup[] = [
             { x: 0.745, y: 0.677 },
             { x: 0.63, y: 0.677 },
             { x: 0.756, y: 0.549 },
-            { x: 0.535, y: 0.449 }
+            { x: 0.535, y: 0.449 },
+            { x: 0.324, y: 0.449 },
+            { x: 0.582, y: 0.287 }
         ]
     },
     {
@@ -399,7 +407,7 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         type: "playerSpawn",
         icon: playerSpawnIcon,
         defaultLabel: "Player Spawn",
-        defaultDescription: "Potential Runner spawn point. There are a maximum of 5 crews on this map.",
+        defaultDescription: "Potential Runner Crew spawn point. There are a maximum of 5 crews on this map.",
         markers: [
             { x: 0.786, y: 0.371 },
             { x: 0.755, y: 0.275 },
@@ -502,6 +510,80 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
 ];
 
 export const markerGroups_CryoArchive: MarkerGroup[] = [
+    {
+        type: "secretExfil",
+        icon: secretExfilIcon,
+        defaultLabel: "Secret Exfil",
+        defaultDescription: "Must be initiated by an Exfil Station. Afterwards, works just like a normal Crew Exfil other than a wave of UESC being nearby.",
+        markers: [
+            { x: 0.265, y: 0.492 },
+            { x: 0.176, y: 0.313 },
+            { x: 0.113, y: 0.634 },
+            { x: 0.375, y: 0.81 },
+            { x: 0.653, y: 0.813 },
+            { x: 0.897, y: 0.685 },
+            { x: 0.895, y: 0.383 },
+            { x: 0.663, y: 0.163 },
+            { x: 0.375, y: 0.168 }
+        ]
+    },
+    {
+        type: "hiddenFinalExfil",
+        icon: hiddenFinalExfilIcon,
+        defaultLabel: "Hidden Final Exfil",
+        defaultDescription: "Works just like a normal Final Exfil, but does not show up on the map. 4 Commanders spawn nearby.",
+        markers: [
+            { x: 0.419, y: 0.489 }, 
+            {
+                x: 0.507, y: 0.306, description: "Located on the ground floor in the theatre. Works just like a normal Final Exfil, \
+                    but it does not show up on the map. 4 Commanders spawn nearby." },
+            {
+                x: 0.619, y: 0.487, description: "Located on the second floor at the bottom of the lift. Works just like a normal Final Exfil, \
+                    but it does not show up on the map. 4 Commanders spawn nearby." },
+            {
+                x: 0.512, y: 0.677, description: "Located on the ground floor in the theatre. Works just like a normal Final Exfil, \
+                    but it does not show up on the map. 4 Commanders spawn nearby." }
+        ]
+    },
+    {
+        type: "playerSpawn",
+        icon: playerSpawnIcon,
+        defaultLabel: "Player Spawn",
+        defaultDescription: "Potential Runner Crew spawn point. There are a maximum of 5 crews on this map. The side that ends up not having a \
+                    Runner Crew spawn will end up with a Pump Credentials spawn.",
+        markers: [
+            { x: 0.718, y: 0.073 },
+            { x: 0.05, y: 0.178 },
+            { x: 0.048, y: 0.813 },
+            { x: 0.716, y: 0.785 },
+            { x: 0.96, y: 0.721 },
+            { x: 0.948, y: 0.257 },
+        ]
+    },
+    {
+        type: "exfilStation",
+        icon: exfilStation,
+        defaultLabel: "Exfil Station",
+        defaultDescription: "Potential Exfil Station spawn point. Required to summon a Secret Exfil. After activation, Runners are advised to \
+                    look at their map afterwards for the appearance of the Secret Exfil.",
+        markers: [
+            { x: 0.472, y: 0.444 },
+            { x: 0.393, y: 0.444 },
+            { x: 0.393, y: 0.536 },
+            { x: 0.472, y: 0.536 },
+            { x: 0.551, y: 0.536 },
+            { x: 0.479, y: 0.488 },
+            { x: 0.393, y: 0.536 },
+            { x: 0.543, y: 0.488 },
+            { x: 0.457, y: 0.346 },
+            { x: 0.457, y: 0.633 },
+            { x: 0.654, y: 0.516 },
+            { x: 0.654, y: 0.462 },
+            { x: 0.644, y: 0.582 },
+            { x: 0.644, y: 0.393 },
+            { x: 0.51, y: 0.481 }
+        ]
+    },
 ];
 
 function createMarkers(groups: MarkerGroup[]): Marker[] {
@@ -566,6 +648,6 @@ export const maps: GameMap[] = [
         width: 2048,
         height: 1453,
         markerGroups: markerGroups_CryoArchive,
-        markers: []
+        markers: createMarkers(markerGroups_CryoArchive)
     }
 ];
