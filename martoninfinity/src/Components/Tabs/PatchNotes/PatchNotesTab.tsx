@@ -1,3 +1,5 @@
+import './PatchNotesTab.css'
+
 function PatchNotesTab() {
     const bungieUpdatesUrl = 'https://www.bungie.net/7/en/News/MarathonUpdates'
 
