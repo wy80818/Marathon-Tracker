@@ -10,19 +10,21 @@ import MapCanvas from "./MapCanvas";
 
 const MapViewer = () => {
     const [selectedMarker, setSelectedMarker] = useState<Marker | null>(null);
+    const [displayedMapId, setDisplayedMapId] = useState(maps[0].id);
     const [selectedMapId, setSelectedMapId] = useState(maps[0].id);
     const [scale, setScale] = useState(0.85);
     const [isHoveringMap, setIsHoveringMap] = useState(false);
     const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
     const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
     const [visibleMarkers, setVisibleMarkers] = useState<Record<string, boolean>>({});
-    const [imageReady, setImageReady] = useState(false);
+    const [imageReady, setImageReady] = useState(true);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const mapCanvasRef = useRef<HTMLDivElement>(null);
     const transformRef = useRef<ReactZoomPanPinchRef>(null);
 
-    const currentMap = maps.find(m => m.id === selectedMapId)!;
+
+    const currentMap = maps.find(m => m.id === displayedMapId)!;
     const markerTypes = [...new Set(currentMap.markers.map(m => m.type))];
 
     const groupedMarkers = currentMap.markerGroups.reduce(
@@ -58,34 +60,51 @@ const MapViewer = () => {
         setVisibleMarkers(all);
     };
 
-    // Reset marker visibility + selection on map change
     useEffect(() => {
         const defaults: Record<string, boolean> = {};
-        currentMap.markers.forEach(marker => { defaults[marker.type] = true; });
+        currentMap.markers.forEach(marker => {
+            defaults[marker.type] = true;
+        });
+
         setVisibleMarkers(defaults);
         setSelectedMarker(null);
-    }, [selectedMapId]);
+    }, [displayedMapId]);
 
-    // Reset open categories on map change
     useEffect(() => {
         const initial: Record<string, boolean> = {};
-        Object.keys(groupedMarkers).forEach(category => { initial[category] = true; });
-        setOpenCategories(initial);
-    }, [selectedMapId]);
 
-    // Preload image, then re-center the existing TransformWrapper
+        Object.keys(groupedMarkers).forEach(category => {
+            initial[category] = true;
+        });
+
+        setOpenCategories(initial);
+    }, [displayedMapId]);
+
     useEffect(() => {
+        if (selectedMapId === displayedMapId) return;
+
         setImageReady(false);
+
+        const FADE_DURATION = 300;
+
+        const timer = setTimeout(() => {
+            setDisplayedMapId(selectedMapId);
+        }, FADE_DURATION);
+
+        return () => clearTimeout(timer);
+    }, [selectedMapId, displayedMapId]);
+
+    useEffect(() => {
         const img = new Image();
         img.src = currentMap.image;
+
         img.onload = () => {
-            // Let React render the new image first, then reset transform
             requestAnimationFrame(() => {
-                transformRef.current?.resetTransform(0); // 0 = no animation
+                transformRef.current?.resetTransform(0);
                 setImageReady(true);
             });
         };
-    }, [selectedMapId, currentMap.image]);
+    }, [currentMap.image]);
 
     return (
         <div className="map-window">
@@ -176,7 +195,7 @@ const MapViewer = () => {
                         width: "100%",
                         height: "100%",
                         opacity: imageReady ? 1 : 0,
-                        transition: "opacity 1s ease",
+                        transition: "opacity .3s ease",
                     }}>
                         <TransformWrapper
                             ref={transformRef}
@@ -246,8 +265,16 @@ const MapViewer = () => {
                                     })()}
 
                                     <div className="zoom-buttons">
-                                        <button onClick={() => resetTransform()}>Reset</button>
+                                        <button
+                                            onClick={() => {
+                                                transformRef.current?.centerView(0.85, 300);
+                                            }}
+                                        >
+                                            Reset
+                                        </button>
                                     </div>
+
+
 
                                     {isHoveringMap && (
                                         <div style={{
