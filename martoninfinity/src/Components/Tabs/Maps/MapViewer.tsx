@@ -274,8 +274,6 @@ const MapViewer = () => {
                                         </button>
                                     </div>
 
-
-
                                     {isHoveringMap && (
                                         <div style={{
                                             position: "absolute", top: "10px", left: "10px", zIndex: 10,

@@ -473,13 +473,13 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
                 x: 0.615,
                 y: 0.542,
                 label: "Tunnels Office Keyroom",
-                description: "Located underground closest to the Southside entryway. 2 doors."
+                description: "Located underground closest to the Southside entryway. 2 doors for entry."
             },
             {
                 x: 0.308,
                 y: 0.416,
                 label: "Terrace Keyroom",
-                description: "Located underground closest to the Southside entryway. 2 doors."
+                description: "Located Northwest of Hauler outside. 2 doors for entry."
             }
         ]
     },
