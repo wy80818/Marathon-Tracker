@@ -30,150 +30,6 @@
     font-weight: bold;
 }
 
-.map-button {
-    width: calc(50% - 5px);
-    box-sizing: border-box;
-    background: #252525;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 12px;
-    text-align: center;
-    transition: background 0.2s;
-}
-
-    .map-button:hover {
-        background: #333;
-    }
-
-    .map-button.active {
-        background: #4a7cff;
-    }
-
-.map-container {
-    flex: 1;
-    min-width: 0;
-    height: 600px;
-    max-width: 1000px;
-    overflow: hidden;
-    background: #0b0b0b;
-    border-radius: 12px;
-    display: inline;
-    justify-content: center;
-    align-items: center;
-}
-
-.marker-overlay {
-    position: absolute;
-    z-index: 9999;
-    pointer-events: auto;
-}
-
-.marker-overlay-card {
-    background: rgba(20, 20, 20, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-    padding: 12px 48px 12px 16px;
-    width: 220px;
-    color: white;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    backdrop-filter: blur(6px);
-    animation: fadeIn 0.12s ease-out;
-    position: relative;
-}
-
-.marker-overlay-close {
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    width: 26px;
-    height: 26px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.06);
-    color: #d0d0d0;
-    font-size: 16px;
-    line-height: 1;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-
-    .marker-overlay-close:hover {
-        background: rgba(255, 255, 255, 0.12);
-        color: white;
-    }
-
-    .marker-overlay-close:active {
-        transform: scale(0.92);
-    }
-
-.marker-overlay-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
-}
-
-    .marker-overlay-header h4 {
-        margin: 0;
-        font-size: 14px;
-        font-weight: 600;
-    }
-
-.marker-overlay-card p {
-    margin: 0;
-    font-size: 13px;
-    color: #cfcfcf;
-    line-height: 1.4;
-}
-
-.marker-overlay-close {
-    position: absolute;
-    top: 6px;
-    right: 8px;
-    background: none;
-    border: none;
-    color: #aaa;
-    font-size: 16px;
-}
-
-    .marker-overlay-close:hover {
-        background: red;
-        color: black;
-    }
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-.zoom-buttons {
-    position: absolute;
-    z-index: 1000;
-    right: 16px;
-    top: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-    .zoom-buttons button {  
-        width: 42px;
-        height: 42px;
-        border: none;
-        border-radius: 8px;
-        background: #2a2a2a;
-        color: white;
-    }
-
 .map-key {
     background: #161616;
     border-radius: 12px;
@@ -181,6 +37,10 @@
     flex-direction: column;
     overflow: hidden;
 }
+
+    .map-key h2 {
+        margin: 0 0 10px 0;
+    }
 
 .map-key-header {
     display: flex;
@@ -210,16 +70,78 @@
     .map-key-content::-webkit-scrollbar-track {
         background: transparent;
     }
-}
 
-.map-key h2 {
-    margin: 0 0 10px 0;
-}
-
-.marker-list {
+.marker-category-header {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.marker-category-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 10px;
+    transition: color 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+    padding: 4px 6px;
+    border-radius: 6px;
+}
+
+    .marker-category-title:hover {
+        background: rgba(255, 255, 255, 0.04);
+        color: #ffffff;
+    }
+
+    .marker-category-title.closed:hover {
+        opacity: 1;
+        color: #9aa4ff;
+    }
+
+
+    .marker-category-title.closed {
+        color: #777;
+        opacity: 0.8;
+    }
+
+    .marker-category-title.open {
+        color: #eaeaea;
+        opacity: 1;
+    }
+
+.marker-category-count {
+    font-size: 12px;
+    font-weight: 600;
+    color: #888;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 2px 8px;
+    border-radius: 999px;
+}
+
+.category-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+    .category-controls button {
+        background: none;
+        border: none;
+        color: #888;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 0;
+        transition: color 0.2s;
+    }
+
+        .category-controls button:hover {
+            color: white;
+        }
+
+
+
+.marker-category {
+    margin-bottom: 16px;
 }
 
 .marker-controls {
@@ -245,6 +167,12 @@
         .marker-controls button:active {
             transform: scale(0.97);
         }
+
+.marker-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
 
 .marker-toggle {
     width: calc(50% - 5px);
@@ -286,88 +214,132 @@
     }
 
 
-.marker-category {
-    margin-bottom: 16px;
+.map-container {
+    flex: 1;
+    min-width: 0;
+    height: 600px;
+    max-width: 1000px;
+    overflow: hidden;
+    background: #0b0b0b;
+    border-radius: 12px;
+    display: inline;
+    justify-content: center;
+    align-items: center;
 }
 
-    .marker-category summary {
-        padding-bottom: 10px;
-        font-size: 15px;
-        font-weight: bold;
-        user-select: none;
+.map-button {
+    width: calc(50% - 5px);
+    box-sizing: border-box;
+    background: #252525;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    transition: background 0.2s;
+}
+
+    .map-button:hover {
+        background: #333;
     }
 
-        .marker-category summary:hover {
-            color: #4a7cff;
-        }
-
-.category-controls {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    /*    margin-bottom: 12px;*/
-}
-
-    .category-controls button {
-        background: none;
-        border: none;
-        color: #888;
-        font-size: 12px;
-        font-weight: 600;
-        padding: 0;
-        transition: color 0.2s;
+    .map-button.active {
+        background: #4a7cff;
     }
 
-        .category-controls button:hover {
-            color: white;
-        }
 
-.marker-category-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
+.marker-overlay {
+    position: absolute;
+    z-index: 9999;
+    pointer-events: auto;
 }
 
-.marker-category-title {
+.marker-overlay-card {
+    background: rgba(20, 20, 20, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 12px 48px 12px 16px;
+    width: 220px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    backdrop-filter: blur(6px);
+    animation: fadeIn 0.12s ease-out;
+    position: relative;
+}
+
+
+    .marker-overlay-card p {
+        margin: 0;
+        font-size: 13px;
+        color: #cfcfcf;
+        line-height: 1.4;
+    }
+
+.marker-overlay-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 10px;
-    transition: color 0.15s ease, opacity 0.15s ease, background 0.15s ease;
-    padding: 4px 6px;
+    margin-bottom: 8px;
+}
+
+    .marker-overlay-header h4 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+.marker-overlay-close {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
     border-radius: 6px;
+    background: none;
+    color: #aaa;
+    font-size: 16px;
+    line-height: 1;
+    transition: all 0.15s ease;
 }
 
-    /* hover state */
-    .marker-category-title:hover {
-        background: rgba(255, 255, 255, 0.04);
-        color: #ffffff;
+    .marker-overlay-close:hover {
+        background: red;
+        color: black;
     }
 
-    /* optional: make collapsed hover slightly brighter */
-    .marker-category-title.closed:hover {
-        opacity: 1;
-        color: #9aa4ff;
+    .marker-overlay-close:active {
+        transform: scale(0.92);
     }
 
-.marker-category-count {
-    font-size: 12px;
-    font-weight: 600;
-    color: #888;
-    background: rgba(255, 255, 255, 0.06);
-    padding: 2px 8px;
-    border-radius: 999px;
+.zoom-buttons {
+    position: absolute;
+    z-index: 1000;
+    right: 16px;
+    top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-    /* collapsed (not dropped down) */
-    .marker-category-title.closed {
-        color: #777;
-        opacity: 0.8;
+    .zoom-buttons button {
+        width: 42px;
+        height: 42px;
+        border: none;
+        border-radius: 8px;
+        background: #2a2a2a;
+        color: white;
     }
 
-    /* expanded */
-    .marker-category-title.open {
-        color: #eaeaea;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
         opacity: 1;
     }
+}

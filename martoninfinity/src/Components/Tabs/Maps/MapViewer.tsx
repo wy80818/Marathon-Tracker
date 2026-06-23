@@ -172,12 +172,11 @@ const MapViewer = () => {
                 </div>
 
                 <div ref={containerRef} className="map-container">
-                    {/* Fade the content, never unmount TransformWrapper */}
                     <div style={{
                         width: "100%",
                         height: "100%",
                         opacity: imageReady ? 1 : 0,
-                        transition: "opacity 0.2s ease",
+                        transition: "opacity 1s ease",
                     }}>
                         <TransformWrapper
                             ref={transformRef}
