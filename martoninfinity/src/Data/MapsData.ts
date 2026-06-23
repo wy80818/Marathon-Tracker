@@ -16,12 +16,15 @@ import keyDeluxeIcon from "../assets/Markers/Key_Deluxe_Icon.png";
 import keyPrestigeIcon from "../assets/Markers/Key_Prestige_Icon.png";
 import keySuperiorIcon from "../assets/Markers/Key_Superior_Icon.png";
 import keyLockboxIcon from "../assets/Markers/Key_Lockbox_Icon.png";
+import elevatorIcon from "../assets/Markers/Elevator.png"
+import vaultIcon from "../assets/Markers/Vault.png"
 
 // Add new markers here in camelCase
 export type CategoryType =
     | "infils_&_exfils"
     | "monitors_&_stations"
-    | "keyrooms"; 
+    | "keyrooms"
+    | "doors_&_entryways";
 
 export type MarkerType =
     | "crewExfil"
@@ -36,7 +39,9 @@ export type MarkerType =
     | "keyDeluxe"
     | "keyPrestige"
     | "keySuperior"
-    | "keyLockbox";
+    | "keyLockbox"
+    | "elevator"
+    | "vault";
 
 export interface Marker {
     id: string;
@@ -218,7 +223,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
                 description: "Located undeground with 3 doors and bulletproof glass. Can be approached from the west and the east."
             },
             {
-                x: 0.517,   
+                x: 0.517,
                 y: 0.326,
                 label: "Greenhouse Operations Keyroom",
                 description: "Located on top of the greenhouses. Two doors as entry."
@@ -252,7 +257,7 @@ export const markerGroups_Outpost: MarkerGroup[] = [
             { x: 0.436, y: 0.427 },
             { x: 0.509, y: 0.707 }
         ]
-    }, 
+    },
     {
         category: "infils_&_exfils",
         type: "finalExfil",
@@ -334,7 +339,7 @@ export const markerGroups_Outpost: MarkerGroup[] = [
                 label: "Airfield Keyroom",
                 description: "Located on the uppermost level of Eastern Airfield. One door for entry and bulletproof glass."
             },
-            
+
         ]
     },
     {
@@ -566,7 +571,7 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
         defaultLabel: "Hidden Final Exfil",
         defaultDescription: "Works just like a normal Final Exfil, but does not show up on the map. 4 Commanders spawn nearby.",
         markers: [
-            { x: 0.419, y: 0.489 }, 
+            { x: 0.419, y: 0.489 },
             {
                 x: 0.507, y: 0.306, description: "Located on the ground floor in the theatre. Works just like a normal Final Exfil, \
                     but it does not show up on the map. 4 Commanders spawn nearby." },
@@ -626,10 +631,62 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
         defaultLabel: "Scan Station",
         defaultDescription: "Scan Station necessary for discovering exfils, pickups, etc. Reveals more based on current crew security clearance level.",
         markers: [
-            { x: 0.457, y: 0.396 },
+            { x: 0.457, y: 0.392 },
             { x: 0.296, y: 0.402 },
             { x: 0.296, y: 0.576 },
-            { x: 0.457, y: 0.396 }
+            { x: 0.457, y: 0.588 },
+
+        ]
+    },
+    {
+        category: "doors_&_entryways",
+        type: "elevator",
+        icon: elevatorIcon,
+        defaultLabel: "Elevator",
+        defaultDescription: "Requires security clearance 3, brings you to the Labs which resides above the map. Remember to bring Antivirus.",
+        markers: [
+            { x: 0.582, y: 0.3 },
+            { x: 0.582, y: 0.676 }
+        ]
+    },
+    {
+        category: "doors_&_entryways",
+        type: "vault",
+        icon: vaultIcon,
+        defaultLabel: "Vault",
+        defaultDescription: "",
+        markers: [
+            {
+                x: 0.43,
+                y: 0.612,
+                label: "Vault 1",
+                description: "Vault room which yields valuable loot once the requirements have been met: 5 Batteries."
+            },
+            {
+                x: 0.619,
+                y: 0.342,
+                label: "Vault 2",
+                description: "Vault room which yields valuable loot once the requirements have been met: 6 Batteries, 1 Cryo Coolant."
+            },
+            {
+                x: 0.63,
+                y: 0.631,
+                label: "Vault 3",
+                description: "Vault room which yields valuable loot once the requirements have been met: 4 Batteries, Pump Credentials."
+            },
+            {
+                x:
+                    0.43,
+                y: 0.365,
+                label: "Vault 4",
+                description: "Vault room which yields valuable loot once the requirements have been met: 8 Batteries, 1 Cryo Coolant, Clearance Level 3, Colonist Credentials."
+            },
+            {
+                x: 0.249,
+                y: 0.5,
+                label: "Vault 5",
+                description: "Vault room which yields valuable loot once the requirements have been met: 5 Batteries, 1 Cryo Coolant, Tranquility Credentials."
+            }
         ]
     },
 ];

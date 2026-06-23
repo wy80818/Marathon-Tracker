@@ -85,7 +85,7 @@ const MapViewer = () => {
 
         setImageReady(false);
 
-        const FADE_DURATION = 300;
+        const FADE_DURATION = 100;
 
         const timer = setTimeout(() => {
             setDisplayedMapId(selectedMapId);
@@ -195,7 +195,7 @@ const MapViewer = () => {
                         width: "100%",
                         height: "100%",
                         opacity: imageReady ? 1 : 0,
-                        transition: "opacity .3s ease",
+                        transition: "opacity .1s ease",
                     }}>
                         <TransformWrapper
                             ref={transformRef}
