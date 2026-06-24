@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "title": "WebDev",
+    "date": "2026-06-24",
+    "description": "Fixed Map Viewer resizing bug."
+  },
+  {
+    "id": 2,
+    "title": "WebDev",
+    "date": "2026-06-25",
+    "description": "Starting to add more content to home page."
+  }
+]

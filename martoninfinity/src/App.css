@@ -181,7 +181,8 @@ label,
     width: 100%;
 }
 
-    .tab-content-inner h2, h3 {
+    .tab-content-inner h2, 
+    .tab-content-inner h3 {
         font-size: 1.75rem;
         margin-bottom: 1rem;
         color: var(--color-lime);
