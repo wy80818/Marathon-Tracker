@@ -31,9 +31,8 @@ export const MapCanvas = forwardRef<HTMLDivElement, Props>(({
                 draggable={false}
                 style={{
                     display: "block",
-                    width: "100%",    // ← was maxWidth: "100%"
-                    height: "600px",  // ← was height: "auto"
-                    objectFit: "contain"
+                    width: "100%",
+                    height: "auto"
                 }}
             />
 
