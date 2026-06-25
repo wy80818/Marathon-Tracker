@@ -5,6 +5,7 @@ import './App.css'
 import marathonLogo from './assets/Miscellaneous/Marathon_Logo_WordMark_Green.png'
 import RunnerIcon from './assets/Icons/RunnerIcon.svg?react'
 import WeaponIcon from './assets/Icons/SwordIcon.svg?react'
+import HomeIcon from './assets/Icons/HomeIcon.svg?react'
 import Placeholder from './assets/Icons/Placeholder.svg?react'
 
 import HomeTab from './Components/Tabs/Home/HomeTab';
@@ -30,7 +31,7 @@ interface TabConfig {
 }
 
 const TABS: TabConfig[] = [
-    { path: '/', label: 'Home', ariaLabel: 'Go to Home tab', iconSvg: Placeholder, component: HomeTab },
+    { path: '/', label: 'Home', ariaLabel: 'Go to Home tab', iconSvg: HomeIcon, component: HomeTab },
     { path: '/patch-notes', label: 'Patch Notes', ariaLabel: 'Go to Patch Notes tab', iconSvg: Placeholder, component: PatchNotesTab },
     { path: '/player-lookup', label: 'Player Lookup', ariaLabel: 'Go to Player Lookup tab', iconSvg: Placeholder, component: PlayerLookupTab },
     { path: '/shells', label: 'Shells', ariaLabel: 'Go to Shells tab', iconSvg: RunnerIcon, component: ShellsTab },
