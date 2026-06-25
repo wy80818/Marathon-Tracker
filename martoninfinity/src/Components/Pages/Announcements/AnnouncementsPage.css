@@ -1,0 +1,149 @@
+.announcements-page {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.announcements-page-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(1, 255, 255, 0.15);
+}
+
+.announcements-back {
+    background: none;
+    border: 1px solid rgba(1, 255, 255, 0.2);
+    border-radius: 4px;
+    color: var(--color-cyan);
+    font-family: "Fira Code", monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 6px 12px;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    margin-top: 6px;
+}
+
+    .announcements-back:hover {
+        opacity: 1;
+        background-color: rgba(1, 255, 255, 0.05);
+        border-color: rgba(1, 255, 255, 0.5);
+    }
+
+.announcements-page-label {
+    font-family: "Fira Code", monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--color-cyan);
+    opacity: 0.7;
+    display: block;
+    margin-bottom: 0.4rem;
+}
+
+.announcements-page-title h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 1.75rem;
+    color: var(--color-lime);
+    text-shadow: 0 0 8px rgba(194, 254, 11, 0.3);
+    margin: 0;
+}
+
+.announcements-page-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.announcements-page-bubble {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.25rem 1rem;
+    border-left: 2px solid transparent;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    animation: fadeIn 0.3s ease-in both;
+}
+
+    .announcements-page-bubble:not(:last-child) {
+        border-bottom: 1px solid rgba(1, 255, 255, 0.06);
+    }
+
+    .announcements-page-bubble:hover {
+        background-color: rgba(194, 254, 11, 0.03);
+        border-left-color: var(--color-lime);
+        padding-left: 1.25rem;
+    }
+
+.announcements-page-bubble-left {
+    flex-shrink: 0;
+    width: 28px;
+    padding-top: 2px;
+}
+
+.announcements-page-index {
+    font-family: "Fira Code", monospace;
+    font-size: 11px;
+    color: var(--color-cyan);
+    opacity: 0.3;
+}
+
+.announcements-page-bubble-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.announcements-page-bubble-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.announcements-page-title-text {
+    font-family: "Fira Code", monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-lime);
+    text-shadow: 0 0 6px rgba(194, 254, 11, 0.3);
+    margin: 0;
+}
+
+.announcements-page-date {
+    font-family: "Fira Code", monospace;
+    font-size: 11px;
+    color: var(--color-cyan);
+    opacity: 0.5;
+    white-space: nowrap;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.announcements-page-desc {
+    font-size: 13px;
+    color: var(--color-text-light);
+}
+
+.announcements-page-bubble {
+    cursor: url("/cursors/pointer.svg") 2 0, pointer;
+}
+
+.announcements-page-read-more {
+    font-family: "Fira Code", monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--color-cyan);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.announcements-page-bubble:hover .announcements-page-read-more {
+    opacity: 0.7;
+}

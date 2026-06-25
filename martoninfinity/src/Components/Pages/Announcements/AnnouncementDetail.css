@@ -1,0 +1,62 @@
+.announcement-detail-page {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.announcement-detail-card {
+    background-color: var(--color-darker-bg);
+    border: 1px solid rgba(1, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 2rem;
+    margin-top: 1.5rem;
+}
+
+.announcement-detail-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.announcement-detail-title {
+    font-family: "Playfair Display", serif;
+    font-size: 1.75rem;
+    color: var(--color-lime);
+    text-shadow: 0 0 8px rgba(194, 254, 11, 0.3);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.announcement-detail-date {
+    font-family: "Fira Code", monospace;
+    font-size: 11px;
+    color: var(--color-cyan);
+    opacity: 0.5;
+    margin: 0;
+    letter-spacing: 0.08em;
+}
+
+.announcement-detail-divider {
+    height: 1px;
+    background: linear-gradient(to right, rgba(1, 255, 255, 0.3), transparent);
+    margin-bottom: 1.5rem;
+}
+
+.announcement-detail-body p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--color-text-light);
+    opacity: 0.9;
+    margin: 0;
+}
+
+.announcement-detail-not-found {
+    font-family: "Fira Code", monospace;
+    font-size: 13px;
+    color: var(--color-cyan);
+    opacity: 0.5;
+    margin-top: 2rem;
+}
