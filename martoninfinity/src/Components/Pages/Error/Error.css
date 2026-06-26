@@ -1,0 +1,58 @@
+.error-page {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.error-card {
+    background-color: var(--color-darker-bg);
+    border: 1px solid rgba(1, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.error-label {
+    font-family: "Fira Code", monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--color-cyan);
+    opacity: 0.7;
+}
+
+.error-code {
+    font-family: "Playfair Display", serif;
+    font-size: 5rem;
+    font-weight: 700;
+    color: var(--color-lime);
+    text-shadow: 0 0 20px rgba(194, 254, 11, 0.4);
+    line-height: 1;
+    margin: 0;
+}
+
+.error-message {
+    font-family: "Fira Code", monospace;
+    font-size: 1rem;
+    color: var(--color-cyan);
+    opacity: 0.8;
+    margin: 0;
+    letter-spacing: 0.05em;
+}
+
+.error-divider {
+    height: 1px;
+    background: linear-gradient(to right, rgba(1, 255, 255, 0.3), transparent);
+    margin: 0.5rem 0;
+}
+
+.error-sub {
+    font-size: 13px;
+    color: var(--color-text-light);
+    opacity: 0.6;
+    line-height: 1.6;
+    margin: 0 0 0.5rem;
+}

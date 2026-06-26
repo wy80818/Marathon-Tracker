@@ -6,6 +6,9 @@ import marathonLogo from './assets/Miscellaneous/Marathon_Logo_WordMark_Green.pn
 import RunnerIcon from './assets/Icons/RunnerIcon.svg?react'
 import WeaponIcon from './assets/Icons/SwordIcon.svg?react'
 import HomeIcon from './assets/Icons/HomeIcon.svg?react'
+import PatchNotesIcon from './assets/Icons/PatchNotesIcon.svg?react'
+import PlayerLookupIcon from './assets/Icons/PlayerLookupIcon.svg?react'
+
 import Placeholder from './assets/Icons/Placeholder.svg?react'
 
 import HomeTab from './Components/Tabs/Home/HomeTab';
@@ -17,6 +20,7 @@ import MapsTab from './Components/Tabs/Maps/MapsTab';
 import LeaderboardTab from './Components/Tabs/Leaderboard/LeaderboardTab';
 import PatchNotesTab from './Components/Tabs/PatchNotes/PatchNotesTab';
 
+import Error from './Components/Pages/Error/Error'
 import AnnouncementsPage from './Components/Pages/Announcements/AnnouncementsPage';
 import AnnouncementDetail from './Components/Pages/Announcements/AnnouncementDetail';
 
@@ -32,7 +36,7 @@ interface TabConfig {
 
 const TABS: TabConfig[] = [
     { path: '/', label: 'Home', ariaLabel: 'Go to Home tab', iconSvg: HomeIcon, component: HomeTab },
-    { path: '/patch-notes', label: 'Patch Notes', ariaLabel: 'Go to Patch Notes tab', iconSvg: Placeholder, component: PatchNotesTab },
+    { path: '/patch-notes', label: 'Patch Notes', ariaLabel: 'Go to Patch Notes tab', iconSvg: PatchNotesIcon, component: PatchNotesTab },
     { path: '/player-lookup', label: 'Player Lookup', ariaLabel: 'Go to Player Lookup tab', iconSvg: Placeholder, component: PlayerLookupTab },
     { path: '/shells', label: 'Shells', ariaLabel: 'Go to Shells tab', iconSvg: RunnerIcon, component: ShellsTab },
     { path: '/weapons', label: 'Weapons', ariaLabel: 'Go to Weapons tab', iconSvg: WeaponIcon, component: WeaponsTab },
@@ -112,8 +116,17 @@ function App() {
             </header>
 
             <Routes>
-                <Route path="/announcements" element={<AnnouncementsPage />} />
-                <Route path="/*" element={<TabLayout />} />
+                <Route path="*" element={<Error />} />
+
+                <Route path="/" element={<TabLayout />} />
+                <Route path="/patch-notes" element={<TabLayout />} />
+                <Route path="/player-lookup" element={<TabLayout />} />
+                <Route path="/shells" element={<TabLayout />} />
+                <Route path="/weapons" element={<TabLayout />} />
+                <Route path="/items" element={<TabLayout />} />
+                <Route path="/maps" element={<TabLayout />} />
+                <Route path="/leaderboard" element={<TabLayout />} />
+
                 <Route path="/announcements" element={<AnnouncementsPage />} />
                 <Route path="/announcements/:id" element={<AnnouncementDetail />} />
             </Routes>

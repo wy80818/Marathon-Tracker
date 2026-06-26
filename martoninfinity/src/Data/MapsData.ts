@@ -18,13 +18,15 @@ import keySuperiorIcon from "../assets/Markers/Key_Superior_Icon.png";
 import keyLockboxIcon from "../assets/Markers/Key_Lockbox_Icon.png";
 import elevatorIcon from "../assets/Markers/Elevator.png"
 import vaultIcon from "../assets/Markers/Vault.png"
+import supplyDropIcon from "../assets/Markers/Supply_Drop.png"
 
 // Add new markers here in camelCase
 export type CategoryType =
     | "infils_&_exfils"
     | "monitors_&_stations"
     | "keyrooms"
-    | "doors_&_entryways";
+    | "doors_&_entryways"
+    | "map_objectives";
 
 export type MarkerType =
     | "crewExfil"
@@ -41,7 +43,8 @@ export type MarkerType =
     | "keySuperior"
     | "keyLockbox"
     | "elevator"
-    | "vault";
+    | "vault"
+    | "supplyDrop";
 
 export interface Marker {
     id: string;
@@ -239,6 +242,19 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         markers: [
             { x: 0.749, y: 0.643 },
             { x: 0.175, y: 0.580 }
+        ]
+    },
+    {
+        category: "map_objectives",
+        type: "supplyDrop",
+        icon: supplyDropIcon,
+        defaultLabel: "Supply Drop",
+        defaultDescription: "Potential Supply Drop location. Once activated, Runners must wait until it arrives in which 4 containers mostly containing weapon attachments \
+            get deployed. Beware of Supply Drop Ship thrusters when it arrives and leaves.",
+        markers: [
+            { x: 0.66, y: 0.548 },
+            { x: 0.404, y: 0.479 },
+            { x: 0.647, y: 0.288 }
         ]
     }
 ];
@@ -541,6 +557,20 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
             { x: 0.635, y: 0.365 },
             { x: 0.464, y: 0.222 },
             { x: 0.649, y: 0.717 }
+        ]
+    },
+    {
+        category: "map_objectives",
+        type: "supplyDrop",
+        icon: supplyDropIcon,
+        defaultLabel: "Supply Drop",
+        defaultDescription: "Potential Supply Drop location. Once activated, Runners must wait until it arrives in which 4 containers mostly containing weapon attachments \
+            get deployed. Beware of Supply Drop Ship thrusters when it arrives and leaves.",
+        markers: [
+            { x: 0.681, y: 0.377 },
+            { x: 0.449, y: 0.647 },
+            { x: 0.525, y: 0.713 },
+            { x: 0.465, y: 0.426 }
         ]
     }
 ];

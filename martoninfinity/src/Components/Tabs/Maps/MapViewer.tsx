@@ -148,7 +148,7 @@ const MapViewer = () => {
                                                     }))
                                                 }
                                             >
-                                                <span>{openCategories[category] ? "ls /" : ""}{category}</span>
+                                                <span>{openCategories[category] ? "ls /" : "/"}{category}</span>
                                                 <span className="marker-category-count">{shown}/{total}</span>
                                             </div>
                                             <div className="category-controls">
