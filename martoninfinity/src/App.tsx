@@ -7,7 +7,7 @@ import RunnerIcon from './assets/Icons/RunnerIcon.svg?react'
 import WeaponIcon from './assets/Icons/SwordIcon.svg?react'
 import HomeIcon from './assets/Icons/HomeIcon.svg?react'
 import PatchNotesIcon from './assets/Icons/PatchNotesIcon.svg?react'
-import PlayerLookupIcon from './assets/Icons/PlayerLookupIcon.svg?react'
+// import PlayerLookupIcon from './assets/Icons/PlayerLookupIcon.svg?react'
 
 import Placeholder from './assets/Icons/Placeholder.svg?react'
 
@@ -24,7 +24,7 @@ import Error from './Components/Pages/Error/Error'
 import AnnouncementsPage from './Components/Pages/Announcements/AnnouncementsPage';
 import AnnouncementDetail from './Components/Pages/Announcements/AnnouncementDetail';
 
-type TabId = 'home' | 'player-lookup' | 'shells' | 'weapons' | 'items' | 'maps' | 'leaderboard' | 'patch-notes'
+// type TabId = 'home' | 'player-lookup' | 'shells' | 'weapons' | 'items' | 'maps' | 'leaderboard' | 'patch-notes'
 
 interface TabConfig {
     path: string
