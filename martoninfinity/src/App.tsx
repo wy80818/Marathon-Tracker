@@ -7,6 +7,7 @@ import RunnerIcon from './assets/Icons/RunnerIcon.svg?react'
 import WeaponIcon from './assets/Icons/SwordIcon.svg?react'
 import HomeIcon from './assets/Icons/HomeIcon.svg?react'
 import PatchNotesIcon from './assets/Icons/PatchNotesIcon.svg?react'
+import MapIcon from './assets/Icons/MapIcon.svg?react'
 // import PlayerLookupIcon from './assets/Icons/PlayerLookupIcon.svg?react'
 
 import Placeholder from './assets/Icons/Placeholder.svg?react'
@@ -41,7 +42,7 @@ const TABS: TabConfig[] = [
     { path: '/shells', label: 'Shells', ariaLabel: 'Go to Shells tab', iconSvg: RunnerIcon, component: ShellsTab },
     { path: '/weapons', label: 'Weapons', ariaLabel: 'Go to Weapons tab', iconSvg: WeaponIcon, component: WeaponsTab },
     { path: '/items', label: 'Items', ariaLabel: 'Go to Items tab', iconSvg: Placeholder, component: ItemsTab },
-    { path: '/maps', label: 'Maps', ariaLabel: 'Go to Maps tab', iconSvg: Placeholder, component: MapsTab },
+    { path: '/maps', label: 'Maps', ariaLabel: 'Go to Maps tab', iconSvg: MapIcon, component: MapsTab },
     { path: '/leaderboard', label: 'Leaderboard', ariaLabel: 'Go to Leaderboard tab', iconSvg: Placeholder, component: LeaderboardTab },
 ]
 
