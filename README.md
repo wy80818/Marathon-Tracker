@@ -8,6 +8,8 @@ As of now, Bungie has not released an API for the game, for now all so far infor
 
 The website features multiple tabs in which the user can peruse through and utilize their respective features.
 
+Accessible on https://marton-dev-777.vercel.app/
+
 Sample images, subject to change:
 
 <img width="1918" height="1198" alt="image" src="https://github.com/user-attachments/assets/2acaac71-ac57-498a-86ef-4052270ae1b3" />
