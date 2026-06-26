@@ -2,7 +2,7 @@ function ShellsTab() {
     return (
         <div className="tab-content-inner">
             <h2>Shells</h2>
-            <p>Browse available shells.</p>
+            <p>Coming soon...</p>
         </div>
     )
 }
