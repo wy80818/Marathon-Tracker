@@ -211,7 +211,7 @@ const MapViewer = () => {
                                 setScale(state.scale);
                             }}
                         >
-                            {({ resetTransform }) => (
+                            {
                                 <div
                                     style={{ position: "relative", width: "100%", height: "600px" }}
                                     onMouseEnter={() => setIsHoveringMap(true)}
@@ -284,7 +284,7 @@ const MapViewer = () => {
                                         </div>
                                     )}
                                 </div>
-                            )}
+                            }
                         </TransformWrapper>
                     </div>
                 </div>

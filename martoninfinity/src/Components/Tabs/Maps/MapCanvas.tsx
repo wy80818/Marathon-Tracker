@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import type { Marker, GameMap } from "../../../Data/MapsData.ts";
 
 interface Props {
