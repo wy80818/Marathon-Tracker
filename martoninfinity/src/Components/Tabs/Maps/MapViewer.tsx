@@ -213,7 +213,7 @@ const MapViewer = () => {
                         >
                             {
                                 <div
-                                    style={{ position: "relative", width: "100%", height: "600px" }}
+                                    style={{ position: "relative", width: "100%", height: "100%" }}
                                     onMouseEnter={() => setIsHoveringMap(true)}
                                     onMouseLeave={() => setIsHoveringMap(false)}
                                 >
