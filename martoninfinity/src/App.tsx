@@ -133,12 +133,14 @@ function App() {
             </Routes>
 
             <footer className="footer-content">
-                <p>
-                    Marathon Tracker is an unofficial fan project created to help players tracker others, explore maps, game information and more.
-                </p>
-                <a>
-                    Marathon™, Bungie™, and all associated logos, images, and trademarks are property of Bungie, Inc.
-                </a>
+                <div className="footer-left">
+                    <span className="footer-brand">MARATHON TRACKER</span>
+                    <p>An unofficial fan project — not affiliated with Bungie, Inc.</p>
+                </div>
+                <div className="footer-divider" />
+                <div className="footer-right">
+                    <p>Marathon™, Bungie™, and all associated logos, images, and trademarks are property of <a href="https://www.bungie.net" target="_blank" rel="noreferrer">Bungie, Inc.</a></p>
+                </div>
             </footer>
         </div>
     )
