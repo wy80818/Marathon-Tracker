@@ -19,9 +19,11 @@ import keyLockboxIcon from "../assets/Markers/Key_Lockbox_Icon.png";
 import elevatorIcon from "../assets/Markers/Elevator.png"
 import vaultIcon from "../assets/Markers/Vault.png"
 import supplyDropIcon from "../assets/Markers/Supply_Drop.png"
+import POIIcon from "../assets/Markers/POI.png"
 
 // Add new markers here in camelCase
 export type CategoryType =
+    | "points_of_interest"
     | "infils_&_exfils"
     | "monitors_&_stations"
     | "keyrooms"
@@ -44,7 +46,9 @@ export type MarkerType =
     | "keyLockbox"
     | "elevator"
     | "vault"
-    | "supplyDrop";
+    | "supplyDrop"
+    | "poiLarge"
+    | "poiSmall";
 
 export interface Marker {
     id: string;
@@ -256,6 +260,36 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
             { x: 0.404, y: 0.479 },
             { x: 0.647, y: 0.288 }
         ]
+    },
+    {
+        category: "points_of_interest",
+        type: "poiLarge",
+        icon: POIIcon,
+        defaultLabel: "Point of Interest",
+        defaultDescription: "",
+        markers: [
+            { x: 0.426, y: 0.557, label: "Algae Ponds" },
+            { x: 0.34, y: 0.786, label: "Maintenance" },
+            { x: 0.181, y: 0.596, label: "Quarantine" },
+            { x: 0.514, y: 0.371, label: "Greenhouse" },
+            { x: 0.575, y: 0.712, label: "AI Uplink" },
+            { x: 0.779, y: 0.481, label: "Complex" },
+            { x: 0.637, y: 0.256, label: "Bio Research" }
+        ]
+    },
+    {
+        category: "points_of_interest",
+        type: "poiSmall",
+        icon: POIIcon,
+        defaultLabel: "Area",
+        defaultDescription: "",
+        markers: [
+            { x: 0.386, y: 0.499, label: "Intersection" },
+            { x: 0.158, y: 0.502, label: "West Gate" },
+            { x: 0.46, y: 0.755, label: "Canal" },
+            { x: 0.616, y: 0.564, label: "Anomaly" },
+            { x: 0.911, y: 0.477, label: "East Gate" },
+        ]
     }
 ];
 
@@ -321,7 +355,8 @@ export const markerGroups_Outpost: MarkerGroup[] = [
             { x: 0.756, y: 0.549 },
             { x: 0.535, y: 0.449 },
             { x: 0.324, y: 0.449 },
-            { x: 0.582, y: 0.287 }
+            { x: 0.582, y: 0.287 },
+            { x: 0.731, y: 0.389 }
         ]
     },
     {
@@ -354,8 +389,7 @@ export const markerGroups_Outpost: MarkerGroup[] = [
                 y: 0.242,
                 label: "Airfield Keyroom",
                 description: "Located on the uppermost level of Eastern Airfield. One door for entry and bulletproof glass."
-            },
-
+            }
         ]
     },
     {
@@ -665,6 +699,18 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
             { x: 0.296, y: 0.402 },
             { x: 0.296, y: 0.576 },
             { x: 0.457, y: 0.588 },
+            { x: 0.173, y: 0.703 },
+            { x: 0.281, y: 0.747 },
+            { x: 0.414, y: 0.755 },
+            { x: 0.5, y: 0.858 },
+            { x: 0.56, y: 0.458 },
+            { x: 0.277, y: 0.278 },
+            { x: 0.35, y: 0.164 }, 
+            { x: 0.433, y: 0.231 }, 
+            { x: 0.572, y: 0.169 },
+            { x: 0.675, y: 0.308 },
+            { x: 0.68, y: 0.458 },
+            { x: 0.68, y: 0.655 },
 
         ]
     },

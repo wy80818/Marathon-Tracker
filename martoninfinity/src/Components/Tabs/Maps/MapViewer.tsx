@@ -18,11 +18,11 @@ const MapViewer = () => {
     const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
     const [visibleMarkers, setVisibleMarkers] = useState<Record<string, boolean>>({});
     const [imageReady, setImageReady] = useState(true);
+    const [isHoveringOverlay, setIsHoveringOverlay] = useState(false);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const mapCanvasRef = useRef<HTMLDivElement>(null);
     const transformRef = useRef<ReactZoomPanPinchRef>(null);
-
 
     const currentMap = maps.find(m => m.id === displayedMapId)!;
     const markerTypes = [...new Set(currentMap.markers.map(m => m.type))];
@@ -59,6 +59,14 @@ const MapViewer = () => {
         markerTypes.forEach(type => { all[type] = false; });
         setVisibleMarkers(all);
     };
+
+    useEffect(() => {
+        const el = containerRef.current;
+        if (!el) return;
+        const stop = (e: WheelEvent) => e.preventDefault();
+        el.addEventListener("wheel", stop, { passive: false });
+        return () => el.removeEventListener("wheel", stop);
+    }, []);
 
     useEffect(() => {
         const defaults: Record<string, boolean> = {};
@@ -202,14 +210,13 @@ const MapViewer = () => {
                             initialScale={0.85}
                             centerOnInit
                             limitToBounds
+                            centerZoomedOut
                             minScale={0.85}
                             maxScale={8}
                             wheel={{ step: 0.005 }}
                             doubleClick={{ step: 1.5 }}
                             velocityAnimation={{ animationTime: 400 }}
-                            onTransform={({ state }) => {
-                                setScale(state.scale);
-                            }}
+                            onTransform={({ state }) => setScale(state.scale)}
                         >
                             {
                                 <div
@@ -248,6 +255,8 @@ const MapViewer = () => {
                                                         ? "translate(calc(-100% - 20px), -50%)"
                                                         : "translate(20px, -50%)"
                                                 }}
+                                                onMouseEnter={() => setIsHoveringOverlay(true)}
+                                                onMouseLeave={() => setIsHoveringOverlay(false)}
                                             >
                                                 <div className="marker-overlay-card" onClick={e => e.stopPropagation()}>
                                                     <div className="marker-overlay-header">
