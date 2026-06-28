@@ -439,6 +439,33 @@ export const markerGroups_Outpost: MarkerGroup[] = [
                 description: "Located on the outside portion of destroyed wing. One door for entry."
             }
         ]
+    },
+    {
+        category: "points_of_interest",
+        type: "poiLarge",
+        icon: POIIcon,
+        defaultLabel: "Point of Interest",
+        defaultDescription: "",
+        markers: [
+            { x: 0.522, y: 0.584, label: "Pinwheel Base" },
+            { x: 0.485, y: 0.45, label: "Flight Control" },
+            { x: 0.407, y: 0.265, label: "Airfield" },
+            { x: 0.606, y: 0.388, label: "Orientation" },
+            { x: 0.724, y: 0.527, label: "Dormitories" },
+            { x: 0.442, y: 0.698, label: "Processing" }
+        ]
+    },
+    {
+        category: "points_of_interest",
+        type: "poiSmall",
+        icon: POIIcon,
+        defaultLabel: "Area",
+        defaultDescription: "",
+        markers: [
+            { x: 0.385, y: 0.586, label: "Drone Wing" },
+            { x: 0.585, y: 0.717, label: "Command Wing" },
+            { x: 0.577, y: 0.46, label: "Destroyed Wing" }
+        ]
     }
 ];
 
@@ -606,7 +633,36 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
             { x: 0.525, y: 0.713 },
             { x: 0.465, y: 0.426 }
         ]
+    },
+    {
+        category: "points_of_interest",
+        type: "poiLarge",
+        icon: POIIcon,
+        defaultLabel: "Point of Interest",
+        defaultDescription: "",
+        markers: [
+            { x: 0.465, y: 0.269, label: "North Relay" },
+            { x: 0.647, y: 0.671, label: "South Relay" },
+            { x: 0.657, y: 0.393, label: "Station" },
+            { x: 0.385, y: 0.731, label: "Overflow" },
+            { x: 0.354, y: 0.483, label: "Hauler" }
+        ]
+    },
+    {
+        category: "points_of_interest",
+        type: "poiSmall",
+        icon: POIIcon,
+        defaultLabel: "Area",
+        defaultDescription: "",
+        markers: [
+            { x: 0.477, y: 0.469, label: "Data Wall" },
+            { x: 0.536, y: 0.622, label: "Ravine" },
+            { x: 0.584, y: 0.526, label: "Tunnels" },
+            { x: 0.721, y: 0.598, label: "East Wall" },
+            { x: 0.515, y: 0.727, label: "Columns" }
+        ]
     }
+
 ];
 
 export const markerGroups_CryoArchive: MarkerGroup[] = [
@@ -719,7 +775,7 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
         type: "elevator",
         icon: elevatorIcon,
         defaultLabel: "Elevator",
-        defaultDescription: "Requires security clearance 3, brings you to the Labs which resides above the map. Remember to bring Antivirus.",
+        defaultDescription: "Requires security clearance 3, brings you to the Labs which resides above the map and where Vault 6 and 7 reside. Remember to bring Antivirus.",
         markers: [
             { x: 0.582, y: 0.3 },
             { x: 0.582, y: 0.676 }
@@ -765,6 +821,42 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
             }
         ]
     },
+    {
+        category: "points_of_interest",
+        type: "poiLarge",
+        icon: POIIcon,
+        defaultLabel: "Point of Interest",
+        defaultDescription: "",
+        markers: [
+            { x: 0.321, y: 0.331, label: "Cargo" },
+            { x: 0.5, y: 0.172, label: "Steerage" },
+            { x: 0.7, y: 0.381, label: "Biostock" },
+            { x: 0.7, y: 0.593, label: "Preservation" },
+            { x: 0.5, y: 0.808, label: "Revival" },
+            { x: 0.321, y: 0.639, label: "Index" },
+            { x: 0.51, y: 0.436, label: "Control" },
+        ]
+    },
+    {
+        category: "points_of_interest",
+        type: "poiSmall",
+        icon: POIIcon,
+        defaultLabel: "Area",
+        defaultDescription: "",
+        markers: [
+            { x: 0.511, y: 0.493, label: "Panoptacon" },
+            { x: 0.323, y: 0.489, label: "Cold Storage" },
+            { x: 0.19, y: 0.339, label: "Calibration" },
+            { x: 0.19, y: 0.628, label: "Optimization" },
+            { x: 0.663, y: 0.141, label: "Stockpile" },
+            { x: 0.663, y: 0.829, label: "Repository" },
+            { x: 0.894, y: 0.366, label: "Staging" },
+            { x: 0.894, y: 0.62, label: "Foundation" },
+            { x: 0.524, y: 0.308, label: "Tranquility (Derelict)" },
+            { x: 0.524, y: 0.675, label: "Tranquility (Dormant)" },
+            { x: 0.819, y: 0.487, label: "Secret Labs" }
+        ]
+    }
 ];
 
 function createMarkers(groups: MarkerGroup[]): Marker[] {

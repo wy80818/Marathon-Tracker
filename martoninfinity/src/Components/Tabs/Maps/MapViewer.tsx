@@ -59,6 +59,21 @@ const MapViewer = () => {
         setVisibleMarkers(all);
     };
 
+    // Prevent page scrolling when hovering over marker key content
+    useEffect(() => {
+        const el = document.querySelector<HTMLElement>(".map-key-content");
+        if (!el) return;
+
+        const handleWheel = (e: WheelEvent) => {
+            e.preventDefault();
+            el.scrollTop += e.deltaY;
+        };
+
+        el.addEventListener("wheel", handleWheel, { passive: false });
+        return () => el.removeEventListener("wheel", handleWheel);
+    }, []);
+
+    // Prevents page scrolling when hovering over the map
     useEffect(() => {
         const el = containerRef.current;
         if (!el) return;
@@ -67,6 +82,7 @@ const MapViewer = () => {
         return () => el.removeEventListener("wheel", stop);
     }, []);
 
+    // Resets marker filters on map change.
     useEffect(() => {
         const defaults: Record<string, boolean> = {};
         currentMap.markers.forEach(marker => {
@@ -77,16 +93,18 @@ const MapViewer = () => {
         setSelectedMarker(null);
     }, [displayedMapId]);
 
+    // Sidebar categories
     useEffect(() => {
         const initial: Record<string, boolean> = {};
 
         Object.keys(groupedMarkers).forEach(category => {
-            initial[category] = true;
+            initial[category] = false;
         });
 
         setOpenCategories(initial);
     }, [displayedMapId]);
 
+    // Map fade out transition
     useEffect(() => {
         if (selectedMapId === displayedMapId) return;
 
@@ -101,6 +119,8 @@ const MapViewer = () => {
         return () => clearTimeout(timer);
     }, [selectedMapId, displayedMapId]);
 
+
+    // Map fade in transition
     useEffect(() => {
         const img = new Image();
         img.src = currentMap.image;
