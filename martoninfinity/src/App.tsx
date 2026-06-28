@@ -49,8 +49,7 @@ const TABS: TabConfig[] = [
 function TabLayout() {
     const navigate = useNavigate()
     const location = useLocation()
-    const [tabsOffset, setTabsOffset] = useState(0)
-    const [lastScrollY, setLastScrollY] = useState(0)
+    const [tabsOffset] = useState(0)
 
     useEffect(() => {
         let lastY = window.scrollY;

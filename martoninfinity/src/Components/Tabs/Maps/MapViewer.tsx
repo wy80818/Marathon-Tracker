@@ -18,7 +18,6 @@ const MapViewer = () => {
     const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
     const [visibleMarkers, setVisibleMarkers] = useState<Record<string, boolean>>({});
     const [imageReady, setImageReady] = useState(true);
-    const [isHoveringOverlay, setIsHoveringOverlay] = useState(false);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const mapCanvasRef = useRef<HTMLDivElement>(null);
@@ -255,8 +254,6 @@ const MapViewer = () => {
                                                         ? "translate(calc(-100% - 20px), -50%)"
                                                         : "translate(20px, -50%)"
                                                 }}
-                                                onMouseEnter={() => setIsHoveringOverlay(true)}
-                                                onMouseLeave={() => setIsHoveringOverlay(false)}
                                             >
                                                 <div className="marker-overlay-card" onClick={e => e.stopPropagation()}>
                                                     <div className="marker-overlay-header">
