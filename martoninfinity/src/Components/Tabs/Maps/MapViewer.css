@@ -1,8 +1,10 @@
 .map-window {
-    height: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .map-layout {
@@ -11,6 +13,7 @@
     flex: 1;
     min-height: 0;
     overflow: hidden;
+    align-items: stretch;
 }
 
 .map-side-column {
@@ -19,9 +22,8 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    min-height: 0;
     overflow: hidden;
-    align-self: flex-start;
-    max-height: 100cqh; /* 100% of the named container's height */
 }
 
 .map-sidebar {
@@ -47,8 +49,8 @@
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    flex: 1; /* grows to fill remaining space after .map-sidebar */
-    min-height: 0; /* lets it shrink and hand off overflow to its child */
+    flex: 1;
+    min-height: 0;
     overflow: hidden;
 }
 
@@ -67,7 +69,7 @@
 .map-key-content {
     overflow-y: auto;
     padding: 0 16px 16px 16px;
-    flex: 1; /* fills .map-key, enabling scroll when content overflows */
+    flex: 1;
     min-height: 0;
 }
 
@@ -93,6 +95,10 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 12px;
+}
+
+.react-transform-component {
+    transition: transform 0.12s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
 }
 
 .marker-category-title {
@@ -329,7 +335,7 @@
 
 .zoom-buttons {
     position: absolute;
-    z-index: 1000;
+    z-index: 10;
     right: 16px;
     top: 16px;
     display: flex;

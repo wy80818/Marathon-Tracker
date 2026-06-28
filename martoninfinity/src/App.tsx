@@ -49,26 +49,30 @@ const TABS: TabConfig[] = [
 function TabLayout() {
     const navigate = useNavigate()
     const location = useLocation()
-    const [tabsOffset, setTabsOffset] = useState(0)
-    const [lastScrollY, setLastScrollY] = useState(0)
+    const [tabsOffset] = useState(0)
 
     useEffect(() => {
+        let lastY = window.scrollY;
+        let currentOffset = 0;
+
         const handleScroll = () => {
-            const currentScrollY = window.scrollY
-            const scrollDelta = currentScrollY - lastScrollY
-            const scrollThreshold = 100
+            const tabsEl = document.querySelector<HTMLElement>(".tabs-wrapper");
+            if (!tabsEl) return;
 
-            setTabsOffset(prev => {
-                if (currentScrollY < scrollThreshold) return 0
-                return Math.max(-100, Math.min(0, prev - scrollDelta))
-            })
+            const tabsHeight = tabsEl.offsetHeight;
+            const currentY = window.scrollY;
+            const delta = currentY - lastY;
 
-            setLastScrollY(currentScrollY)
-        }
+            currentOffset = Math.min(tabsHeight, Math.max(0, currentOffset + delta));
 
-        window.addEventListener('scroll', handleScroll, { passive: true })
-        return () => window.removeEventListener('scroll', handleScroll)
-    }, [lastScrollY])
+            tabsEl.style.transform = `translateY(-${currentOffset}px)`;
+
+            lastY = currentY;
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     const activeTab = TABS.find(tab => tab.path === location.pathname) ?? TABS[0]
     const ActiveComponent = activeTab.component
