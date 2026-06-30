@@ -652,7 +652,6 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
             { x: 0.465, y: 0.426 }
         ]
     },
-    ,
     {
         category: "map_objectives",
         type: "securedResource",
