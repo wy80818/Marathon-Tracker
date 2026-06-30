@@ -20,7 +20,7 @@ import elevatorIcon from "../assets/Markers/Elevator.png"
 import vaultIcon from "../assets/Markers/Vault.png"
 import supplyDropIcon from "../assets/Markers/Supply_Drop.png"
 import POIIcon from "../assets/Markers/POI.png"
-import SecuredResourceIcon from "../assets/Markers/Secured_Resource.png"
+import securedResourceIcon from "../assets/Markers/Secured_Resource.png"
 
 // Add new markers here in camelCase
 export type CategoryType =
@@ -266,7 +266,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
     {
         category: "map_objectives",
         type: "securedResource",
-        icon: SecuredResourceIcon,
+        icon: securedResourceIcon,
         defaultLabel: "Secured Resource",
         defaultDescription: "",
         markers: [
@@ -656,7 +656,7 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
     {
         category: "map_objectives",
         type: "securedResource",
-        icon: SecuredResourceIcon,
+        icon: securedResourceIcon,
         defaultLabel: "Secured Resource",
         defaultDescription: "Potential Secured Resource spawn which provides early tier loot once completed. High chance for blue unique weapons. \
              Once activated, a timer will start along with a wave of UESC spawning as countermeasures.",
