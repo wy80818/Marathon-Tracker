@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import type { ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 
@@ -9,9 +10,13 @@ import { maps } from "../../../Data/MapsData";
 import MapCanvas from "./MapCanvas";
 
 const MapViewer = () => {
+    const navigate = useNavigate();
+    const { mapId } = useParams<{ mapId: string }>();
+    const initialMapId = maps.some(m => m.id === mapId) ? mapId! : maps[0].id;
+
     const [selectedMarker, setSelectedMarker] = useState<Marker | null>(null);
-    const [displayedMapId, setDisplayedMapId] = useState(maps[0].id);
-    const [selectedMapId, setSelectedMapId] = useState(maps[0].id);
+    const [displayedMapId, setDisplayedMapId] = useState(initialMapId);
+    const [selectedMapId, setSelectedMapId] = useState(initialMapId);
     const [scale, setScale] = useState(0.85);
     const [isHoveringMap, setIsHoveringMap] = useState(false);
     const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
@@ -58,6 +63,16 @@ const MapViewer = () => {
         markerTypes.forEach(type => { all[type] = false; });
         setVisibleMarkers(all);
     };
+
+    // Updates map when URL changes
+    useEffect(() => {
+        if (!mapId) return;
+
+        const exists = maps.some(m => m.id === mapId);
+        if (exists && mapId !== selectedMapId) {
+            setSelectedMapId(mapId);
+        }
+    }, [mapId]);
 
     // Prevent page scrolling when hovering over marker key content
     useEffect(() => {
@@ -137,6 +152,9 @@ const MapViewer = () => {
         <div className="map-window">
             <div className="map-layout">
                 <div className="map-side-column">
+                    <button className="map-back" onClick={() => navigate("/maps")}>
+                        Back to Maps
+                    </button>
                     <div className="map-sidebar">
                         <h2>Maps</h2>
                         <div className="map-list">
@@ -144,7 +162,10 @@ const MapViewer = () => {
                                 <button
                                     key={map.id}
                                     className={`map-button ${selectedMapId === map.id ? "active" : ""}`}
-                                    onClick={() => setSelectedMapId(map.id)}
+                                    onClick={() => {
+                                        setSelectedMapId(map.id);
+                                        navigate(`/maps/${map.id}`, { replace: true });
+                                    }}
                                 >
                                     <p>{map.name}</p>
                                 </button>

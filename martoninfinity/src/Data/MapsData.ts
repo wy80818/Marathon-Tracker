@@ -3,6 +3,11 @@ import cryoArchive from "../assets/Maps/cryo-archive.png";
 import perimiter from "../assets/Maps/perimeter.png";
 import outpost from "../assets/Maps/outpost.png";
 
+import cryoIcon from "../assets/MapIcons/cryo.jpeg";
+import direIcon from "../assets/MapIcons/dire-marsh.jpeg";
+import perimeterIcon from "../assets/MapIcons/perimeter.jpeg";
+import outpostIcon from "../assets/MapIcons/outpost.jpeg"
+
 import crewExfilIcon from "../assets/Markers/Crew_Exfil.png";
 import finalExfilIcon from "../assets/Markers/Final_Exfil.png";
 import hiddenFinalExfilIcon from "../assets/Markers/Hidden_Final_Exfil.png";
@@ -80,6 +85,7 @@ export interface GameMap {
     id: string;
     name: string;
     image: string;
+    mapIcon: string;
     width: number;
     height: number;
     markerGroups: MarkerGroup[];
@@ -924,6 +930,7 @@ export const maps: GameMap[] = [
         id: "marsh",
         name: "Dire Marsh",
         image: direMarsh,
+        mapIcon: direIcon,
         width: 2224,
         height: 1744,
         markerGroups: markerGroups_DireMarsh,
@@ -933,6 +940,7 @@ export const maps: GameMap[] = [
         id: "outpost",
         name: "Outpost",
         image: outpost,
+        mapIcon: outpostIcon,
         width: 2224,
         height: 1744,
         markerGroups: markerGroups_Outpost,
@@ -942,6 +950,7 @@ export const maps: GameMap[] = [
         id: "perimeter",
         name: "Perimeter",
         image: perimiter,
+        mapIcon: perimeterIcon,
         width: 2224,
         height: 1744,
         markerGroups: markerGroups_Perimiter,
@@ -951,6 +960,7 @@ export const maps: GameMap[] = [
         id: "cryo-archive",
         name: "Cryo Archive",
         image: cryoArchive,
+        mapIcon: cryoIcon,
         width: 2048,
         height: 1453,
         markerGroups: markerGroups_CryoArchive,

@@ -24,8 +24,7 @@ import PatchNotesTab from './Components/Tabs/PatchNotes/PatchNotesTab';
 import Error from './Components/Pages/Error/Error'
 import AnnouncementsPage from './Components/Pages/Announcements/AnnouncementsPage';
 import AnnouncementDetail from './Components/Pages/Announcements/AnnouncementDetail';
-
-// type TabId = 'home' | 'player-lookup' | 'shells' | 'weapons' | 'items' | 'maps' | 'leaderboard' | 'patch-notes'
+import MapViewerPage from './Components/Pages/Maps/MapViewer';
 
 interface TabConfig {
     path: string
@@ -167,6 +166,7 @@ function App() {
                 <Route path="/weapons" element={<TabLayout />} />
                 <Route path="/items" element={<TabLayout />} />
                 <Route path="/maps" element={<TabLayout />} />
+                <Route path="/maps/:mapId" element={<MapViewerPage />} />
                 <Route path="/leaderboard" element={<TabLayout />} />
 
                 <Route path="/announcements" element={<AnnouncementsPage />} />
