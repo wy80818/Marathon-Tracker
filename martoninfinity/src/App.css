@@ -7,6 +7,10 @@
     --color-green: #59b41d;
     --color-white: #ffffff;
     --color-text-light: #e0e0e0;
+    --space-xs: clamp(0.25rem, 1vw, 0.5rem);
+    --space-sm: clamp(0.5rem, 2vw, 0.75rem);
+    --space-md: clamp(0.75rem, 3vw, 1.25rem);
+    --space-lg: clamp(1rem, 4vw, 2rem);
 }
 
 * {
@@ -48,41 +52,46 @@ label,
     cursor: url("/cursors/pointer.svg") 2 0, pointer;
 }
 
-
 .app-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    min-height: 100dvh; /* respects mobile browser chrome */
     background-color: var(--color-dark-bg);
 }
 
 .app-header {
     background: var(--color-lime);
     color: #000000;
-    padding: 1.5rem 2rem;
+    padding: var(--space-md) var(--space-lg);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     font-family: "Playfair Display", serif;
 }
-    
+
     .app-header h1 {
-        font-size: 3rem;
+        font-size: clamp(1.25rem, 4vw, 3rem);
         font-weight: 700;
         letter-spacing: 0.5px;
         color: #000000;
         margin: 0;
+        min-width: 0; /* allows flex shrink + ellipsis to work */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
 .header-content {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: var(--space-md);
     max-width: 1200px;
 }
 
 .marathon-logo {
-    height: 60px;
+    height: clamp(36px, 6vw, 60px);
     width: auto;
     object-fit: contain;
+    flex-shrink: 0;
 }
 
 .tabs-wrapper {
@@ -94,22 +103,56 @@ label,
     will-change: transform;
 }
 
+.tabs-scroll-container {
+    position: relative;
+}
+
+.tabs-fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 3rem;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+    .tabs-fade.visible {
+        opacity: 1;
+    }
+
+.tabs-fade--left {
+    left: 0;
+    background: linear-gradient(to right, #3a4563 20%, transparent);
+}
+
+.tabs-fade--right {
+    right: 0;
+    background: linear-gradient(to left, #3a4563 20%, transparent);
+}
+
 .tabs-list {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--space-xs);
     background-color: #3a4563;
     border-bottom: 2px solid var(--color-cyan);
     overflow-x: auto;
-    padding: 0.5rem 1rem;
-    flex-wrap: wrap;
+    padding: var(--space-xs) var(--space-sm);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
+    .tabs-list::-webkit-scrollbar {
+        display: none;
+    }
+
 .tab-button {
-    padding: 0.75rem 1.25rem;
+    padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(0.6rem, 2vw, 1.25rem);
     border: 2px solid transparent;
     background-color: transparent;
     color: var(--color-text-light);
-    font-size: 1rem;
+    font-size: clamp(0.7rem, 1.5vw, 1rem);
     font-weight: 550;
     font-family: 'Courier New', monospace;
     transition: all 0.3s ease;
@@ -118,16 +161,18 @@ label,
     border-radius: 2px;
     margin-bottom: 0;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: clamp(0px, 0.1vw, 1px);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: var(--space-xs);
+    min-height: 44px;
+    flex-shrink: 0;
 }
 
     .tab-button svg {
-        width: 24px;
-        height: 24px;
+        width: clamp(18px, 2.5vw, 24px);
+        height: clamp(18px, 2.5vw, 24px);
         flex-shrink: 0;
         display: block;
     }
@@ -169,9 +214,21 @@ label,
             animation: glowPulse 2s ease-in-out infinite;
         }
 
+@media (max-width: 400px) {
+    .tab-button .tab-label {
+        display: none;
+    }
+
+    .tab-button {
+        padding: 0.5rem 0.65rem;
+        min-width: 44px;
+        justify-content: center;
+    }
+}
+
 .tab-content {
     flex: 1;
-    padding: 2rem;
+    padding: var(--space-lg);
     background-color: var(--color-dark-bg);
     overflow-y: auto;
 }
@@ -180,9 +237,9 @@ label,
     width: 100%;
 }
 
-    .tab-content-inner h2, 
+    .tab-content-inner h2,
     .tab-content-inner h3 {
-        font-size: 1.75rem;
+        font-size: clamp(1.25rem, 3vw, 1.75rem);
         margin-bottom: 1rem;
         color: var(--color-lime);
         text-shadow: 0 0 8px rgba(194, 254, 11, 0.3);
@@ -190,14 +247,13 @@ label,
     }
 
     .tab-content-inner p {
-        font-size: 1rem;
+        font-size: clamp(0.875rem, 1.5vw, 1rem);
         line-height: 1.6;
         color: var(--color-text-light);
     }
 
 .tab-panel {
     animation: fadeIn 0.3s ease-in;
-    min-height: 0;
     min-height: 400px;
 }
 
@@ -205,13 +261,15 @@ label,
     background: linear-gradient(135deg, rgba(23, 28, 46, 1) 0%, rgba(41, 50, 79, 1) 100%);
     border-top: 2px solid var(--color-cyan);
     color: var(--color-text-light);
-    padding: 1.25rem 2rem;
+    padding: var(--space-md) var(--space-lg);
     display: flex;
     align-items: center;
-    gap: 2rem;
+    flex-wrap: wrap;
+    gap: var(--space-md);
     font-family: "Fira Code", monospace;
     position: relative;
     flex-shrink: 0;
+    margin-top: auto;
 }
 
     .footer-content::before {
@@ -233,17 +291,17 @@ label,
 }
 
 .footer-brand {
-    font-size: 0.85rem;
+    font-size: clamp(0.7rem, 1.5vw, 0.85rem);
     font-weight: 700;
     letter-spacing: 2px;
     color: var(--color-lime);
 }
 
 .footer-left p {
-    font-size: 0.75rem;
+    font-size: clamp(0.65rem, 1.2vw, 0.75rem);
     color: #666;
     margin: 0;
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .footer-divider {
@@ -253,12 +311,20 @@ label,
     flex-shrink: 0;
 }
 
+/* hide the divider when footer wraps to a new row */
+@media (max-width: 600px) {
+    .footer-divider {
+        display: none;
+    }
+}
+
 .footer-right {
     flex: 1;
+    min-width: 180px;
 }
 
     .footer-right p {
-        font-size: 0.75rem;
+        font-size: clamp(0.65rem, 1.2vw, 0.75rem);
         color: #555;
         margin: 0;
         line-height: 1.5;
@@ -274,7 +340,7 @@ label,
             color: var(--color-lime);
         }
 
-
+/* ── Animations ── */
 
 @keyframes fadeIn {
     from {

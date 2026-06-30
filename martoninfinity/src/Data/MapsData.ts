@@ -3,6 +3,11 @@ import cryoArchive from "../assets/Maps/cryo-archive.png";
 import perimiter from "../assets/Maps/perimeter.png";
 import outpost from "../assets/Maps/outpost.png";
 
+import cryoIcon from "../assets/MapIcons/cryo.jpeg";
+import direIcon from "../assets/MapIcons/dire-marsh.jpeg";
+import perimeterIcon from "../assets/MapIcons/perimeter.jpeg";
+import outpostIcon from "../assets/MapIcons/outpost.jpeg"
+
 import crewExfilIcon from "../assets/Markers/Crew_Exfil.png";
 import finalExfilIcon from "../assets/Markers/Final_Exfil.png";
 import hiddenFinalExfilIcon from "../assets/Markers/Hidden_Final_Exfil.png";
@@ -20,6 +25,7 @@ import elevatorIcon from "../assets/Markers/Elevator.png"
 import vaultIcon from "../assets/Markers/Vault.png"
 import supplyDropIcon from "../assets/Markers/Supply_Drop.png"
 import POIIcon from "../assets/Markers/POI.png"
+import securedResourceIcon from "../assets/Markers/Secured_Resource.png"
 
 // Add new markers here in camelCase
 export type CategoryType =
@@ -47,6 +53,7 @@ export type MarkerType =
     | "elevator"
     | "vault"
     | "supplyDrop"
+    | "securedResource"
     | "poiLarge"
     | "poiSmall";
 
@@ -78,6 +85,7 @@ export interface GameMap {
     id: string;
     name: string;
     image: string;
+    mapIcon: string;
     width: number;
     height: number;
     markerGroups: MarkerGroup[];
@@ -259,6 +267,22 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
             { x: 0.66, y: 0.548 },
             { x: 0.404, y: 0.479 },
             { x: 0.647, y: 0.288 }
+        ]
+    },
+    {
+        category: "map_objectives",
+        type: "securedResource",
+        icon: securedResourceIcon,
+        defaultLabel: "Secured Resource",
+        defaultDescription: "",
+        markers: [
+            { x: 0.189, y: 0.603 },
+            { x: 0.323, y: 0.753 },
+            { x: 0.432, y: 0.578 },
+            { x: 0.513, y: 0.377 },
+            { x: 0.725, y: 0.281 },
+            { x: 0.778, y: 0.467 },
+            { x: 0.57, y: 0.714 }
         ]
     },
     {
@@ -635,6 +659,21 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         ]
     },
     {
+        category: "map_objectives",
+        type: "securedResource",
+        icon: securedResourceIcon,
+        defaultLabel: "Secured Resource",
+        defaultDescription: "Potential Secured Resource spawn which provides early tier loot once completed. High chance for blue unique weapons. \
+             Once activated, a timer will start along with a wave of UESC spawning as countermeasures.",
+        markers: [
+            { x: 0.355, y: 0.488 },
+            { x: 0.419, y: 0.735 },
+            { x: 0.65, y: 0.682 },
+            { x: 0.668, y: 0.386 },
+            { x: 0.467, y: 0.236 }
+        ]
+    },
+    {
         category: "points_of_interest",
         type: "poiLarge",
         icon: POIIcon,
@@ -891,6 +930,7 @@ export const maps: GameMap[] = [
         id: "marsh",
         name: "Dire Marsh",
         image: direMarsh,
+        mapIcon: direIcon,
         width: 2224,
         height: 1744,
         markerGroups: markerGroups_DireMarsh,
@@ -900,6 +940,7 @@ export const maps: GameMap[] = [
         id: "outpost",
         name: "Outpost",
         image: outpost,
+        mapIcon: outpostIcon,
         width: 2224,
         height: 1744,
         markerGroups: markerGroups_Outpost,
@@ -909,6 +950,7 @@ export const maps: GameMap[] = [
         id: "perimeter",
         name: "Perimeter",
         image: perimiter,
+        mapIcon: perimeterIcon,
         width: 2224,
         height: 1744,
         markerGroups: markerGroups_Perimiter,
@@ -918,6 +960,7 @@ export const maps: GameMap[] = [
         id: "cryo-archive",
         name: "Cryo Archive",
         image: cryoArchive,
+        mapIcon: cryoIcon,
         width: 2048,
         height: 1453,
         markerGroups: markerGroups_CryoArchive,

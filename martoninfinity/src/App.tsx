@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef} from 'react'
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import './App.css'
 
@@ -24,8 +24,7 @@ import PatchNotesTab from './Components/Tabs/PatchNotes/PatchNotesTab';
 import Error from './Components/Pages/Error/Error'
 import AnnouncementsPage from './Components/Pages/Announcements/AnnouncementsPage';
 import AnnouncementDetail from './Components/Pages/Announcements/AnnouncementDetail';
-
-// type TabId = 'home' | 'player-lookup' | 'shells' | 'weapons' | 'items' | 'maps' | 'leaderboard' | 'patch-notes'
+import MapViewerPage from './Components/Pages/Maps/MapViewer';
 
 interface TabConfig {
     path: string
@@ -50,6 +49,8 @@ function TabLayout() {
     const navigate = useNavigate()
     const location = useLocation()
     const [tabsOffset] = useState(0)
+    const tabsListRef = useRef<HTMLDivElement>(null)
+    const [scrollState, setScrollState] = useState({ left: false, right: false })
 
     useEffect(() => {
         let lastY = window.scrollY;
@@ -63,6 +64,8 @@ function TabLayout() {
             const currentY = window.scrollY;
             const delta = currentY - lastY;
 
+            if (Math.abs(delta) < 2) return; // ignore tiny scroll jitter
+
             currentOffset = Math.min(tabsHeight, Math.max(0, currentOffset + delta));
 
             tabsEl.style.transform = `translateY(-${currentOffset}px)`;
@@ -74,6 +77,27 @@ function TabLayout() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    useEffect(() => {
+        const el = tabsListRef.current
+        if (!el) return
+
+        const update = () => {
+            const { scrollLeft, scrollWidth, clientWidth } = el
+            setScrollState({
+                left: scrollLeft > 4,
+                right: scrollLeft < scrollWidth - clientWidth - 4,
+            })
+        }
+
+        update() // run once on mount
+        el.addEventListener('scroll', update, { passive: true })
+        window.addEventListener('resize', update, { passive: true })
+        return () => {
+            el.removeEventListener('scroll', update)
+            window.removeEventListener('resize', update)
+        }
+    }, [])
+
     const activeTab = TABS.find(tab => tab.path === location.pathname) ?? TABS[0]
     const ActiveComponent = activeTab.component
 
@@ -83,22 +107,34 @@ function TabLayout() {
                 className="tabs-wrapper"
                 style={{ transform: `translateY(${tabsOffset}%)` }}
             >
-                <div role="tablist" className="tabs-list">
-                    {TABS.map(tab => {
-                        const Icon = tab.iconSvg
-                        const isActive = location.pathname === tab.path
-                        return (
-                            <button
-                                key={tab.path}
-                                aria-label={tab.ariaLabel}
-                                className={`tab-button ${isActive ? 'active' : ''}`}
-                                onClick={() => navigate(tab.path)}
-                            >
-                                <Icon />
-                                {tab.label}
-                            </button>
-                        )
-                    })}
+                <div className="tabs-scroll-container">
+                    {/* left fade — only rendered when scrolled right */}
+                    <div className={`tabs-fade tabs-fade--left ${scrollState.left ? 'visible' : ''}`} aria-hidden="true" />
+
+                    <div
+                        role="tablist"
+                        className="tabs-list"
+                        ref={tabsListRef}
+                    >
+                        {TABS.map(tab => {
+                            const Icon = tab.iconSvg
+                            const isActive = location.pathname === tab.path
+                            return (
+                                <button
+                                    key={tab.path}
+                                    aria-label={tab.ariaLabel}
+                                    className={`tab-button ${isActive ? 'active' : ''}`}
+                                    onClick={() => navigate(tab.path)}
+                                >
+                                    <Icon />
+                                    <span className="tab-label">{tab.label}</span>
+                                </button>
+                            )
+                        })}
+                    </div>
+
+                    {/* right fade — only rendered when more content to the right */}
+                    <div className={`tabs-fade tabs-fade--right ${scrollState.right ? 'visible' : ''}`} aria-hidden="true" />
                 </div>
             </div>
             <div className="tab-content">
@@ -130,6 +166,7 @@ function App() {
                 <Route path="/weapons" element={<TabLayout />} />
                 <Route path="/items" element={<TabLayout />} />
                 <Route path="/maps" element={<TabLayout />} />
+                <Route path="/maps/:mapId" element={<MapViewerPage />} />
                 <Route path="/leaderboard" element={<TabLayout />} />
 
                 <Route path="/announcements" element={<AnnouncementsPage />} />

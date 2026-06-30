@@ -1,6 +1,4 @@
 :root {
-
-
     @media (max-width: 1024px) {
         font-size: 16px;
     }
@@ -9,4 +7,17 @@
 @media (prefers-color-scheme: dark) {
     :root {
     }
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
 }
