@@ -20,6 +20,7 @@ import elevatorIcon from "../assets/Markers/Elevator.png"
 import vaultIcon from "../assets/Markers/Vault.png"
 import supplyDropIcon from "../assets/Markers/Supply_Drop.png"
 import POIIcon from "../assets/Markers/POI.png"
+import SecuredResourceIcon from "../assets/Markers/Secured_Resource.png"
 
 // Add new markers here in camelCase
 export type CategoryType =
@@ -47,6 +48,7 @@ export type MarkerType =
     | "elevator"
     | "vault"
     | "supplyDrop"
+    | "securedResource"
     | "poiLarge"
     | "poiSmall";
 
@@ -259,6 +261,22 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
             { x: 0.66, y: 0.548 },
             { x: 0.404, y: 0.479 },
             { x: 0.647, y: 0.288 }
+        ]
+    },
+    {
+        category: "map_objectives",
+        type: "securedResource",
+        icon: SecuredResourceIcon,
+        defaultLabel: "Secured Resource",
+        defaultDescription: "",
+        markers: [
+            { x: 0.189, y: 0.603 },
+            { x: 0.323, y: 0.753 },
+            { x: 0.432, y: 0.578 },
+            { x: 0.513, y: 0.377 },
+            { x: 0.725, y: 0.281 },
+            { x: 0.778, y: 0.467 },
+            { x: 0.57, y: 0.714 }
         ]
     },
     {
@@ -632,6 +650,22 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
             { x: 0.449, y: 0.647 },
             { x: 0.525, y: 0.713 },
             { x: 0.465, y: 0.426 }
+        ]
+    },
+    ,
+    {
+        category: "map_objectives",
+        type: "securedResource",
+        icon: SecuredResourceIcon,
+        defaultLabel: "Secured Resource",
+        defaultDescription: "Potential Secured Resource spawn which provides early tier loot once completed. High chance for blue unique weapons. \
+             Once activated, a timer will start along with a wave of UESC spawning as countermeasures.",
+        markers: [
+            { x: 0.355, y: 0.488 },
+            { x: 0.419, y: 0.735 },
+            { x: 0.65, y: 0.682 },
+            { x: 0.668, y: 0.386 },
+            { x: 0.467, y: 0.236 }
         ]
     },
     {
