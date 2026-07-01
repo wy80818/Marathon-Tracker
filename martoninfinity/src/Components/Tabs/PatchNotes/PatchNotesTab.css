@@ -3,6 +3,11 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
+
+    @media (max-width: 450px) {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 .patch-notes-info {

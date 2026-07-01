@@ -2,6 +2,10 @@
     display: flex;
     gap: 2rem;
     align-items: flex-start;
+
+    @media (max-width: 450px) {
+        flex-direction: column;
+    }
 }
 
 .home-main {
