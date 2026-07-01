@@ -266,7 +266,8 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         markers: [
             { x: 0.66, y: 0.548 },
             { x: 0.404, y: 0.479 },
-            { x: 0.647, y: 0.288 }
+            { x: 0.647, y: 0.288 },
+            { x: 0.227, y: 0.572 }
         ]
     },
     {
