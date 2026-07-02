@@ -275,7 +275,8 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         type: "securedResource",
         icon: securedResourceIcon,
         defaultLabel: "Secured Resource",
-        defaultDescription: "",
+        defaultDescription: "Potential Secured Resource spawn which provides early tier loot once completed. High chance for blue unique weapons. \
+             Once activated, a timer will start along with a wave of UESC spawning as countermeasures.",
         markers: [
             { x: 0.189, y: 0.603 },
             { x: 0.323, y: 0.753 },
