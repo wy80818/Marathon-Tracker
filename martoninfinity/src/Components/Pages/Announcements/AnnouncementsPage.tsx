@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import announcements from "../../../Data/announcements.json";
+import { announcements } from "../../../Data/AnnouncementsData";
 import "./AnnouncementsPage.css";
 
 interface Announcement {
@@ -19,8 +19,8 @@ function AnnouncementsPage() {
     return (
         <div className="announcements-page">
             <div className="announcements-page-header">
-                <button className="announcements-back" onClick={() => navigate(-1)}>
-                    ← back
+                <button className="announcements-back" onClick={() => navigate("/")}>
+                    ← Back to Home
                 </button>
                 <div className="announcements-page-title">
                     <span className="announcements-page-label">// announcements</span>

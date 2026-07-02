@@ -108,7 +108,6 @@ function TabLayout() {
                 style={{ transform: `translateY(${tabsOffset}%)` }}
             >
                 <div className="tabs-scroll-container">
-                    {/* left fade — only rendered when scrolled right */}
                     <div className={`tabs-fade tabs-fade--left ${scrollState.left ? 'visible' : ''}`} aria-hidden="true" />
 
                     <div

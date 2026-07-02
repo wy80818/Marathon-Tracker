@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
-import announcements from "../../../Data/announcements.json";
+import ReactMarkdown from "react-markdown";
+import { announcements } from "../../../Data/AnnouncementsData";
 import "./AnnouncementDetail.css";
 
 interface Announcement {
@@ -20,8 +21,8 @@ function AnnouncementDetail() {
     if (!announcement) {
         return (
             <div className="announcement-detail-page">
-                <button className="announcements-back" onClick={() => navigate(-1)}>
-                    ← back
+                <button className="announcements-back" onClick={() => navigate("/announcements")}>
+                    ← Back to Announcements
                 </button>
                 <p className="announcement-detail-not-found">Announcement not found.</p>
             </div>
@@ -36,8 +37,8 @@ function AnnouncementDetail() {
 
     return (
         <div className="announcement-detail-page">
-            <button className="announcements-back" onClick={() => navigate(-1)}>
-                ← back
+            <button className="announcements-back" onClick={() => navigate("/announcements")}>
+                ← Back to Announcements
             </button>
 
             <article className="announcement-detail-card">
@@ -48,12 +49,11 @@ function AnnouncementDetail() {
                 </header>
 
                 <div className="announcement-detail-divider" />
-
-                <div className="announcement-detail-body">
-                    <p>{announcement.description}</p>
+                <div className="announcement-markdown">
+                    <ReactMarkdown>{announcement.description}</ReactMarkdown>
                 </div>
-            </article>
-        </div>
+            </article >
+        </div >
     );
 }
 

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import announcements from "../../../Data/announcements.json";
+import { announcements } from "../../../Data/AnnouncementsData";
 import "./HomeTab.css";
 
 interface Announcement {

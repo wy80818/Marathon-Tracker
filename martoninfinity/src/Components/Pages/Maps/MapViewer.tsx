@@ -133,7 +133,7 @@ const MapViewer = () => {
             <div className="map-layout">
                 <div className="map-side-column">
                     <button className="map-back" onClick={() => navigate("/maps")}>
-                        Back to Maps
+                        ← Back to Maps
                     </button>
                     <div className="map-sidebar">
                         <h2>Maps</h2>
