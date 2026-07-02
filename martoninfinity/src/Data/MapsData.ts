@@ -26,6 +26,7 @@ import vaultIcon from "../assets/Markers/Vault.png"
 import supplyDropIcon from "../assets/Markers/Supply_Drop.png"
 import POIIcon from "../assets/Markers/POI.png"
 import securedResourceIcon from "../assets/Markers/Secured_Resource.png"
+import DCONIcon from "../assets/Markers/DCON.png"
 
 // Add new markers here in camelCase
 export type CategoryType =
@@ -55,7 +56,8 @@ export type MarkerType =
     | "supplyDrop"
     | "securedResource"
     | "poiLarge"
-    | "poiSmall";
+    | "poiSmall"
+    | "DCON";
 
 export interface Marker {
     id: string;
@@ -285,6 +287,16 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
             { x: 0.725, y: 0.281 },
             { x: 0.778, y: 0.467 },
             { x: 0.57, y: 0.714 }
+        ]
+    },
+    {
+        category: "map_objectives",
+        type: "DCON",
+        icon: DCONIcon,
+        defaultLabel: "DCON",
+        defaultDescription: "Guaranteed DCON spawn necessary for progressing contract objectives that require depositing items into.",
+        markers: [
+            { x: 0.715, y: 0.404 }
         ]
     },
     {
@@ -928,6 +940,17 @@ function createMarkers(groups: MarkerGroup[]): Marker[] {
 
 // Add for every new map added.
 export const maps: GameMap[] = [
+
+    {
+        id: "perimeter",
+        name: "Perimeter",
+        image: perimiter,
+        mapIcon: perimeterIcon,
+        width: 2224,
+        height: 1744,
+        markerGroups: markerGroups_Perimiter,
+        markers: createMarkers(markerGroups_Perimiter)
+    },
     {
         id: "marsh",
         name: "Dire Marsh",
@@ -947,16 +970,6 @@ export const maps: GameMap[] = [
         height: 1744,
         markerGroups: markerGroups_Outpost,
         markers: createMarkers(markerGroups_Outpost)
-    },
-    {
-        id: "perimeter",
-        name: "Perimeter",
-        image: perimiter,
-        mapIcon: perimeterIcon,
-        width: 2224,
-        height: 1744,
-        markerGroups: markerGroups_Perimiter,
-        markers: createMarkers(markerGroups_Perimiter)
     },
     {
         id: "cryo-archive",
