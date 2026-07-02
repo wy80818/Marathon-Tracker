@@ -1,3 +1,9 @@
+.react-zoom-pan-pinch {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
 .map-window {
     height: 75vh;
     display: flex;
