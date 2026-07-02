@@ -16,7 +16,7 @@
     gap: var(--space-md);
 }
 
-.maps-tab-card {
+.maps-tab-card { 
     display: flex;
     flex-direction: column;
     overflow: hidden;
