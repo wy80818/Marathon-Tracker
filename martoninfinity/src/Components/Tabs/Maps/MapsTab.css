@@ -51,7 +51,6 @@
 
 .maps-tab-card span {
     padding: var(--space-sm) var(--space-md);
-    font-family: 'Courier New', monospace;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
