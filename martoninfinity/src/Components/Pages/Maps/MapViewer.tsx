@@ -9,6 +9,9 @@ import type { Marker } from "../../../Data/MapsData";
 import { maps } from "../../../Data/MapsData";
 import MapCanvas from "./MapCanvas";
 
+const WRAPPER_STYLE = { width: "100%", height: "100%" };
+const CONTENT_STYLE = { pointerEvents: "auto" as const };
+
 const MapViewer = () => {
     const navigate = useNavigate();
     const { mapId } = useParams<{ mapId: string }>();
@@ -73,29 +76,6 @@ const MapViewer = () => {
             setSelectedMapId(mapId);
         }
     }, [mapId]);
-
-    // Prevent page scrolling when hovering over marker key content
-    useEffect(() => {
-        const el = document.querySelector<HTMLElement>(".map-key-content");
-        if (!el) return;
-
-        const handleWheel = (e: WheelEvent) => {
-            e.preventDefault();
-            el.scrollTop += e.deltaY;
-        };
-
-        el.addEventListener("wheel", handleWheel, { passive: false });
-        return () => el.removeEventListener("wheel", handleWheel);
-    }, []);
-
-    // Prevents page scrolling when hovering over the map
-    useEffect(() => {
-        const el = containerRef.current;
-        if (!el) return;
-        const stop = (e: WheelEvent) => e.preventDefault();
-        el.addEventListener("wheel", stop, { passive: false });
-        return () => el.removeEventListener("wheel", stop);
-    }, []);
 
     // Resets marker filters on map change.
     useEffect(() => {
@@ -251,11 +231,17 @@ const MapViewer = () => {
                             centerOnInit
                             limitToBounds
                             centerZoomedOut
-                            minScale={0.85}
+                            minScale={0.8}
                             maxScale={8}
-                            wheel={{ step: 0.005 }}
+                            smooth
+                            wheel={{
+                                step: 0.005
+                            }}
                             doubleClick={{ step: 1.5 }}
-                            velocityAnimation={{ animationTime: 400 }}
+                            velocityAnimation={{
+                                animationTime: 300,
+                                animationType: "easeOutCubic",
+                            }}
                             onTransform={({ state }) => setScale(state.scale)}
                         >
                             {
@@ -265,10 +251,7 @@ const MapViewer = () => {
                                     onMouseEnter={() => setIsHoveringMap(true)}
                                     onMouseLeave={() => setIsHoveringMap(false)}
                                 >
-                                    <TransformComponent
-                                        wrapperStyle={{ width: "100%", height: "100%" }}
-                                        contentStyle={{ pointerEvents: "auto" }}
-                                    >
+                                    <TransformComponent wrapperStyle={WRAPPER_STYLE} contentStyle={CONTENT_STYLE}>
                                         <MapCanvas
                                             ref={mapCanvasRef}
                                             map={currentMap}
