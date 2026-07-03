@@ -955,7 +955,7 @@ export const maps: GameMap[] = [
         markers: createMarkers(markerGroups_Perimiter)
     },
     {
-        id: "marsh",
+        id: "dire-marsh",
         name: "Dire Marsh",
         image: direMarsh,
         mapIcon: direIcon,
