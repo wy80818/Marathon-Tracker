@@ -785,6 +785,7 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
             { x: 0.393, y: 0.536 },
             { x: 0.472, y: 0.536 },
             { x: 0.551, y: 0.536 },
+            { x: 0.551, y: 0.444 },
             { x: 0.479, y: 0.488 },
             { x: 0.393, y: 0.536 },
             { x: 0.543, y: 0.488 },
@@ -817,9 +818,9 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
             { x: 0.35, y: 0.164 }, 
             { x: 0.433, y: 0.231, description: "Ground floor Scan Station necessary for discovering exfil stations, pickups, etc. Reveals more based on current crew security clearance level." }, 
             { x: 0.572, y: 0.169 },
-            { x: 0.675, y: 0.308 },
+            { x: 0.674, y: 0.308 },
             { x: 0.68, y: 0.458 },
-            { x: 0.68, y: 0.655 },
+            { x: 0.674, y: 0.658 },
             { x: 0.569, y: 0.811 },
             { x: 0.388, y: 0.381, description: "Secret Ground floor Vent Scan Station necessary for discovering exfil stations, pickups, etc. Reveals more based on current crew security clearance level." },
 
@@ -910,7 +911,7 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
             { x: 0.894, y: 0.62, label: "Foundation" },
             { x: 0.524, y: 0.308, label: "Tranquility (Derelict)" },
             { x: 0.524, y: 0.675, label: "Tranquility (Dormant)" },
-            { x: 0.819, y: 0.487, label: "Secret Labs" }
+            { x: 0.819, y: 0.487, label: "Secret Lab" }
         ]
     }
 ];
