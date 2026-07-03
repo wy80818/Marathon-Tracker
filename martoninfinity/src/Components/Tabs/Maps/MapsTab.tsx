@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { maps } from "../../../Data/MapsData";
+
 import "./MapsTab.css";
 
 const MapsTab = () => {

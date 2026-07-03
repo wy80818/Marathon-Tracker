@@ -4,6 +4,7 @@ import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import type { ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 
 import "./MapViewer.css";
+import Error from "../Error/Error";
 
 import type { Marker } from "../../../Data/MapsData";
 import { maps } from "../../../Data/MapsData";
@@ -15,7 +16,8 @@ const CONTENT_STYLE = { pointerEvents: "auto" as const };
 const MapViewer = () => {
     const navigate = useNavigate();
     const { mapId } = useParams<{ mapId: string }>();
-    const initialMapId = maps.some(m => m.id === mapId) ? mapId! : maps[0].id;
+    const mapExists = mapId ? maps.some(m => m.id === mapId) : true;
+    const initialMapId = mapId && mapExists ? mapId : maps[0].id;
 
     const [selectedMarker, setSelectedMarker] = useState<Marker | null>(null);
     const [displayedMapId, setDisplayedMapId] = useState(initialMapId);
@@ -128,12 +130,24 @@ const MapViewer = () => {
         };
     }, [currentMap.image]);
 
+    // Error page
+    if (mapId && !mapExists) {
+        return (
+            <Error
+                message="Map not found."
+                sub={`No map matches "${mapId}".`}
+                backlink="/maps"
+                backmsg="Back to Maps"
+            />
+        );
+    }
+
     return (
         <div className="map-window">
             <div className="map-layout">
                 <div className="map-side-column">
                     <button className="map-back" onClick={() => navigate("/maps")}>
-                        Back to Maps
+                        ← Back to Maps
                     </button>
                     <div className="map-sidebar">
                         <h2>Maps</h2>

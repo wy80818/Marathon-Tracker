@@ -3,14 +3,14 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import './App.css'
 
 import marathonLogo from './assets/Miscellaneous/Marathon_Logo_WordMark_Green.png'
-// import RunnerIcon from './assets/Icons/RunnerIcon.svg?react'
-// import WeaponIcon from './assets/Icons/SwordIcon.svg?react'
-import HomeIcon from './assets/Icons/HomeIcon.svg?react'
-import PatchNotesIcon from './assets/Icons/PatchNotesIcon.svg?react'
-import MapIcon from './assets/Icons/MapIcon.svg?react'
-// import PlayerLookupIcon from './assets/Icons/PlayerLookupIcon.svg?react'
-
-import Placeholder from './assets/Icons/Placeholder.svg?react'
+// import RunnerIcon from './assets/TabIcons/RunnerIcon.svg?react'
+// import WeaponIcon from './assets/TabIcons/SwordIcon.svg?react'
+import HomeIcon from './assets/TabIcons/HomeIcon.svg?react'
+import PatchNotesIcon from './assets/TabIcons/PatchNotesIcon.svg?react'
+import MapIcon from './assets/TabIcons/MapIcon.svg?react'
+import ItemIcon from './assets/TabIcons/ItemsIcon.svg?react'
+// import PlayerLookupIcon from './assets/TabIcons/PlayerLookupIcon.svg?react'
+import Placeholder from './assets/TabIcons/Placeholder.svg?react'
 
 import HomeTab from './Components/Tabs/Home/HomeTab';
 import PlayerLookupTab from './Components/Tabs/PlayerLookup/PlayerLookupTab';
@@ -40,7 +40,7 @@ const TABS: TabConfig[] = [
     { path: '/player-lookup', label: 'Player Lookup', ariaLabel: 'Go to Player Lookup tab', iconSvg: Placeholder, component: PlayerLookupTab },
     { path: '/shells', label: 'Shells', ariaLabel: 'Go to Shells tab', iconSvg: Placeholder, component: ShellsTab },
     { path: '/weapons', label: 'Weapons', ariaLabel: 'Go to Weapons tab', iconSvg: Placeholder, component: WeaponsTab },
-    { path: '/items', label: 'Items', ariaLabel: 'Go to Items tab', iconSvg: Placeholder, component: ItemsTab },
+    { path: '/items', label: 'Items', ariaLabel: 'Go to Items tab', iconSvg: ItemIcon, component: ItemsTab },
     { path: '/maps', label: 'Maps', ariaLabel: 'Go to Maps tab', iconSvg: MapIcon, component: MapsTab },
     { path: '/leaderboard', label: 'Leaderboard', ariaLabel: 'Go to Leaderboard tab', iconSvg: Placeholder, component: LeaderboardTab },
 ]
@@ -108,7 +108,6 @@ function TabLayout() {
                 style={{ transform: `translateY(${tabsOffset}%)` }}
             >
                 <div className="tabs-scroll-container">
-                    {/* left fade — only rendered when scrolled right */}
                     <div className={`tabs-fade tabs-fade--left ${scrollState.left ? 'visible' : ''}`} aria-hidden="true" />
 
                     <div

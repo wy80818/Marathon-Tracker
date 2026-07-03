@@ -8,6 +8,7 @@
 
 .announcements-page-header {
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
     margin-bottom: 2rem;
@@ -57,11 +58,12 @@
 .announcements-page-list {
     display: flex;
     flex-direction: column;
-    gap: 1px;
+    gap: 5px;
 }
 
 .announcements-page-bubble {
     display: flex;
+    background-color: var(--color-darker-bg);
     gap: 1.25rem;
     padding: 1.25rem 1rem;
     border-left: 2px solid transparent;

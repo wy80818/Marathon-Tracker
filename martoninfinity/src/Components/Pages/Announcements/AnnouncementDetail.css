@@ -45,13 +45,132 @@
     margin-bottom: 1.5rem;
 }
 
-.announcement-detail-body p {
-    font-size: 15px;
-    line-height: 1.8;
-    color: var(--color-text-light);
-    opacity: 0.9;
-    margin: 0;
+.announcement-markdown {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 65ch;
 }
+
+    /* Paragraphs & spacing */
+    .announcement-markdown p {
+        margin: 0 0 1em 0;
+    }
+
+        .announcement-markdown p:last-child {
+            margin-bottom: 0;
+        }
+
+    /* Headings */
+    .announcement-markdown h1,
+    .announcement-markdown h2,
+    .announcement-markdown h3 {
+        font-family: "Playfair Display", serif;
+        margin: 1.5em 0 0.5em 0;
+        font-weight: 700;
+        line-height: 1.3;
+        color: var(--color-lime);
+        text-shadow: 0 0 6px rgba(194, 254, 11, 0.25);
+    }
+
+    .announcement-markdown h1 {
+        font-size: 1.4rem;
+    }
+
+    .announcement-markdown h2 {
+        font-size: 1.2rem;
+    }
+
+    .announcement-markdown h3 {
+        font-size: 1.05rem;
+    }
+
+    /* Bold / italic */
+    .announcement-markdown strong {
+        font-weight: 700;
+        color: var(--color-lime);
+    }
+
+    .announcement-markdown em {
+        font-style: italic;
+        color: var(--color-cyan);
+        opacity: 0.85;
+    }
+
+    /* Lists */
+    .announcement-markdown ul,
+    .announcement-markdown ol {
+        margin: 0 0 1em 0;
+        padding-left: 1.4em;
+    }
+
+    .announcement-markdown li {
+        margin-bottom: 0.5em;
+    }
+
+        .announcement-markdown li::marker {
+            color: var(--color-cyan);
+            opacity: 0.6;
+        }
+
+    /* Links */
+    .announcement-markdown a {
+        color: var(--color-cyan);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        text-decoration-color: rgba(1, 255, 255, 0.4);
+        transition: text-decoration-color 0.2s ease, opacity 0.2s ease;
+    }
+
+        .announcement-markdown a:hover {
+            text-decoration-color: var(--color-cyan);
+            opacity: 0.85;
+        }
+
+    /* Blockquotes */
+    .announcement-markdown blockquote {
+        margin: 1.2em 0;
+        padding: 0.5em 0 0.5em 1em;
+        border-left: 2px solid rgba(194, 254, 11, 0.4);
+        color: rgba(255, 255, 255, 0.6);
+        font-style: italic;
+    }
+
+    /* Inline code */
+    .announcement-markdown code {
+        background: rgba(1, 255, 255, 0.08);
+        border: 1px solid rgba(1, 255, 255, 0.15);
+        color: var(--color-cyan);
+        padding: 0.15em 0.45em;
+        border-radius: 4px;
+        font-size: 0.88em;
+        font-family: "Fira Code", monospace;
+    }
+
+    /* Code blocks */
+    .announcement-markdown pre {
+        background: rgba(0, 0, 0, 0.35);
+        border: 1px solid rgba(1, 255, 255, 0.15);
+        color: rgba(255, 255, 255, 0.85);
+        padding: 1em;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 1.2em 0;
+        font-family: "Fira Code", monospace;
+    }
+
+        .announcement-markdown pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+    /* Horizontal rule */
+    .announcement-markdown hr {
+        border: none;
+        border-top: 1px solid rgba(1, 255, 255, 0.15);
+        margin: 1.75em 0;
+    }
 
 .announcement-detail-not-found {
     font-family: "Fira Code", monospace;
