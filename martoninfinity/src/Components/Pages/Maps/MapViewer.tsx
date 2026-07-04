@@ -96,7 +96,7 @@ const MapViewer = () => {
         const initial: Record<string, boolean> = {};
 
         Object.keys(groupedMarkers).forEach(category => {
-            initial[category] = false;
+            initial[category] = true;
         });
 
         setOpenCategories(initial);
