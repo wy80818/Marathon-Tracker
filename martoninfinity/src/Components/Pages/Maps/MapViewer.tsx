@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import type { ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 
@@ -27,7 +28,7 @@ const MapViewer = () => {
     const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
     const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
     const [visibleMarkers, setVisibleMarkers] = useState<Record<string, boolean>>({});
-    const [imageReady, setImageReady] = useState(true);
+    const [imageReady, setImageReady] = useState(false);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const mapCanvasRef = useRef<HTMLDivElement>(null);
@@ -299,7 +300,21 @@ const MapViewer = () => {
                                                         <img src={selectedMarker.icon} width={28} height={28} />
                                                         <h4>{selectedMarker.label}</h4>
                                                     </div>
-                                                    <p>{selectedMarker.description}</p>
+                                                    <ReactMarkdown
+                                                        components={{
+                                                            strong: ({ children }) => ( // **critical detail**
+                                                                <strong style={{ color: 'var(--color-red)', fontStyle: 'normal' }}>{children}</strong>
+                                                            ),
+                                                            em: ({ children }) => ( // *item* = Item
+                                                                <strong style={{ color: 'var(--color-lime)', fontStyle: 'normal' }}>{children}</strong>
+                                                            ),
+                                                            code: ({ children }) => ( // \`location\`
+                                                                <strong style={{ color: 'var(--color-cyan)', fontStyle: 'normal' }}>{children}</strong>
+                                                            )
+                                                        }}
+                                                    >
+                                                        {selectedMarker.description}
+                                                    </ReactMarkdown>
                                                     <button
                                                         className="marker-overlay-close"
                                                         onClick={() => setSelectedMarker(null)}

@@ -5,7 +5,7 @@ import "./MapsTab.css";
 
 const MapsTab = () => {
     return (
-        <div className="maps-tab">
+        <div className="tab-panel maps-tab">
             <h2>Maps</h2>
 
             <div className="maps-tab-grid">
