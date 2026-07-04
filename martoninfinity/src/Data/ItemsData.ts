@@ -36,7 +36,7 @@ export const items: item[] = [
         image: null,
         rarity: "Enhanced",
         sellPrice: "50",
-        description: "Heals 30 HP upon activation",
-        sources: "Test"
-    }
+        description: "Heals 30 HP upon activation"
+    },
+
 ]

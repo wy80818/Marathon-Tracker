@@ -1,13 +1,16 @@
+// Maps
 import direMarsh from "../assets/Maps/dire-marsh.png";
 import cryoArchive from "../assets/Maps/cryo-archive.png";
 import perimiter from "../assets/Maps/perimeter.png";
 import outpost from "../assets/Maps/outpost.png";
 
+// Map Icons
 import cryoIcon from "../assets/MapIcons/cryo.jpeg";
 import direIcon from "../assets/MapIcons/dire-marsh.jpeg";
 import perimeterIcon from "../assets/MapIcons/perimeter.jpeg";
 import outpostIcon from "../assets/MapIcons/outpost.jpeg"
 
+// Marker Icons
 import crewExfilIcon from "../assets/Markers/Crew_Exfil.png";
 import finalExfilIcon from "../assets/Markers/Final_Exfil.png";
 import hiddenFinalExfilIcon from "../assets/Markers/Hidden_Final_Exfil.png";
@@ -102,7 +105,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         type: "crewExfil",
         icon: crewExfilIcon,
         defaultLabel: "Crew Exfil",
-        defaultDescription: "Potential exfil location necessary for players to extract. Once activated, an audio que is played as well as a beam of light appears \
+        defaultDescription: "**Potential** exfil location necessary for players to extract. Once activated, an audio que is played as well as a beam of light appears \
                 in which it can be heard/seen by nearby Runners.",
         markers: [
             { x: 0.748, y: 0.385 },
@@ -120,9 +123,9 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         type: "finalExfil",
         icon: finalExfilIcon,
         defaultLabel: "Final Exfil",
-        defaultDescription: "Final exfil location. Only appears once the match timer reaches 0. Afterwards, \
-                    all Runners are given exactly 1 minute to reach the location before they are eliminated by \
-                    the match time limit. There is only 1 exfil ever.",
+        defaultDescription: "Final exfil location. Only appears **once** the match timer reaches 0. Afterwards, \
+                    all Runners are given exactly **1 minute** to reach the location before they are eliminated by \
+                    the match time limit. There is only **1** exfil ever.",
         markers: [
             { x: 0.608, y: 0.606 }
         ]
@@ -132,7 +135,8 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         type: "guardedExfil",
         icon: guardedExfilIcon,
         defaultLabel: "Guarded Exfil",
-        defaultDescription: "Potential exfil location. Functions exactly like a Crew Exfil, but when initialized by a Runner, spawns 1 UESC wave which includes a Commander.",
+        defaultDescription: "**Potential** exfil location. Functions exactly like a Crew Exfil, but when initialized \
+                    by a Runner, spawns **1 UESC wave** which includes a **Commander**.",
         markers: [
             { x: 0.33, y: 0.564 },
             { x: 0.509, y: 0.664 },
@@ -145,7 +149,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         type: "playerSpawn",
         icon: playerSpawnIcon,
         defaultLabel: "Player Spawn",
-        defaultDescription: "Potential Runner Crew spawn point. There are a maximum of 6 crews on this map.",
+        defaultDescription: "**Potential** Runner Crew spawn point. There are a maximum of **6** crews on this map.",
         markers: [
             { x: 0.503, y: 0.814 },
             { x: 0.145, y: 0.437 },
@@ -176,25 +180,25 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
                 x: 0.729,
                 y: 0.549,
                 label: "Complex Shed Keyroom",
-                description: "Located at the northermost shed in the vicinity. 2 doors for entry."
+                description: "Located at the `northermost shed` in the vicinity of `Complex`. 2 doors for entry."
             },
             {
                 x: 0.355,
                 y: 0.754,
                 label: "Maintenance Pump Keyroom",
-                description: "Located on the first floor. One door for entry and a shutter can be opened from the inside."
+                description: "Located on the `first floor` of `Maintenance`. One door for entry and a shutter can be opened from the inside."
             },
             {
                 x: 0.514,
                 y: 0.409,
                 label: "Greenhouse Lab Keyroom",
-                description: "Located inside on the first floor. Two doors as entry."
+                description: "Located inside `Greenhouse` on the `first floor`. Two doors as entry."
             },
             {
                 x: 0.454,
                 y: 0.571,
                 label: "Algae Ponds Office Keyroom",
-                description: "Located inside on the second floor. One door as entry and a shutter can be opened from the inside."
+                description: "Located inside on the `second floor` of `Algae Ponds`. One door as entry and a shutter can be opened from the inside."
             }
         ]
     },
@@ -209,20 +213,20 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
                 x: 0.355,
                 y: 0.733,
                 label: "Maintenance Canal Keyroom",
-                description: "Located in the underside of Maintenance. \
+                description: "Located in the `underside of Maintenance`. \
                 Multiple entryways and doors exist which all get unlocked once the key is used on any door."
             },
             {
                 x: 0.209,
                 y: 0.568,
                 label: "Quarantine Morgue Keyroom",
-                description: "Located under Quarantine, a stairway and ladder for two entryways to the room."
+                description: "Located `under Quarantine`, a stairway and ladder for two entryways to the room."
             },
             {
                 x: 0.666,
                 y: 0.249,
                 label: "Bio Research Lab Keyroom",
-                description: "Located on the second floor of Bio Research. Two doors as entry and a shutter can be opened from the inside."
+                description: "Located on the `second floor` of `Bio Research`. Two doors as entry and a shutter can be opened from the inside."
             },
         ]
     },
@@ -237,13 +241,13 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
                 x: 0.617,
                 y: 0.708,
                 label: "AI Uplink Keyroom",
-                description: "Located undeground with 3 doors and bulletproof glass. Can be approached from the west and the east."
+                description: "Located `undeground AI Uplink` with 3 doors and bulletproof glass. Can be approached from the west and the east."
             },
             {
                 x: 0.517,
                 y: 0.326,
                 label: "Greenhouse Operations Keyroom",
-                description: "Located on top of the greenhouses. Two doors as entry."
+                description: "Located on `top of a greenhouse`. Two doors as entry."
             }
         ]
     },
@@ -252,7 +256,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         type: "keyLockbox",
         icon: keyLockboxIcon,
         defaultLabel: "Lockbox Spawn",
-        defaultDescription: "Possible Lockbox location. Exactly one random location every match. Indicated by red flares. Room will contain multiple lockboxes.",
+        defaultDescription: "**Potential** Lockbox location. Exactly one random location every match. Indicated by `red flares`. Room will contain multiple lockboxes.",
         markers: [
             { x: 0.749, y: 0.643 },
             { x: 0.175, y: 0.580 }
@@ -263,7 +267,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         type: "supplyDrop",
         icon: supplyDropIcon,
         defaultLabel: "Supply Drop",
-        defaultDescription: "Potential Supply Drop location. Once activated, Runners must wait until it arrives in which 4 containers mostly containing weapon attachments \
+        defaultDescription: "**Potential** Supply Drop location. Once activated, Runners must wait until it arrives in which 4 containers mostly containing *weapon attachments* \
             get deployed. Beware of Supply Drop Ship thrusters when it arrives and leaves.",
         markers: [
             { x: 0.66, y: 0.548 },
@@ -277,7 +281,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         type: "securedResource",
         icon: securedResourceIcon,
         defaultLabel: "Secured Resource",
-        defaultDescription: "Potential Secured Resource spawn which provides early tier loot once completed. High chance for blue unique weapons. \
+        defaultDescription: "**Potential** Secured Resource spawn which provides early tier loot once completed. High chance for *deluxe unique weapons*. \
              Once activated, a timer will start along with a wave of UESC spawning as countermeasures.",
         markers: [
             { x: 0.189, y: 0.603 },
@@ -294,7 +298,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         type: "DCON",
         icon: DCONIcon,
         defaultLabel: "DCON",
-        defaultDescription: "Guaranteed DCON spawn necessary for progressing contract objectives that require depositing items into.",
+        defaultDescription: "DCON location necessary for progressing contract objectives that require depositing items into.",
         markers: [
             { x: 0.715, y: 0.404 }
         ]
@@ -337,7 +341,7 @@ export const markerGroups_Outpost: MarkerGroup[] = [
         type: "restrictedExfil",
         icon: restrictedExfilIcon,
         defaultLabel: "Restricted Exfil",
-        defaultDescription: "Potential exfil location. Works like a normal Crew Exfil, but requires one Red Master Clearance Code to activate.",
+        defaultDescription: "**Potential** exfil location. Works like a normal Crew Exfil, but requires one `Red Master Clearance Code` to activate.",
         markers: [
             { x: 0.639, y: 0.608 },
             { x: 0.596, y: 0.427 },
@@ -351,9 +355,9 @@ export const markerGroups_Outpost: MarkerGroup[] = [
         type: "finalExfil",
         icon: finalExfilIcon,
         defaultLabel: "Final Exfil",
-        defaultDescription: "Potential final exfil location. Only appears once the match timer reaches 0. Afterwards, \
-                    all Runners are given exactly 1 minute to reach the location before they are eliminated by \
-                    the match time limit. There is only 1 final exfil ever.",
+        defaultDescription: "**Potential** final exfil location. Only appears once the match timer reaches 0. Afterwards, \
+                    all Runners are given exactly **1 minute** to reach the location before they are eliminated by \
+                    the match time limit. There is only **1** final exfil ever.",
         markers: [
             { x: 0.499, y: 0.426 },
             { x: 0.387, y: 0.617 },
@@ -365,7 +369,8 @@ export const markerGroups_Outpost: MarkerGroup[] = [
         type: "guardedExfil",
         icon: guardedExfilIcon,
         defaultLabel: "Guarded Exfil",
-        defaultDescription: "Potential exfil location. Functions exactly like a Crew Exfil, but when initialized by a Runner, spawns 1 UESC wave which includes a Commander.",
+        defaultDescription: "**Potential** exfil location. Functions exactly like a Crew Exfil, but when initialized \
+                    by a Runner, spawns **1 UESC wave** which includes a **Commander**.",
         markers: [
             { x: 0.283, y: 0.659 },
             { x: 0.34, y: 0.763 },
@@ -381,7 +386,7 @@ export const markerGroups_Outpost: MarkerGroup[] = [
         type: "playerSpawn",
         icon: playerSpawnIcon,
         defaultLabel: "Player Spawn",
-        defaultDescription: "Potential Runner Crew spawn point. There are a maximum of 4 crews on this map.",
+        defaultDescription: "**Potential** Runner Crew spawn point. There are a maximum of **4** crews on this map.",
         markers: [
             { x: 0.473, y: 0.181 },
             { x: 0.313, y: 0.244 },
@@ -408,25 +413,25 @@ export const markerGroups_Outpost: MarkerGroup[] = [
                 x: 0.453,
                 y: 0.658,
                 label: "Processing Upper Keyroom",
-                description: "Located inside Processing on the uppermost level. Two doors for entry and bulletproof glass."
+                description: "Located `inside Processing` on the `uppermost level`. Two doors for entry and bulletproof glass."
             },
             {
                 x: 0.607,
                 y: 0.625,
                 label: "Dormitories Keyroom",
-                description: "Located on the second floor of Dormitories. One door for entry and bulletproof glass."
+                description: "Located on the `second floor` of `Dormitories`. One door for entry and bulletproof glass."
             },
             {
                 x: 0.559,
                 y: 0.388,
                 label: "Welcome Center Keyroom",
-                description: "Located on the second floor of Orientation. Two doors for entry and bulletproof glass."
+                description: "Located on the `second floor` of `Orientation`. Two doors for entry and bulletproof glass."
             },
             {
                 x: 0.474,
                 y: 0.242,
                 label: "Airfield Keyroom",
-                description: "Located on the uppermost level of Eastern Airfield. One door for entry and bulletproof glass."
+                description: "Located on the `uppermost level` of `Eastern Airfield`. One door for entry and bulletproof glass."
             }
         ]
     },
@@ -441,19 +446,19 @@ export const markerGroups_Outpost: MarkerGroup[] = [
                 x: 0.428,
                 y: 0.596,
                 label: "Processing Basement Keyroom",
-                description: "Located at the lowest level of Processing in the direction of Flight Control. Two doors for entry and bulletproof glass."
+                description: "Located `under Outpost` between `Processing` and `Flight Control`. Two doors for entry and bulletproof glass."
             },
             {
                 x: 0.458,
                 y: 0.447,
                 label: "Flight Control Keyroom",
-                description: "Located on the second floor of Flight Control. One door for entry and bulletproof glass with a vent for escape."
+                description: "Located on the `second floor` of `Flight Control`. One door for entry and bulletproof glass with a vent for escape."
             },
             {
                 x: 0.363,
                 y: 0.57,
                 label: "Drone Wing Keyroom",
-                description: "Located at the far end of the Drone Wing inside the Pinwheel. Two doors for entry and bulletproof glass."
+                description: "Located at the `far end` of the `Drone Wing` inside the `Pinwheel`. Two doors for entry and bulletproof glass."
             },
         ]
     },
@@ -468,13 +473,13 @@ export const markerGroups_Outpost: MarkerGroup[] = [
                 x: 0.607,
                 y: 0.733,
                 label: "Command Facility Keyroom",
-                description: "Located on the upper level of the Command Wing inside the Pinwheel. One door for entry and bulletproof glass."
+                description: "Located on the `upper level` of the `Command Wing` inside the `Pinwheel`. One door for entry and bulletproof glass."
             },
             {
                 x: 0.614,
                 y: 0.425,
                 label: "Destroyed Wing Keyroom",
-                description: "Located on the outside portion of destroyed wing. One door for entry."
+                description: "Located on the **outside** portion of `Destroyed Wing`. One door for entry."
             }
         ]
     },
@@ -513,7 +518,7 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         type: "crewExfil",
         icon: crewExfilIcon,
         defaultLabel: "Crew Exfil",
-        defaultDescription: "Potential exfil location necessary for players to extract. Once activated, an audio que is played as well as a beam of light appears \
+        defaultDescription: "**Potential** exfil location necessary for players to extract. Once activated, an audio que is played as well as a beam of light appears \
                 in which it can be heard/seen by nearby Runners.",
         markers: [
             { x: 0.398, y: 0.691 },
@@ -529,9 +534,9 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         type: "finalExfil",
         icon: finalExfilIcon,
         defaultLabel: "Final Exfil",
-        defaultDescription: "Final exfil location. Only appears once the match timer reaches 0. Afterwards, \
-                    all Runners are given exactly 1 minute to reach the location before they are eliminated by \
-                    the match time limit. There is only 1 exfil ever.",
+        defaultDescription: "**Potential** final exfil location. Only appears once the match timer reaches 0. Afterwards, \
+                    all Runners are given exactly **1 minute** to reach the location before they are eliminated by \
+                    the match time limit. There is only **1** final exfil ever.",
         markers: [
             { x: 0.487, y: 0.529 }
         ]
@@ -541,7 +546,8 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         type: "guardedExfil",
         icon: guardedExfilIcon,
         defaultLabel: "Guarded Exfil",
-        defaultDescription: "Potential exfil location. Functions exactly like a Crew Exfil, but when initialized by a Runner, spawns 1 UESC wave which includes a Commander.",
+        defaultDescription: "**Potential** exfil location. Functions exactly like a Crew Exfil, but when initialized \
+                    by a Runner, spawns **1 UESC wave** which includes a **Commander**.",
         markers: [
             { x: 0.532, y: 0.377 },
             { x: 0.532, y: 0.377 },
@@ -554,7 +560,7 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         type: "playerSpawn",
         icon: playerSpawnIcon,
         defaultLabel: "Player Spawn",
-        defaultDescription: "Potential Runner Crew spawn point. There are a maximum of 5 crews on this map.",
+        defaultDescription: "**Potential** Runner Crew spawn point. There are a maximum of **5** crews on this map.",
         markers: [
             { x: 0.786, y: 0.371 },
             { x: 0.755, y: 0.275 },
@@ -581,25 +587,25 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
                 x: 0.465,
                 y: 0.199,
                 label: "North Relay Storage Keyroom",
-                description: "Located in the Northernmost part of the second floor in North Relay. 2 doors for entry."
+                description: "Located in the `Northernmost` part of the `second floor` in `North Relay`. 2 doors for entry."
             },
             {
                 x: 0.643,
                 y: 0.412,
                 label: "Station Security Keyroom",
-                description: "Located inside the main Station building. 2 doors for entry with bulletproof glass."
+                description: "Located inside the main `Station` building. 2 doors for entry with bulletproof glass."
             },
             {
                 x: 0.615,
                 y: 0.542,
                 label: "Tunnels Office Keyroom",
-                description: "Located underground closest to the Southside entryway. 2 doors for entry."
+                description: "Located `underground` closest to the Southside entryway. 2 doors for entry."
             },
             {
                 x: 0.308,
                 y: 0.416,
                 label: "Terrace Keyroom",
-                description: "Located Northwest of Hauler outside. 2 doors for entry."
+                description: "Located `Northwest` of `Hauler` outside. 2 doors for entry."
             }
         ]
     },
@@ -614,13 +620,13 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
                 x: 0.387,
                 y: 0.75,
                 label: "Overflow Laboratory Keyroom",
-                description: "Located on the second floor of Overflow. One door for entry and a shutter can be opened from the inside."
+                description: "Located on the `second floor` of `Overflow`. One door for entry and a shutter can be opened from the inside."
             },
             {
                 x: 0.58,
                 y: 0.451,
                 label: "Data Wall Upper Level Keyroom",
-                description: "Located inside on the Easternmost side of Data Wall on the highest level. One door for entry with a vent as escape."
+                description: "Located `inside` on the `Easternmost` side of `Data Wall` on the `highest level`. One door for entry with a vent as escape."
             }
         ]
     },
@@ -635,14 +641,14 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
                 x: 0.626,
                 y: 0.681,
                 label: "South Relay Observation Keyroom",
-                description: "Located inside the large crane-like structure in the air. Can be approached normally with the stack of boxes \
+                description: "Located `inside` the `large crane-like structure` in the air. Can be approached normally with the `stack of boxes` \
                     Southwest of the marker. One doorway with a vent as escape."
             },
             {
                 x: 0.356,
                 y: 0.521,
                 label: "Hauler Observation Keyroom",
-                description: "Located on the 2nd floor of Hauler. 2 doors for entry."
+                description: "Located on the `2nd floor` of `Hauler`. 2 doors for entry."
             }
         ]
     },
@@ -651,7 +657,7 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         type: "keyLockbox",
         icon: keyLockboxIcon,
         defaultLabel: "Lockbox Spawn",
-        defaultDescription: "Possible Lockbox location. Exactly one random location every match. Indicated by red flares. Room will contain multiple lockboxes.",
+        defaultDescription: "**Potential** Lockbox location. Exactly one random location every match. Indicated by `red flares`. Room will contain multiple lockboxes.",
         markers: [
             { x: 0.635, y: 0.365 },
             { x: 0.464, y: 0.222 },
@@ -663,7 +669,7 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         type: "supplyDrop",
         icon: supplyDropIcon,
         defaultLabel: "Supply Drop",
-        defaultDescription: "Potential Supply Drop location. Once activated, Runners must wait until it arrives in which 4 containers mostly containing weapon attachments \
+        defaultDescription: "**Potential** Supply Drop location. Once activated, Runners must wait until it arrives in which 4 containers mostly containing *weapon attachments* \
             get deployed. Beware of Supply Drop Ship thrusters when it arrives and leaves.",
         markers: [
             { x: 0.681, y: 0.377 },
@@ -677,7 +683,7 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         type: "securedResource",
         icon: securedResourceIcon,
         defaultLabel: "Secured Resource",
-        defaultDescription: "Potential Secured Resource spawn which provides early tier loot once completed. High chance for blue unique weapons. \
+        defaultDescription: "**Potential** Secured Resource spawn which provides early tier loot once completed. High chance for *deluxe unique weapons*. \
              Once activated, a timer will start along with a wave of UESC spawning as countermeasures.",
         markers: [
             { x: 0.355, y: 0.488 },
@@ -724,7 +730,7 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
         type: "secretExfil",
         icon: secretExfilIcon,
         defaultLabel: "Secret Exfil",
-        defaultDescription: "Must be initiated by an Exfil Station. Afterwards, works just like a normal Crew Exfil other than a wave of UESC being nearby.",
+        defaultDescription: "Must be initiated by an `Exfil Station`. Afterwards, works just like a normal Crew Exfil other than a wave of UESC being nearby.",
         markers: [
             { x: 0.265, y: 0.492 },
             { x: 0.176, y: 0.313 },
@@ -746,13 +752,13 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
         markers: [
             { x: 0.419, y: 0.489 },
             {
-                x: 0.507, y: 0.306, description: "Located on the ground floor in the theatre. Works just like a normal Final Exfil, \
+                x: 0.507, y: 0.306, description: "Located on the `ground floor` in the `theatre`. Works just like a normal Final Exfil, \
                     but it does not show up on the map. 4 Commanders spawn nearby." },
             {
-                x: 0.619, y: 0.487, description: "Located on the second floor at the bottom of the lift. Works just like a normal Final Exfil, \
+                x: 0.619, y: 0.487, description: "Located on the `second floor` at the `bottom of the lift`. Works just like a normal Final Exfil, \
                     but it does not show up on the map. 4 Commanders spawn nearby." },
             {
-                x: 0.512, y: 0.677, description: "Located on the ground floor in the theatre. Works just like a normal Final Exfil, \
+                x: 0.512, y: 0.677, description: "Located on the `ground floor` in the `theatre`. Works just like a normal Final Exfil, \
                     but it does not show up on the map. 4 Commanders spawn nearby." }
         ]
     },
@@ -761,8 +767,8 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
         type: "playerSpawn",
         icon: playerSpawnIcon,
         defaultLabel: "Player Spawn",
-        defaultDescription: "Potential Runner Crew spawn point. There are a maximum of 5 crews on this map. The side that ends up not having a \
-                    Runner Crew spawn will end up with a Pump Credentials spawn.",
+        defaultDescription: "**Potential** Runner Crew spawn point. There are a maximum of **5** crews on this map. The side that ends up not having a \
+                    Runner Crew spawn will end up with a `Pump Credentials spawn`.",
         markers: [
             { x: 0.718, y: 0.073 },
             { x: 0.05, y: 0.178 },
@@ -777,14 +783,16 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
         type: "exfilStation",
         icon: exfilStation,
         defaultLabel: "Exfil Station",
-        defaultDescription: "Potential Exfil Station spawn point. Required to summon a Secret Exfil. After activation, Runners are advised to \
-                    look at their map afterwards for the appearance of the Secret Exfil.",
+        defaultDescription: "**Potential** Exfil Station spawn point. **Only visible** on the map when interacting with a `Scan Station` while having *Clearance \
+                    Level 3* or more. Required to summon a `Secret Exfil`. After activation, Runners are advised to \
+                    look at their `map` afterwards for the appearance of the Secret Exfil.",
         markers: [
             { x: 0.472, y: 0.444 },
             { x: 0.393, y: 0.444 },
             { x: 0.393, y: 0.536 },
             { x: 0.472, y: 0.536 },
             { x: 0.551, y: 0.536 },
+            { x: 0.551, y: 0.444 },
             { x: 0.479, y: 0.488 },
             { x: 0.393, y: 0.536 },
             { x: 0.543, y: 0.488 },
@@ -802,26 +810,26 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
         type: "scanStation",
         icon: scanStation,
         defaultLabel: "Scan Station",
-        defaultDescription: "Scan Station necessary for discovering exfil stations, pickups, etc. Reveals more based on current crew security clearance level.",
+        defaultDescription: "Scan Station necessary for discovering exfil stations, pickups, etc. Reveals more based on current crew *Security Clearance Level*.",
         markers: [
-            { x: 0.457, y: 0.392, description: "2nd floor Scan Station necessary for discovering exfil stations, pickups, etc. Reveals more based on current crew security clearance level." },
+            { x: 0.457, y: 0.392, description: "`2nd floor` Scan Station necessary for discovering exfil stations, pickups, etc. Reveals more based on current crew security clearance level." },
             { x: 0.296, y: 0.402 },
             { x: 0.296, y: 0.576 },
-            { x: 0.457, y: 0.588, description: "2nd floor Scan Station necessary for discovering exfil stations, pickups, etc. Reveals more based on current crew security clearance level." },
+            { x: 0.457, y: 0.588, description: "`2nd floor` Scan Station necessary for discovering exfil stations, pickups, etc. Reveals more based on current crew security clearance level." },
             { x: 0.173, y: 0.703 },
             { x: 0.281, y: 0.747 },
-            { x: 0.414, y: 0.755, description: "Ground floor Scan Station necessary for discovering exfil stations, pickups, etc. Reveals more based on current crew security clearance level." },
-            { x: 0.5, y: 0.858, description: "2nd floor Scan Station necessary for discovering exfil stations, pickups, etc. Reveals more based on current crew security clearance level." },
-            { x: 0.568, y: 0.443, description: "2nd floor Scan Station necessary for discovering exfil stations, pickups, etc. Reveals more based on current crew security clearance level." },
+            { x: 0.414, y: 0.755, description: "`Ground floor` Scan Station necessary for discovering exfil stations, pickups, etc. Reveals more based on current crew security clearance level." },
+            { x: 0.5, y: 0.858, description: "`2nd floor` Scan Station necessary for discovering exfil stations, pickups, etc. Reveals more based on current crew security clearance level." },
+            { x: 0.568, y: 0.443, description: "`2nd floor` Scan Station necessary for discovering exfil stations, pickups, etc. Reveals more based on current crew security clearance level." },
             { x: 0.277, y: 0.278},
             { x: 0.35, y: 0.164 }, 
-            { x: 0.433, y: 0.231, description: "Ground floor Scan Station necessary for discovering exfil stations, pickups, etc. Reveals more based on current crew security clearance level." }, 
+            { x: 0.433, y: 0.231, description: "`Ground floor` Scan Station necessary for discovering exfil stations, pickups, etc. Reveals more based on current crew security clearance level." }, 
             { x: 0.572, y: 0.169 },
-            { x: 0.675, y: 0.308 },
+            { x: 0.674, y: 0.308 },
             { x: 0.68, y: 0.458 },
-            { x: 0.68, y: 0.655 },
+            { x: 0.674, y: 0.658 },
             { x: 0.569, y: 0.811 },
-            { x: 0.388, y: 0.381, description: "Secret Ground floor Vent Scan Station necessary for discovering exfil stations, pickups, etc. Reveals more based on current crew security clearance level." },
+            { x: 0.388, y: 0.381, description: "`Secret Ground floor` Vent Scan Station necessary for discovering exfil stations, pickups, etc. Reveals more based on current crew security clearance level." },
 
         ]
     },
@@ -830,8 +838,8 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
         type: "elevator",
         icon: elevatorIcon,
         defaultLabel: "Elevator",
-        defaultDescription: "Requires security clearance 3, brings you to the Labs which resides above the map and where Vault 6 and 7 reside. Remember to bring Antivirus. \
-                There is also a vent next to the elevator which gives the same access as the elevator would.",
+        defaultDescription: "Requires *Security Clearance 3*, brings you to the `Labs` which resides above the map and where `Vault 6 and 7` reside. Remember to bring *Antivirus*. \
+                There is also a `vent` next to the elevator which gives the same access as the elevator would.",
         markers: [
             { x: 0.582, y: 0.3 },
             { x: 0.582, y: 0.676 }
@@ -848,32 +856,32 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
                 x: 0.43,
                 y: 0.612,
                 label: "Vault 1",
-                description: "Vault room which yields valuable loot once the requirements have been met: 5 Batteries."
+                description: "Vault room which yields valuable loot once the requirements have been met: *5 Batteries*."
             },
             {
                 x: 0.619,
                 y: 0.342,
                 label: "Vault 2",
-                description: "Vault room which yields valuable loot once the requirements have been met: 6 Batteries, 1 Cryo Coolant."
+                description: "Vault room which yields valuable loot once the requirements have been met: *6 Batteries, 1 Cryo Coolant*."
             },
             {
                 x: 0.63,
                 y: 0.631,
                 label: "Vault 3",
-                description: "Vault room which yields valuable loot once the requirements have been met: 4 Batteries, Pump Credentials."
+                description: "Vault room which yields valuable loot once the requirements have been met: *4 Batteries, Pump Credentials*."
             },
             {
                 x:
                     0.43,
                 y: 0.365,
                 label: "Vault 4",
-                description: "Vault room which yields valuable loot once the requirements have been met: 8 Batteries, 1 Cryo Coolant, Clearance Level 3, Colonist Credentials."
+                description: "Vault room which yields valuable loot once the requirements have been met: *8 Batteries, 1 Cryo Coolant, Clearance Level 3, Colonist Credentials*."
             },
             {
                 x: 0.249,
                 y: 0.5,
                 label: "Vault 5",
-                description: "Vault room which yields valuable loot once the requirements have been met: 5 Batteries, 1 Cryo Coolant, Tranquility Credentials."
+                description: "Vault room which yields valuable loot once the requirements have been met: *5 Batteries, 1 Cryo Coolant, Tranquility Credentials*."
             }
         ]
     },
@@ -910,7 +918,7 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
             { x: 0.894, y: 0.62, label: "Foundation" },
             { x: 0.524, y: 0.308, label: "Tranquility (Derelict)" },
             { x: 0.524, y: 0.675, label: "Tranquility (Dormant)" },
-            { x: 0.819, y: 0.487, label: "Secret Labs" }
+            { x: 0.819, y: 0.487, label: "Secret Lab" }
         ]
     }
 ];
