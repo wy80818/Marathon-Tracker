@@ -1,0 +1,83 @@
+.custom-dropdown {
+    position: relative;
+    flex: 0 0 auto;
+    width: fit-content;
+    min-width: 160px;
+}
+
+.custom-dropdown-trigger {
+    width: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-family: "Fira Code", monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--color-cyan);
+    background-color: var(--color-darker-bg);
+    border: 1px solid rgba(1, 255, 255, 0.2);
+    border-radius: 6px;
+    padding: 9px 14px;
+    opacity: 0.85;
+    cursor: url("/cursors/pointer.svg") 2 0, pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .custom-dropdown-trigger:hover,
+    .custom-dropdown-trigger.open {
+        opacity: 1;
+        border-color: rgba(1, 255, 255, 0.5);
+        background-color: rgba(1, 255, 255, 0.05);
+    }
+
+.custom-dropdown-arrow {
+    width: 10px;
+    height: 6px;
+    color: var(--color-cyan);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+.custom-dropdown-trigger.open .custom-dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.custom-dropdown-menu {
+    position: fixed;
+    width: max-content;
+    max-width: 240px;
+    background: var(--color-darker-bg);
+    border: 1px solid rgba(1, 255, 255, 0.25);
+    border-radius: 8px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(1, 255, 255, 0.03);
+    list-style: none;
+    margin: 0;
+    padding: 6px;
+    z-index: 1000;
+    max-height: 240px;
+    overflow-y: auto;
+    animation: fadeIn 0.15s ease-in;
+}
+
+.custom-dropdown-option {
+    font-family: "Fira Code", monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--color-text-light);
+    padding: 8px 10px;
+    border-radius: 5px;
+    cursor: url("/cursors/pointer.svg") 2 0, pointer;
+    transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+    .custom-dropdown-option.highlighted {
+        background: rgba(1, 255, 255, 0.1);
+        color: var(--color-cyan);
+    }
+
+    .custom-dropdown-option.selected {
+        color: var(--color-lime);
+        font-weight: 600;
+    }
