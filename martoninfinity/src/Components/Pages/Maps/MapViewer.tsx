@@ -246,7 +246,7 @@ const MapViewer = () => {
                             centerOnInit
                             limitToBounds
                             centerZoomedOut
-                            minScale={0.8}
+                            minScale={0.85}
                             maxScale={8}
                             smooth
                             wheel={{

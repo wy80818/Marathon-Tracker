@@ -7,13 +7,13 @@
     animation: fadeIn 0.3s ease-in;
 }
 
-    .tab-content-inner h2 {
-        font-family: "Playfair Display", serif;
-        font-size: clamp(1.25rem, 3vw, 1.75rem);
-        color: var(--color-lime);
-        text-shadow: 0 0 8px rgba(194, 254, 11, 0.3);
-        margin: 0 0 var(--space-md);
-    }
+.tab-content-inner h2 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    color: var(--color-lime);
+    text-shadow: 0 0 8px rgba(194, 254, 11, 0.3);
+    margin: 0 0 var(--space-md);
+}
 
 .items-controls {
     display: flex;
@@ -220,6 +220,72 @@
         outline-offset: 2px;
     }
 
+
+.item-rarity {
+    font-family: "Fira Code", monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+    position: relative;
+    isolation: isolate;
+}
+
+.rarity-standard {
+    background: repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.06) 0px, rgba(255, 255, 255, 0.06) 1px, transparent 1px, transparent 4px), linear-gradient(135deg, var(--color-darker-bg) 0%, rgba(255, 255, 255, 0.18) 100%);
+    border-color: rgba(255, 255, 255, 0.35);
+}
+
+.rarity-enhanced {
+    background: repeating-linear-gradient(115deg, rgba(2, 245, 135, 0.08) 0px, rgba(2, 245, 135, 0.08) 1px, transparent 1px, transparent 4px), linear-gradient(135deg, var(--color-darker-bg) 0%, rgba(2, 245, 135, 0.22) 100%);
+    border-color: rgba(2, 245, 135, 0.45);
+    box-shadow: 0 0 6px rgba(2, 245, 135, 0.25), inset 0 0 6px rgba(2, 245, 135, 0.08);
+    text-shadow: 0 0 6px rgba(2, 245, 135, 0.5);
+}
+
+.rarity-deluxe {
+    background: repeating-linear-gradient(115deg, rgba(81, 167, 241, 0.08) 0px, rgba(81, 167, 241, 0.08) 1px, transparent 1px, transparent 4px), linear-gradient(135deg, var(--color-darker-bg) 0%, rgba(81, 167, 241, 0.22) 100%);
+    border-color: rgba(81, 167, 241, 0.45);
+    box-shadow: 0 0 6px rgba(81, 167, 241, 0.25), inset 0 0 6px rgba(81, 167, 241, 0.08);
+    text-shadow: 0 0 6px rgba(81, 167, 241, 0.5);
+}
+
+.rarity-superior {
+    background: repeating-linear-gradient(115deg, rgba(194, 50, 247, 0.08) 0px, rgba(194, 50, 247, 0.08) 1px, transparent 1px, transparent 4px), linear-gradient(135deg, var(--color-darker-bg) 0%, rgba(194, 50, 247, 0.24) 100%);
+    border-color: rgba(194, 50, 247, 0.5);
+    box-shadow: 0 0 7px rgba(194, 50, 247, 0.3), inset 0 0 6px rgba(194, 50, 247, 0.1);
+    text-shadow: 0 0 7px rgba(194, 50, 247, 0.55);
+}
+
+.rarity-prestige {
+    background: repeating-linear-gradient(115deg, rgba(234, 220, 21, 0.08) 0px, rgba(234, 220, 21, 0.08) 1px, transparent 1px, transparent 4px), linear-gradient(135deg, var(--color-darker-bg) 0%, rgba(234, 220, 21, 0.24) 100%);
+    border-color: rgba(234, 220, 21, 0.5);
+    box-shadow: 0 0 7px rgba(234, 220, 21, 0.3), inset 0 0 6px rgba(234, 220, 21, 0.1);
+    text-shadow: 0 0 7px rgba(234, 220, 21, 0.55);
+}
+
+.rarity-contraband {
+    background: repeating-linear-gradient(115deg, rgba(233, 48, 45, 0.09) 0px, rgba(233, 48, 45, 0.09) 1px, transparent 1px, transparent 4px), linear-gradient(135deg, var(--color-darker-bg) 0%, rgba(233, 48, 45, 0.26) 100%);
+    border-color: rgba(233, 48, 45, 0.55);
+    box-shadow: 0 0 8px rgba(233, 48, 45, 0.35), inset 0 0 6px rgba(233, 48, 45, 0.12);
+    text-shadow: 0 0 8px rgba(233, 48, 45, 0.6);
+    animation: pulse-contraband 2s ease-in-out infinite;
+}
+
+@keyframes pulse-contraband {
+    0%, 100% {
+        box-shadow: 0 0 8px rgba(233, 48, 45, 0.35), inset 0 0 6px rgba(233, 48, 45, 0.12);
+    }
+
+    50% {
+        box-shadow: 0 0 14px rgba(233, 48, 45, 0.6), inset 0 0 8px rgba(233, 48, 45, 0.2);
+    }
+}
+
 .item-image {
     width: 44px;
     height: 44px;
@@ -269,14 +335,6 @@
     font-weight: 600;
     color: var(--color-text-light);
     letter-spacing: 0.02em;
-}
-
-.item-rarity {
-    font-family: "Fira Code", monospace;
-    font-size: 10px;
-    letter-spacing: 0.06em;
-    padding: 2px 8px;
-    border-radius: 999px;
 }
 
 .item-price {
@@ -396,7 +454,8 @@
 
     .item-modal-close:hover {
         opacity: 1;
-        background: rgba(1, 255, 255, 0.1);
+        background: red;
+        color: black;
     }
 
     .item-modal-close:active {

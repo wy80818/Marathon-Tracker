@@ -1,12 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { items, type categoryType, type rarityType } from "../../../Data/ItemsData";
+import ReactMarkdown from 'react-markdown';
+import { items, categories, rarities, type categoryType, type rarityType } from "../../../Data/ItemsData";
 import type { item } from "../../../Data/ItemsData";
 
 import Dropdown from "../../Functions/Dropdown/Dropdown"
 import "./ItemsTab.css";
-
-const categories: categoryType[] = ["Consumable", "Salvage", "Equipment"];
-const rarities: rarityType[] = ["Standard", "Enhanced", "Deluxe", "Superior", "Prestige"];
 
 interface Filters {
     category: categoryType | "All";
@@ -31,12 +29,14 @@ function ItemsTab() {
     };
 
     const filteredItems = useMemo(() => {
-        return items.filter((it) => {
-            const matchesCategory = filters.category === "All" || it.category === filters.category;
-            const matchesRarity = filters.rarity === "All" || it.rarity === filters.rarity;
-            const matchesSearch = it.name.toLowerCase().includes(search.toLowerCase());
-            return matchesCategory && matchesRarity && matchesSearch;
-        });
+        return items
+            .filter((it) => {
+                const matchesCategory = filters.category === "All" || it.category === filters.category;
+                const matchesRarity = filters.rarity === "All" || it.rarity === filters.rarity;
+                const matchesSearch = it.name.toLowerCase().includes(search.toLowerCase());
+                return matchesCategory && matchesRarity && matchesSearch;
+            })
+            .sort((a, b) => a.name.localeCompare(b.name));
     }, [filters, search]);
 
     const handleGridScroll = () => {
@@ -53,7 +53,7 @@ function ItemsTab() {
     return (
         <div className="tab-content-inner">
             <h2>Items</h2>
-            <p>DEV: Will add items over time</p><br></br>
+            <p>DEV: Holding off on items manually, would probably be better to wait for API</p><br></br>
             <div className="items-controls">
                 <input
                     type="text"
@@ -138,7 +138,7 @@ function ItemsTab() {
                             {selectedItem.sources && (
                                 <div className="item-modal-sources">
                                     <span className="item-modal-sources-label">Sources</span>
-                                    <p>{selectedItem.sources}</p>
+                                    <ReactMarkdown>{selectedItem.sources}</ReactMarkdown>
                                 </div>
                             )}
                         </div>
