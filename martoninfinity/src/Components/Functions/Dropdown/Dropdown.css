@@ -1,12 +1,11 @@
 .custom-dropdown {
     position: relative;
     flex: 0 0 auto;
-    width: fit-content;
-    min-width: 160px;
+    width: 160px; /* was width: fit-content; min-width: 160px; */
 }
 
 .custom-dropdown-trigger {
-    width: auto;
+    width: 100%; /* was width: auto; */
     display: inline-flex;
     align-items: center;
     justify-content: space-between;

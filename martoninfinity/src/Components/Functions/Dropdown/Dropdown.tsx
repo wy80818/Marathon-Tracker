@@ -4,7 +4,7 @@ import "./Dropdown.css";
 
 interface DropdownProps<T extends string> {
     value: T | "All";
-    options: T[];
+    options: readonly T[];
     allLabel: string;
     onChange: (value: T | "All") => void;
 }

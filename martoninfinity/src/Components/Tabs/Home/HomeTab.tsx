@@ -24,6 +24,7 @@ function HomeTab() {
                 <div className="home-main">
                     <h2>Home Screen</h2>
                     <p>Select a tab to navigate through the application.</p>
+                    <p>Any tab with an icon (not a "!") has features implemented that can be used!</p>
                 </div>
                 <div className="announcements">
                     <span className="announcements-label">// announcements</span>
