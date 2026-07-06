@@ -24,7 +24,7 @@ function AnnouncementDetail() {
         return (
             <Error
                 message="Announcement not found."
-                sub={`The announcement belonging to ID = ${id} you're looking for doesn't exist or has been moved.`}
+                sub={`The announcement belonging to ID = ${id} doesn't exist or has been moved.`}
                 backlink="/announcements"
                 backmsg="Back to All Announcements"
             />

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { items, categories, rarities, type categoryType, type rarityType } from "../../../Data/ItemsData";
@@ -20,7 +20,8 @@ const defaultFilters: Filters = {
 };
 
 const SCRAMBLE_CHARS = "`1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>?";
-const DECRYPT_DURATION_MS = 600;
+const DECRYPT_DURATION_MS = 1000;
+const DecryptAllContext = createContext(0);
 
 function Spoiler({ children }: { children?: React.ReactNode }) {
     const [revealed, setRevealed] = useState(false);
@@ -29,6 +30,9 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
     const idleIntervalsRef = useRef<ReturnType<typeof setInterval>[]>([]);
     const charIntervalsRef = useRef<ReturnType<typeof setInterval>[]>([]);
     const charTimeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+    const decryptAllSignal = useContext(DecryptAllContext);
+    const prevSignalRef = useRef(decryptAllSignal);
 
     const originalText = typeof children === "string" ? children : "";
 
@@ -57,7 +61,7 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
         letters.forEach((ch, i) => {
             if (ch === " ") return;
 
-            const scrambleSpeed = 60 + Math.random() * 80; // 60-140ms, each char its own rate
+            const scrambleSpeed = 60 + Math.random() * 50; // 60-110ms, each char its own rate
             const interval = setInterval(() => {
                 setChars((prev) => {
                     const next = [...prev];
@@ -89,7 +93,7 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
                 return;
             }
 
-            const scrambleSpeed = 30 + Math.random() * 50; // 30-80ms
+            const scrambleSpeed = 60 + Math.random() * 50; // 60-110ms
             const interval = setInterval(() => {
                 setChars((prev) => {
                     const next = [...prev];
@@ -116,6 +120,13 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
             charTimeoutsRef.current.push(timeout);
         });
     };
+
+    useEffect(() => {
+        if (decryptAllSignal !== prevSignalRef.current) {
+            prevSignalRef.current = decryptAllSignal;
+            startDecrypt();
+        }
+    }, [decryptAllSignal]);
 
     useEffect(() => {
         return () => {
@@ -151,11 +162,17 @@ function ItemsTab() {
     const [selectedItem, setSelectedItem] = useState<item | null>(null);
     const [atTop, setAtTop] = useState(true);
     const [atBottom, setAtBottom] = useState(false);
+    const [decryptAllSignal, setDecryptAllSignal] = useState(0);
     const gridScrollRef = useRef<HTMLDivElement>(null);
 
     const updateFilter = <K extends keyof Filters>(key: K, value: Filters[K]) => {
         setFilters((prev) => ({ ...prev, [key]: value }));
     };
+
+    const hasSpoilers = useMemo(() => {
+        if (!selectedItem?.sources) return false;
+        return /~~.+?~~/s.test(selectedItem.sources);
+    }, [selectedItem]);
 
     const filteredItems = useMemo(() => {
         return items
@@ -269,11 +286,23 @@ function ItemsTab() {
                             <p className="item-modal-description">{selectedItem.description}</p>
                             {selectedItem.sources && (
                                 <div className="item-modal-sources">
-                                    <span className="item-modal-sources-label">Sources</span>
-                                    <ReactMarkdown
-                                        remarkPlugins={[remarkGfm]}
-                                        components={{ del: Spoiler }}
-                                    >{selectedItem.sources}</ReactMarkdown>
+                                    <div className="item-modal-sources-header">
+                                        <span className="item-modal-sources-label">Sources</span>
+                                        {hasSpoilers && (
+                                            <button
+                                                className="decrypt-all-btn"
+                                                onClick={() => setDecryptAllSignal((s) => s + 1)}
+                                            >
+                                                Decrypt All
+                                            </button>
+                                        )}
+                                    </div>
+                                    <DecryptAllContext.Provider value={decryptAllSignal}>
+                                        <ReactMarkdown
+                                            remarkPlugins={[remarkGfm]}
+                                            components={{ del: Spoiler }}
+                                        >{selectedItem.sources}</ReactMarkdown>
+                                    </DecryptAllContext.Provider>
                                 </div>
                             )}
                         </div>

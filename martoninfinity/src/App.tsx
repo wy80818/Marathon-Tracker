@@ -52,6 +52,7 @@ function TabLayout() {
     const tabsListRef = useRef<HTMLDivElement>(null)
     const [scrollState, setScrollState] = useState({ left: false, right: false })
 
+    // Hide and show tabs when scrolling down and up respectively
     useEffect(() => {
         let lastY = window.scrollY;
         let currentOffset = 0;
@@ -77,6 +78,7 @@ function TabLayout() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    // Tab fade-out effect
     useEffect(() => {
         const el = tabsListRef.current
         if (!el) return
