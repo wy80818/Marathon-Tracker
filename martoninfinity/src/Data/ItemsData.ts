@@ -32,6 +32,7 @@ export interface item {
 
 // const prestigeCoreSellPrice = "3,000";
 
+// ~~spoiler~~ for spoiler
 export const items: item[] = [
     {
         category: "Consumable",
@@ -86,6 +87,7 @@ export const items: item[] = [
         image: null,
         rarity: "Contraband",
         sellPrice: "8,000",
-        description: "A piece of a Compiler's nervous system."
+        description: "A piece of a Compiler's nervous system.",
+        sources: "Guaranteed after killing ~~the Compiler~~ located ~~in the Lab above Cryo Archive~~."
     }
 ]   

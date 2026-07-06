@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { items, categories, rarities, type categoryType, type rarityType } from "../../../Data/ItemsData";
 import type { item } from "../../../Data/ItemsData";
+
+import CreditIcon from "../../../assets/Miscellaneous/Credits.svg?react"
 
 import Dropdown from "../../Functions/Dropdown/Dropdown"
 import "./ItemsTab.css";
@@ -15,6 +18,132 @@ const defaultFilters: Filters = {
     category: "All",
     rarity: "All",
 };
+
+const SCRAMBLE_CHARS = "`1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>?";
+const DECRYPT_DURATION_MS = 600;
+
+function Spoiler({ children }: { children: React.ReactNode }) {
+    const [revealed, setRevealed] = useState(false);
+    const [decrypting, setDecrypting] = useState(false);
+    const [chars, setChars] = useState<string[]>([]);
+    const idleIntervalsRef = useRef<ReturnType<typeof setInterval>[]>([]);
+    const charIntervalsRef = useRef<ReturnType<typeof setInterval>[]>([]);
+    const charTimeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+    const originalText = typeof children === "string" ? children : "";
+
+    const randomChar = () =>
+        SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+
+    const clearIdleTimers = () => {
+        idleIntervalsRef.current.forEach(clearInterval);
+        idleIntervalsRef.current = [];
+    };
+
+    const clearDecryptTimers = () => {
+        charIntervalsRef.current.forEach(clearInterval);
+        charTimeoutsRef.current.forEach(clearTimeout);
+        charIntervalsRef.current = [];
+        charTimeoutsRef.current = [];
+    };
+
+    // Idle scramble before click — each character flickers on its own independent interval
+    useEffect(() => {
+        if (revealed || decrypting) return;
+
+        const letters = originalText.split("");
+        setChars(letters.map((ch) => (ch === " " ? " " : randomChar())));
+
+        letters.forEach((ch, i) => {
+            if (ch === " ") return;
+
+            const scrambleSpeed = 60 + Math.random() * 80; // 60-140ms, each char its own rate
+            const interval = setInterval(() => {
+                setChars((prev) => {
+                    const next = [...prev];
+                    next[i] = randomChar();
+                    return next;
+                });
+            }, scrambleSpeed);
+            idleIntervalsRef.current.push(interval);
+        });
+
+        return () => clearIdleTimers();
+    }, [revealed, decrypting, originalText]);
+
+    const startDecrypt = () => {
+        if (revealed || decrypting) return;
+        setDecrypting(true);
+        clearIdleTimers();
+
+        const letters = originalText.split("");
+        let lockedCount = 0;
+
+        letters.forEach((ch, i) => {
+            if (ch === " ") {
+                lockedCount += 1;
+                if (lockedCount === letters.length) {
+                    setDecrypting(false);
+                    setRevealed(true);
+                }
+                return;
+            }
+
+            const scrambleSpeed = 30 + Math.random() * 50; // 30-80ms
+            const interval = setInterval(() => {
+                setChars((prev) => {
+                    const next = [...prev];
+                    next[i] = randomChar();
+                    return next;
+                });
+            }, scrambleSpeed);
+            charIntervalsRef.current.push(interval);
+
+            const lockDelay = Math.random() * DECRYPT_DURATION_MS;
+            const timeout = setTimeout(() => {
+                clearInterval(interval);
+                setChars((prev) => {
+                    const next = [...prev];
+                    next[i] = ch;
+                    return next;
+                });
+                lockedCount += 1;
+                if (lockedCount === letters.length) {
+                    setDecrypting(false);
+                    setRevealed(true);
+                }
+            }, lockDelay);
+            charTimeoutsRef.current.push(timeout);
+        });
+    };
+
+    useEffect(() => {
+        return () => {
+            clearIdleTimers();
+            clearDecryptTimers();
+        };
+    }, []);
+
+    const style: React.CSSProperties = {
+        fontFamily: 'inherit',
+        color: revealed ? 'inherit' : '#0ff',
+        textShadow: revealed ? 'none' : '0 0 8px #0ff, 0 0 2px #0ff',
+        backgroundColor: revealed ? 'transparent' : 'rgba(0, 20, 20, 0.6)',
+        borderRadius: revealed ? '0' : '3px',
+        boxShadow: revealed ? 'none' : '0 0 6px rgba(0,255,255,0.4)',
+        userSelect: revealed ? 'auto' : 'none',
+        cursor: decrypting ? 'default' : 'url("/cursors/pointer.svg") 2 0, pointer',
+        transition: 'color 0.2s, background-color 0.2s, box-shadow 0.2s, border-radius 0.2s',
+        textDecoration: 'none',
+        whiteSpace: 'pre',
+    };
+
+    return (
+        <del onClick={startDecrypt} style={style}>
+            {chars.length ? chars.join("") : originalText}
+        </del>
+    );
+}
 
 function ItemsTab() {
     const [filters, setFilters] = useState<Filters>(defaultFilters);
@@ -101,7 +230,10 @@ function ItemsTab() {
                                     {it.rarity}
                                 </span>
                             </div>
-                            <span className="item-price">{it.sellPrice}</span>
+                            <span className="item-price">
+                                <CreditIcon className="credit-icon" />
+                                {it.sellPrice}
+                            </span>
                         </button>
                     ))}
                 </div>
@@ -138,14 +270,20 @@ function ItemsTab() {
                             {selectedItem.sources && (
                                 <div className="item-modal-sources">
                                     <span className="item-modal-sources-label">Sources</span>
-                                    <ReactMarkdown>{selectedItem.sources}</ReactMarkdown>
+                                    <ReactMarkdown
+                                        remarkPlugins={[remarkGfm]}
+                                        components={{ del: Spoiler }}
+                                    >{selectedItem.sources}</ReactMarkdown>
                                 </div>
                             )}
                         </div>
 
                         <div className="item-modal-footer">
                             <span className="item-modal-footer-label">Sell Price</span>
-                            <span className="item-modal-price">{selectedItem.sellPrice}</span>
+                            <span className="item-modal-price">
+                                <CreditIcon className="credit-icon" />
+                                {selectedItem.sellPrice}
+                            </span>
                         </div>
                     </div>
                 </div>
