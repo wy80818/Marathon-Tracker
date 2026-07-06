@@ -22,7 +22,7 @@ const defaultFilters: Filters = {
 const SCRAMBLE_CHARS = "`1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>?";
 const DECRYPT_DURATION_MS = 600;
 
-function Spoiler({ children }: { children: React.ReactNode }) {
+function Spoiler({ children }: { children?: React.ReactNode }) {
     const [revealed, setRevealed] = useState(false);
     const [decrypting, setDecrypting] = useState(false);
     const [chars, setChars] = useState<string[]>([]);
