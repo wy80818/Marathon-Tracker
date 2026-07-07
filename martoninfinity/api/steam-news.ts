@@ -1,5 +1,8 @@
 // import { STEAM_NEWS_URL } from '../config/steam.js'
 
+const STEAM_NEWS_URL =
+    'ISteamNews/GetNewsForApp/v2/?appid=3065800&count=100&maxlength=1000&format=json'
+
 function secondsUntilNextTuesday() {
     const now = new Date()
 
@@ -43,7 +46,7 @@ export async function GET() {
 
 //     try {
 //         const response = await fetch(
-//             `https:api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=3065800&count=100&maxlength=1000&format=json`
+//             `https://api.steampowered.com/${STEAM_NEWS_URL}`
 //         )
 
 //         if (!response.ok) {
