@@ -1,33 +1,83 @@
+import { useEffect, useState } from 'react'
 import './PatchNotesTab.css'
 
 function PatchNotesTab() {
-    const bungieUpdatesUrl = 'https://www.bungie.net/7/en/News/MarathonUpdates'
+    const [news, setNews] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
+
+    useEffect(() => {
+        async function loadNews() {
+            try {
+                // Your backend endpoint
+                const response = await fetch('/api/steam-news')
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch news')
+                }
+
+                const data = await response.json()
+                setNews(data.appnews.newsitems)
+            } catch (err) {
+                setError(err.message)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        loadNews()
+    }, [])
+
+    if (loading) {
+        return (
+            <div className="tab-content-inner">
+                <h2>Patch Notes</h2>
+                <p>Loading latest updates...</p>
+            </div>
+        )
+    }
+
+    if (error) {
+        return (
+            <div className="tab-content-inner">
+                <h2>Patch Notes</h2>
+                <p>{error}</p>
+            </div>
+        )
+    }
 
     return (
         <div className="tab-content-inner">
             <h2>Patch Notes</h2>
-            <p>Latest Marathon Updates from Bungie</p>
+            <p>Latest Marathon News from Steam</p>
+
             <div className="patch-notes-container">
-                <div className="patch-notes-info">
-                    <p className="patch-notes-description">
-                        Marathon Updates are published on Bungie's official website. Click the button below to view the latest patch notes and announcements.
-                    </p>
-                    <a
-                        href={bungieUpdatesUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="patch-notes-button"
+                {news.map((item) => (
+                    <div
+                        className="patch-notes-info-section"
+                        key={item.gid}
                     >
-                        View Marathon Updates on Bungie.net →
-                    </a>
-                </div>
-                <div className="patch-notes-info-section">
-                    <h3>Coming Soon</h3>
-                    <p>We're working on integrating live patch notes directly into this tracker. Check back soon for updates!</p>
-                </div>
+                        <h3>{item.title}</h3>
+
+                        <small>
+                            {new Date(item.date * 1000).toLocaleDateString()}
+                        </small>
+
+                        <p>{item.contents}</p>
+
+                        <a
+                            href={item.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="patch-notes-button"
+                        >
+                            Read Full Article →
+                        </a>
+                    </div>
+                ))}
             </div>
         </div>
     )
 }
 
-export default PatchNotesTab;
+export default PatchNotesTab
