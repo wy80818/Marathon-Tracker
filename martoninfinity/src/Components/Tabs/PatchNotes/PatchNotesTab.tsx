@@ -1,14 +1,20 @@
 import { useEffect, useState } from 'react'
 import './PatchNotesTab.css'
 
-// interface SteamNewsItem {
-//     gid: string
-//     title: string
-//     url: string
-//     contents: string
-//     date: number
-//     feedlabel: string
-// }
+interface SteamNewsItem {
+    gid: string
+    title: string
+    url: string
+    contents: string
+    date: number
+    feedlabel: string
+}
+
+interface SteamNewsResponse {
+    appnews: {
+        newsitems: SteamNewsItem[]
+    }
+}
 
 function cleanSteamDescription(text: string) {
     return text
@@ -38,9 +44,9 @@ function cleanSteamDescription(text: string) {
 }
 
 function PatchNotesTab() {
-    const [news, setNews] = useState([])
+    const [news, setNews] = useState<SteamNewsItem[]>([])
     const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
+    const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
         async function loadNews() {
@@ -52,7 +58,7 @@ function PatchNotesTab() {
                     throw new Error('Failed to fetch news')
                 }
 
-                const data = await response.json()
+                const data = (await response.json()) as SteamNewsResponse
 
                 console.log(
                     data.appnews.newsitems
@@ -64,7 +70,11 @@ function PatchNotesTab() {
                     )
                 ) 
             } catch (err) {
-                setError(err.message)
+                setError(
+                    err instanceof Error
+                        ? err.message
+                        : 'An unknown error occurred'
+                )
             } finally {
                 setLoading(false)
             }
