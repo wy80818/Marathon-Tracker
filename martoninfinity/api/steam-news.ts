@@ -26,19 +26,23 @@ function secondsUntilNextTuesday() {
 }
 
 export async function GET() {
-    console.log("FUNCTION START")
-
     const response = await fetch(
         `https://api.steampowered.com/${STEAM_NEWS_URL}`
     )
 
-    console.log("STEAM STATUS:", response.status)
+    if (!response.ok) {
+        throw new Error(`Steam API returned ${response.status}`)
+    }
 
     const data = await response.json()
 
-    console.log("DATA RECEIVED")
-
-    return Response.json(data)
+    return new Response(JSON.stringify(data), {
+        headers: {
+            "Content-Type": "application/json",
+            "Cache-Control":
+                `public, s-maxage=${secondsUntilNextTuesday()}, stale-while-revalidate=300`,
+        },
+    })
 }
 
 // export default async function handler() {
