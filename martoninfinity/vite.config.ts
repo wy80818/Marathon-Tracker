@@ -15,10 +15,6 @@ export default defineConfig({
                 changeOrigin: true,
                 rewrite: () =>
                     `/ISteamNews/GetNewsForApp/v2/?appid=3065800&count=100&maxlength=1000&format=json`,
-                // Development ONLY: Disable caching for the proxy response to ensure fresh data is fetched from the Steam API on each request.
-                // headers: { 
-                //     'Cache-Control': 'no-cache',
-                // },
             },
         },
     }
