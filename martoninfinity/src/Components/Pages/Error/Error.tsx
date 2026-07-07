@@ -21,7 +21,7 @@ function Error({
     return (
         <div className="error-page">
             <div className="error-card">
-                <span className="error-label">// error</span>
+                <span className="error-label">// Error</span>
                 <h2 className="error-code">{code}</h2>
                 <p className="error-message">{message}</p>
                 <div className="error-divider" />

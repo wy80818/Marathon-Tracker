@@ -14,7 +14,7 @@ export default defineConfig({
                 target: 'https://api.steampowered.com',
                 changeOrigin: true,
                 rewrite: () =>
-                    `/ISteamNews/GetNewsForApp/v2/?appid=3065800&count=100&maxlength=1000&format=json`,
+                    `/ISteamNews/GetNewsForApp/v2/?appid=3065800&count=100&maxlength=0&format=json`,
             },
         },
     }
