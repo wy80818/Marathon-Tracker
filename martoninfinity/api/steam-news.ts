@@ -23,6 +23,8 @@ function secondsUntilNextTuesday() {
 }
 
 export default async function handler() {
+    console.log("Steam API function started")
+
     try {
         const response = await fetch(
             `https://api.steampowered.com/${STEAM_NEWS_URL}`
@@ -32,7 +34,11 @@ export default async function handler() {
             throw new Error(`Steam API returned ${response.status}`)
         }
 
+        console.log("Steam responded:", response.status)
+
         const data = await response.json()
+
+        console.log("JSON received")
 
         // For development ONLY
         // return new Response(JSON.stringify(data), {
@@ -49,7 +55,7 @@ export default async function handler() {
             },
         })
     } catch (error) {
-        console.error(error)
+        console.error("Steam error:", error)
 
         return new Response(
             JSON.stringify({
