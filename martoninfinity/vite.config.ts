@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import { STEAM_NEWS_URL } from './src/config'
+import { STEAM_NEWS_URL } from './config/steam.js'
 import react from '@vitejs/plugin-react'
 import svgr from 'vite-plugin-svgr'
 
