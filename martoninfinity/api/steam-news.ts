@@ -1,4 +1,4 @@
-import { STEAM_NEWS_URL } from '../src/config'
+import { STEAM_NEWS_URL } from '../config/steam.js'
 
 function secondsUntilNextTuesday() {
     const now = new Date()
