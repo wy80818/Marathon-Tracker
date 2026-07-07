@@ -88,6 +88,6 @@ export const items: item[] = [
         rarity: "Contraband",
         sellPrice: "8,000",
         description: "A piece of a Compiler's nervous system.",
-        sources: "Guaranteed after killing ~~the Compiler~~ located ~~in the Lab above Cryo Archive~~."
+        sources: "Guaranteed after killing ~~the Compiler~~ located ~~above the Lab, above Cryo Archive~~."
     }
 ]   

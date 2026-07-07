@@ -19,7 +19,9 @@ const defaultFilters: Filters = {
     rarity: "All",
 };
 
-const SCRAMBLE_CHARS = "`1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>?";
+const sortedItems = [...items].sort((a, b) => a.name.localeCompare(b.name));
+
+const SCRAMBLE_CHARS = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
 const DECRYPT_DURATION_MS = 1000;
 const DecryptAllContext = createContext(0);
 
@@ -146,7 +148,9 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
         cursor: decrypting ? 'default' : 'url("/cursors/pointer.svg") 2 0, pointer',
         transition: 'color 0.2s, background-color 0.2s, box-shadow 0.2s, border-radius 0.2s',
         textDecoration: 'none',
-        whiteSpace: 'pre',
+        whiteSpace: 'pre-wrap',
+        overflowWrap: 'break-word',
+        wordBreak: 'break-word',
     };
 
     return (
@@ -169,22 +173,25 @@ function ItemsTab() {
         setFilters((prev) => ({ ...prev, [key]: value }));
     };
 
+    // Check if spoilers exist
     const hasSpoilers = useMemo(() => {
         if (!selectedItem?.sources) return false;
         return /~~.+?~~/s.test(selectedItem.sources);
     }, [selectedItem]);
 
+    // Sorting function
     const filteredItems = useMemo(() => {
-        return items
-            .filter((it) => {
-                const matchesCategory = filters.category === "All" || it.category === filters.category;
-                const matchesRarity = filters.rarity === "All" || it.rarity === filters.rarity;
-                const matchesSearch = it.name.toLowerCase().includes(search.toLowerCase());
-                return matchesCategory && matchesRarity && matchesSearch;
-            })
-            .sort((a, b) => a.name.localeCompare(b.name));
+        const query = search.toLowerCase(); // computed once per change, not per item
+
+        return sortedItems.filter((it) => {
+            const matchesCategory = filters.category === "All" || it.category === filters.category;
+            const matchesRarity = filters.rarity === "All" || it.rarity === filters.rarity;
+            const matchesSearch = it.name.toLowerCase().includes(query);
+            return matchesCategory && matchesRarity && matchesSearch;
+        });
     }, [filters, search]);
 
+    // Handle fade effects
     const handleGridScroll = () => {
         const el = gridScrollRef.current;
         if (!el) return;
@@ -199,7 +206,7 @@ function ItemsTab() {
     return (
         <div className="tab-content-inner">
             <h2>Items</h2>
-            <p>DEV: Holding off on items manually, would probably be better to wait for API</p><br></br>
+            <p>DEV: Holding off on items manually, would probably be better to wait for API</p><br></br> 
             <div className="items-controls">
                 <input
                     type="text"
