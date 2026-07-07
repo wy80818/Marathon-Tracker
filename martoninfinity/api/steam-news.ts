@@ -41,12 +41,12 @@ export default async function handler() {
         console.log("JSON received")
 
         // For development ONLY
-        // return new Response(JSON.stringify(data), {
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Cache-Control': 'no-store',
-        //     },
-        // })
+        return new Response(JSON.stringify(data), {
+            headers: {
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-store',
+            },
+        })
         return new Response(JSON.stringify(data), {
             headers: {
                 'Content-Type': 'application/json',
