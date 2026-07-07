@@ -1,50 +1,70 @@
 import { useEffect, useState } from 'react'
 import './PatchNotesTab.css'
 
-interface SteamNewsItem {
-    gid: string
-    title: string
-    url: string
-    contents: string
-    date: number
-    feedlabel: string
-    feed_type: number
-}
+// interface SteamNewsItem {
+//     gid: string
+//     title: string
+//     url: string
+//     contents: string
+//     date: number
+//     feedlabel: string
+// }
 
-interface SteamNewsResponse {
-    appnews: {
-        newsitems: SteamNewsItem[]
-    }
+function cleanSteamDescription(text: string) {
+    return text
+        // Remove images
+        .replace(/<img[^>]*>/gi, '')
+
+        // Convert line breaks
+        .replace(/<br\s*\/?>/gi, '\n')
+
+        // Remove HTML tags
+        .replace(/<[^>]*>/g, '')
+
+        // Convert BBCode
+        .replace(/\[h\d\](.*?)\[\/h\d\]/gi, '$1')
+        .replace(/\[b\](.*?)\[\/b\]/gi, '$1')
+        .replace(/\[i\](.*?)\[\/i\]/gi, '$1')
+        .replace(/\[list\]/gi, '')
+        .replace(/\[\/list\]/gi, '')
+        .replace(/\[\*\]/gi, '• ')
+
+        // Remove remaining BBCode
+        .replace(/\[.*?\]/g, '')
+
+        // Clean whitespace
+        .replace(/\n\s*\n/g, '\n')
+        .trim()
 }
 
 function PatchNotesTab() {
-    const [news, setNews] = useState<SteamNewsItem[]>([])
+    const [news, setNews] = useState([])
     const [loading, setLoading] = useState(true)
-    const [error, setError] = useState<string | null>(null)
+    const [error, setError] = useState(null)
 
     useEffect(() => {
         async function loadNews() {
             try {
-                const response = await fetch('/api/steam-news')
+                // Your backend endpoint
+                const response = await fetch('/api/steam-news?_=' + Date.now())
 
                 if (!response.ok) {
-                    throw new Error('Failed to fetch Steam news.')
+                    throw new Error('Failed to fetch news')
                 }
 
-                const data = (await response.json()) as SteamNewsResponse
+                const data = await response.json()
+
+                console.log(
+                    data.appnews.newsitems
+                )
 
                 setNews(
                     data.appnews.newsitems.filter(
-                        item => item.feedlabel === 'Community Announcements'
+                        (item) => item.feedlabel === 'Community Announcements'
                     )
-                )
-                console.log(data.appnews.newsitems)
+                ) 
             } catch (err) {
-                setError(
-                    err instanceof Error
-                        ? err.message
-                        : 'An unknown error occurred.'
-                )
+                setError(err.message)
             } finally {
                 setLoading(false)
             }
@@ -55,16 +75,18 @@ function PatchNotesTab() {
 
     if (loading) {
         return (
-            <div className="patch-notes-page">
-                <h2>Loading patch notes...</h2>
+            <div className="tab-content-inner">
+                <h2>Patch Notes</h2>
+                <p>Loading latest updates...</p>
             </div>
         )
     }
 
     if (error) {
         return (
-            <div className="patch-notes-page">
-                <h2>{error}</h2>
+            <div className="tab-content-inner">
+                <h2>Patch Notes</h2>
+                <p>{error}</p>
             </div>
         )
     }
@@ -73,10 +95,10 @@ function PatchNotesTab() {
         <div className="patch-notes-page">
             <div className="patch-notes-header">
                 <span className="patch-notes-label">
-                    // steam updates
+                // steam updates
                 </span>
 
-                <h2>Marathon Patch Notes</h2>
+                <h2>Patch Notes</h2>
             </div>
 
             <div className="patch-notes-list">
@@ -92,9 +114,7 @@ function PatchNotesTab() {
                         }}
                     >
                         <div className="patch-note-left">
-                            <span>
-                                {String(index + 1).padStart(2, '0')}
-                            </span>
+                            {String(index + 1).padStart(2, '0')}
                         </div>
 
                         <div className="patch-note-right">
@@ -113,9 +133,7 @@ function PatchNotesTab() {
                             </div>
 
                             <p>
-                                {item.contents.length > 220
-                                    ? item.contents.slice(0, 220) + '…'
-                                    : item.contents}
+                                {cleanSteamDescription(item.contents).slice(0, 220)}
                             </p>
 
                             <span className="patch-note-read">

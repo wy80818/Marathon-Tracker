@@ -1,31 +1,43 @@
 .patch-notes-page {
     width: 100%;
-    max-width: 900px;
+    max-width: 800px;
     margin: 0 auto;
-    animation: fadeIn .3s ease;
+    padding: 2rem;
+    animation: fadeIn 0.3s ease-in;
 }
+
+
+/* Header */
 
 .patch-notes-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     margin-bottom: 2rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(1,255,255,.15);
+    border-bottom: 1px solid rgba(1, 255, 255, 0.15);
 }
+
 
 .patch-notes-label {
-    display: block;
-    margin-bottom: .4rem;
     font-family: "Fira Code", monospace;
     font-size: 11px;
-    letter-spacing: .08em;
+    letter-spacing: 0.08em;
     color: var(--color-cyan);
-    opacity: .7;
+    opacity: 0.7;
 }
 
+
 .patch-notes-header h2 {
-    margin: 0;
     font-family: "Playfair Display", serif;
+    font-size: 1.75rem;
     color: var(--color-lime);
+    text-shadow: 0 0 8px rgba(194, 254, 11, 0.3);
+    margin: 0;
 }
+
+
+/* List */
 
 .patch-notes-list {
     display: flex;
@@ -33,72 +45,118 @@
     gap: 5px;
 }
 
+
+/* Entry */
+
 .patch-note {
     display: flex;
+    background-color: var(--color-darker-bg);
     gap: 1.25rem;
     padding: 1.25rem 1rem;
     border-left: 2px solid transparent;
     border-radius: 4px;
     text-decoration: none;
-    background: var(--color-darker-bg);
-    transition: .2s;
+    color: inherit;
+    transition: background-color 0.2s ease, border-color 0.2s ease, padding-left 0.2s ease;
+    animation: fadeIn 0.3s ease both;
 }
 
+
     .patch-note:hover {
+        background-color: rgba(194, 254, 11, 0.03);
         border-left-color: var(--color-lime);
-        background: rgba(194,254,11,.03);
         padding-left: 1.25rem;
     }
 
+
+/* Number */
+
 .patch-note-left {
-    width: 30px;
     flex-shrink: 0;
+    width: 28px;
+    padding-top: 2px;
     font-family: "Fira Code", monospace;
+    font-size: 11px;
     color: var(--color-cyan);
-    opacity: .35;
+    opacity: 0.3;
 }
+
+
+/* Content */
 
 .patch-note-right {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
+
 
 .patch-note-top {
     display: flex;
-    justify-content: space-between;
     align-items: baseline;
+    justify-content: space-between;
     gap: 1rem;
 }
 
+
     .patch-note-top h3 {
-        margin: 0;
-        color: var(--color-lime);
-        font-size: 14px;
         font-family: "Fira Code", monospace;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--color-lime);
+        text-shadow: 0 0 6px rgba(194, 254, 11, 0.3);
+        margin: 0;
     }
+
 
     .patch-note-top span {
-        white-space: nowrap;
-        font-size: 11px;
         font-family: "Fira Code", monospace;
+        font-size: 11px;
         color: var(--color-cyan);
-        opacity: .5;
+        opacity: 0.5;
+        white-space: nowrap;
     }
 
+
+/* Description */
+
 .patch-note-right p {
-    margin: .75rem 0;
-    color: var(--color-text-light);
     font-size: 13px;
     line-height: 1.6;
+    color: var(--color-text-light);
+    margin: 0;
 }
+
+
+/* Link */
 
 .patch-note-read {
     font-family: "Fira Code", monospace;
     font-size: 11px;
+    letter-spacing: 0.08em;
     color: var(--color-cyan);
     opacity: 0;
-    transition: opacity .2s;
+    transition: opacity 0.2s ease;
 }
 
+
 .patch-note:hover .patch-note-read {
-    opacity: .7;
+    opacity: 0.7;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .patch-notes-page {
+        padding: 1.25rem;
+    }
+
+
+    .patch-note-top {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
 }

@@ -1,15 +1,69 @@
-export default async function handler(req: Request) {
-    const response = await fetch(
-        'https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=3065800&count=10&maxlength=500&format=json'
+import { STEAM_NEWS_URL } from '../src/config'
+
+function secondsUntilNextTuesday() {
+    const now = new Date()
+
+    const next = new Date(now)
+
+    next.setDate(
+        now.getDate() +
+        ((2 - now.getDay() + 7) % 7)
     )
 
-    const data = await response.json()
+    next.setHours(12, 1, 0, 0)
 
-    return new Response(JSON.stringify(data), {
-        headers: {
-            'Content-Type': 'application/json',
-            'Cache-Control':
-                'public, s-maxage=300, stale-while-revalidate=600',
-        },
-    })
+    // If Tuesday 12:01 already passed
+    if (next <= now) {
+        next.setDate(next.getDate() + 7)
+    }
+
+    return Math.floor(
+        (next.getTime() - now.getTime()) / 1000
+    )
+}
+
+export default async function handler() {
+    try {
+        const response = await fetch(
+            `https://api.steampowered.com/${STEAM_NEWS_URL}`
+        )
+
+        if (!response.ok) {
+            throw new Error(`Steam API returned ${response.status}`)
+        }
+
+        const data = await response.json()
+
+        // For development ONLY
+        // return new Response(JSON.stringify(data), {
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Cache-Control': 'no-store',
+        //     },
+        // })
+        return new Response(JSON.stringify(data), {
+            headers: {
+                'Content-Type': 'application/json',
+                'Cache-Control':
+                    `public, s-maxage=${secondsUntilNextTuesday()}, stale-while-revalidate=300`,
+            },
+        })
+    } catch (error) {
+        console.error(error)
+
+        return new Response(
+            JSON.stringify({
+                error:
+                    error instanceof Error
+                        ? error.message
+                        : 'Unknown error',
+            }),
+            {
+                status: 500,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        )
+    }
 }
