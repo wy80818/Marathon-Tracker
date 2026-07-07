@@ -67,5 +67,21 @@ To use the map tab:
 3. Interact with the map using scroll wheel + LMB
 4. Click the different marker types to drop down respective markers in the sidebar.
 `
+    },
+    {
+        id: 4,
+        title: "WebDev",
+        date: "2026-07-07",
+        description: `
+Items Tab is functionally complete!
+
+There are 6 statically created items which are missing images.
+
+I rather would move on to other features than painstakingly add all items that exist in the game.
+
+Hopefully the API will provide this information.
+
+In the future I will improve upon patch notes tab.
+`
     }
 ];
