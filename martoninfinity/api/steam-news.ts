@@ -22,54 +22,69 @@ function secondsUntilNextTuesday() {
     )
 }
 
-export default async function handler() {
-    console.log("Steam API function started")
+export async function GET(request: Request) {
+    console.log("FUNCTION HIT")
 
-    try {
-        const response = await fetch(
-            `https://api.steampowered.com/${STEAM_NEWS_URL}`
-        )
-
-        if (!response.ok) {
-            throw new Error(`Steam API returned ${response.status}`)
-        }
-
-        console.log("Steam responded:", response.status)
-
-        const data = await response.json()
-
-        console.log("JSON received")
-
-        // For development ONLY
-        return new Response(JSON.stringify(data), {
+    return new Response(
+        JSON.stringify({
+            test: "working"
+        }),
+        {
             headers: {
-                'Content-Type': 'application/json',
-                'Cache-Control': 'no-store',
-            },
-        })
-        return new Response(JSON.stringify(data), {
-            headers: {
-                'Content-Type': 'application/json',
-                'Cache-Control':
-                    `public, s-maxage=${secondsUntilNextTuesday()}, stale-while-revalidate=300`,
-            },
-        })
-    } catch (error) {
-        console.error("Steam error:", error)
-
-        return new Response(
-            JSON.stringify({
-                error:
-                    error instanceof Error
-                        ? error.message
-                        : 'Unknown error',
-            }),
-            {
-                status: 500,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                "Content-Type": "application/json"
             }
-        )
-    }
+        }
+    )
 }
+
+// export default async function handler() {
+//     console.log("Steam API function started")
+
+//     try {
+//         const response = await fetch(
+//             `https:api.steampowered.com/${STEAM_NEWS_URL}`
+//         )
+
+//         if (!response.ok) {
+//             throw new Error(`Steam API returned ${response.status}`)
+//         }
+
+//         console.log("Steam responded:", response.status)
+
+//         const data = await response.json()
+
+//         console.log("JSON received")
+
+//         For development ONLY
+//         return new Response(JSON.stringify(data), {
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Cache-Control': 'no-store',
+//             },
+//         })
+//         return new Response(JSON.stringify(data), {
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Cache-Control':
+//                     `public, s-maxage=${secondsUntilNextTuesday()}, stale-while-revalidate=300`,
+//             },
+//         })
+//     } catch (error) {
+//         console.error("Steam error:", error)
+
+//         return new Response(
+//             JSON.stringify({
+//                 error:
+//                     error instanceof Error
+//                         ? error.message
+//                         : 'Unknown error',
+//             }),
+//             {
+//                 status: 500,
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                 },
+//             }
+//         )
+//     }
+// }
