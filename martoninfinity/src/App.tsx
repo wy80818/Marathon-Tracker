@@ -6,7 +6,7 @@ import marathonLogo from './assets/Miscellaneous/Marathon_Logo_WordMark_Green.pn
 // import RunnerIcon from './assets/TabIcons/RunnerIcon.svg?react'
 // import WeaponIcon from './assets/TabIcons/SwordIcon.svg?react'
 import HomeIcon from './assets/TabIcons/HomeIcon.svg?react'
-import PatchNotesIcon from './assets/TabIcons/PatchNotesIcon.svg?react'
+import NewsIcon from './assets/TabIcons/NewsIcon.svg?react'
 import MapIcon from './assets/TabIcons/MapIcon.svg?react'
 import ItemIcon from './assets/TabIcons/ItemsIcon.svg?react'
 // import PlayerLookupIcon from './assets/TabIcons/PlayerLookupIcon.svg?react'
@@ -19,12 +19,13 @@ import WeaponsTab from './Components/Tabs/Weapons/WeaponsTab';
 import ItemsTab from './Components/Tabs/Items/ItemsTab';
 import MapsTab from './Components/Tabs/Maps/MapsTab';
 import LeaderboardTab from './Components/Tabs/Leaderboard/LeaderboardTab';
-import PatchNotesTab from './Components/Tabs/PatchNotes/PatchNotesTab';
+import NewsTab from './Components/Tabs/News/NewsTab';
 
 import Error from './Components/Pages/Error/Error'
 import AnnouncementsPage from './Components/Pages/Announcements/AnnouncementsPage';
 import AnnouncementDetail from './Components/Pages/Announcements/AnnouncementDetail';
 import MapViewerPage from './Components/Pages/Maps/MapViewer';
+import NewsArticle from './Components/Pages/News/NewsArticle'
 
 interface TabConfig {
     path: string
@@ -36,7 +37,7 @@ interface TabConfig {
 
 const TABS: TabConfig[] = [
     { path: '/', label: 'Home', ariaLabel: 'Go to Home tab', iconSvg: HomeIcon, component: HomeTab },
-    { path: '/patch-notes', label: 'Patch Notes', ariaLabel: 'Go to Patch Notes tab', iconSvg: PatchNotesIcon, component: PatchNotesTab },
+    { path: '/news', label: 'News', ariaLabel: 'Go to News tab', iconSvg: NewsIcon, component: NewsTab },
     { path: '/player-lookup', label: 'Player Lookup', ariaLabel: 'Go to Player Lookup tab', iconSvg: Placeholder, component: PlayerLookupTab },
     { path: '/shells', label: 'Shells', ariaLabel: 'Go to Shells tab', iconSvg: Placeholder, component: ShellsTab },
     { path: '/weapons', label: 'Weapons', ariaLabel: 'Go to Weapons tab', iconSvg: Placeholder, component: WeaponsTab },
@@ -161,7 +162,8 @@ function App() {
                 <Route path="*" element={<Error />} />
 
                 <Route path="/" element={<TabLayout />} />
-                <Route path="/patch-notes" element={<TabLayout />} />
+                <Route path="/news" element={<TabLayout />} />
+                <Route path="/news/:gid" element={<NewsArticle />} />
                 <Route path="/player-lookup" element={<TabLayout />} />
                 <Route path="/shells" element={<TabLayout />} />
                 <Route path="/weapons" element={<TabLayout />} />

@@ -1,23 +1,3 @@
-// [
-//   {
-//     "id": 1,
-//     "title": "WebDev",
-//     "date": "2026-06-24",
-//     "description": "Fixed Map Viewer resizing bug."
-//   },
-//   {
-//     "id": 2,
-//     "title": "WebDev",
-//     "date": "2026-06-25",
-//     "description": "Starting to add more content to home page."
-//   },
-//   {
-//     "id": 3,
-//     "title": "WebDev",
-//     "date": "2026-07-02",
-//     "description": "Map Tab is functionally compelete!Only changes that are necessary in the future are more markers, better visuals and bug fixes."
-//   }
-// ]
 export interface Announcement {
     id: number;
     title: string;
@@ -27,7 +7,7 @@ export interface Announcement {
 
 export const announcements: Announcement[] = [
     {
-        id: 1,
+        id: 0,
         title: "WebDev",
         date: "2000-01-01",
         description: `

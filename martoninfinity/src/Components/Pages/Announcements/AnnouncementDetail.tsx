@@ -43,10 +43,10 @@ function AnnouncementDetail() {
                 ← Back to Announcements
             </button>
 
-            <article className="announcement-detail-card">
+            <div className="announcement-detail-card">
                 <header className="announcement-detail-header">
                     <span className="announcements-page-label">// announcement</span>
-                    <h2 className="announcement-detail-title">{announcement.title}</h2>
+                    <h1 className="announcement-detail-title">{announcement.title}</h1>
                     <p className="announcement-detail-date">{formattedDate}</p>
                 </header>
 
@@ -54,7 +54,7 @@ function AnnouncementDetail() {
                 <div className="announcement-markdown">
                     <ReactMarkdown>{announcement.description}</ReactMarkdown>
                 </div>
-            </article >
+            </div >
         </div >
     );
 }
