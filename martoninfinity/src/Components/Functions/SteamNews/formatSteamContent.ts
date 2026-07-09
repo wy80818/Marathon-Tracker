@@ -33,6 +33,7 @@ function convertBBCode(text: string): string {
     out = out.replace(/\[h[4-6]\](.*?)\[\/h[4-6]\]/gis, '<h4>$1</h4>')
 
     // Basic inline styles
+    out = out.replace(/\[p\](.*?)\[\/p\]/gis, (_m, inner) => (inner.trim() ? `<p>${inner.trim()}</p>` : ''))
     out = out.replace(/\[b\](.*?)\[\/b\]/gis, '<strong>$1</strong>')
     out = out.replace(/\[i\](.*?)\[\/i\]/gis, '<em>$1</em>')
     out = out.replace(/\[u\](.*?)\[\/u\]/gis, '<u>$1</u>')
@@ -53,9 +54,36 @@ function convertBBCode(text: string): string {
     // Images
     out = out.replace(/\[img\](.*?)\[\/img\]/gis, '<img src="$1" loading="lazy" />')
 
+    out = out.replace(/\[previewyoutube=(?:"|&quot;)?([\w-]+)(?:;[^"\]]*)?(?:"|&quot;)?\]([\s\S]*?)\[\/previewyoutube\]/gi,
+        (_m, videoId) =>
+            `<a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" rel="noopener noreferrer" class="yt-preview">` +
+            `<img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" loading="lazy" alt="YouTube video preview" />` +
+            `</a>`
+    )
+
     // Properly wrapped lists: [olist] (ordered) and [list] (unordered)
-    out = out.replace(/\[olist\](.*?)\[\/olist\]/gis, (_m, inner) => convertListBlock(inner, true))
-    out = out.replace(/\[list\](.*?)\[\/list\]/gis, (_m, inner) => convertListBlock(inner, false))
+    // Properly wrapped lists: [olist] (ordered) and [list] (unordered).
+    // Steam nests [list] inside [*] items (e.g. "Wares Added:" / "Wares Changed:"
+    // sub-groups under a single top-level bullet). A single non-greedy regex pass
+    // can't handle that nesting — it just grabs from the first [list] to the
+    // nearest [/list], regardless of depth, which flattens/misaligns everything
+    // after the first nested block. So we resolve innermost lists first (via a
+    // negative lookahead that only matches a [list]/[olist] block containing no
+    // further list tags), then repeat until nothing changes.
+    function convertLists(text: string): string {
+        let prev: string
+        const innerPattern = '((?:(?!\\[\\/?list\\]|\\[\\/?olist\\]).)*)'
+        const olistRe = new RegExp(`\\[olist\\]${innerPattern}\\[\\/olist\\]`, 'gis')
+        const listRe = new RegExp(`\\[list\\]${innerPattern}\\[\\/list\\]`, 'gis')
+        do {
+            prev = text
+            text = text.replace(olistRe, (_m, inner) => convertListBlock(inner, true))
+            text = text.replace(listRe, (_m, inner) => convertListBlock(inner, false))
+        } while (text !== prev)
+        return text
+    }
+
+    out = convertLists(out)
 
     // Stray [*] items with no wrapping [list]/[olist] at all — stage them as
     // <flli> markers rather than <li> directly, so the line-based grouping
