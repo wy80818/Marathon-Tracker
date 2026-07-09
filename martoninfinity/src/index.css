@@ -1,6 +1,9 @@
 :root {
+    /* Base font size scales with viewport for responsive typography */
+    font-size: clamp(14px, 1.8vw, 18px);
+
     @media (max-width: 1024px) {
-        font-size: 16px;
+        font-size: clamp(14px, 2vw, 16px);
     }
 }
 

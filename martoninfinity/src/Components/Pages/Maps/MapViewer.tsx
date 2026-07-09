@@ -172,7 +172,7 @@ const MapViewer = () => {
                         <div className="map-key-header">
                             <h2>Markers</h2>
                             <div className="marker-controls">
-                                <button onClick={showAllMarkers}>Show All</button>
+                                <button onClick={showAllMarkers}>Show All</button>/
                                 <button onClick={hideAllMarkers}>Hide All</button>
                             </div>
                         </div>
@@ -200,7 +200,7 @@ const MapViewer = () => {
                                                     const u = { ...prev };
                                                     groups.forEach(g => (u[g.type] = true));
                                                     return u;
-                                                })}>Show All</button>
+                                                })}>Show All</button>/
                                                 <button onClick={() => setVisibleMarkers(prev => {
                                                     const u = { ...prev };
                                                     groups.forEach(g => (u[g.type] = false));
