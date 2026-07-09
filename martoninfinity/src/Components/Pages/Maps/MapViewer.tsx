@@ -29,6 +29,7 @@ const MapViewer = () => {
     const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
     const [visibleMarkers, setVisibleMarkers] = useState<Record<string, boolean>>({});
     const [imageReady, setImageReady] = useState(false);
+    const [transformKey, setTransformKey] = useState(0);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const mapCanvasRef = useRef<HTMLDivElement>(null);
@@ -257,7 +258,10 @@ const MapViewer = () => {
                                 animationTime: 300,
                                 animationType: "easeOutCubic",
                             }}
-                            onTransform={({ state }) => setScale(state.scale)}
+                            onTransform={({ state }) => {
+                                setScale(state.scale);
+                                setTransformKey(prev => prev + 1);
+                            }}
                         >
                             {
                                 <div
@@ -287,6 +291,7 @@ const MapViewer = () => {
                                         return (
                                             <div
                                                 className="marker-overlay"
+                                                data-transform-key={transformKey}
                                                 style={{
                                                     left: pos.left,
                                                     top: pos.top,

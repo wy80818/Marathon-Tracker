@@ -20,22 +20,22 @@ function NewsArticle() {
 
     if (!stateItem && loading) {
         return (
-            <div className="announcement-detail-page">
-                <button className="announcement-detail-back" onClick={() => navigate('/news')}>
+            <div className="news-detail-page">
+                <button className="news-detail-back" onClick={() => navigate('/news')}>
                     ← Back to News
                 </button>
-                <p className="announcement-detail-not-found">Loading article...</p>
+                <p className="news-detail-not-found">Loading article...</p>
             </div>
         )
     }
 
     if (!stateItem && error) {
         return (
-            <div className="announcement-detail-page">
-                <button className="announcement-detail-back" onClick={() => navigate('/news')}>
+            <div className="news-detail-page">
+                <button className="news-detail-back" onClick={() => navigate('/news')}>
                     ← Back to news
                 </button>
-                <p className="announcement-detail-not-found">{error}</p>
+                <p className="news-detail-not-found">{error}</p>
             </div>
         )
     }
@@ -58,31 +58,31 @@ function NewsArticle() {
     })
 
     return (
-        <div className="announcement-detail-page">
-            <button className="announcement-detail-back" onClick={() => navigate('/news')}>
+        <div className="news-detail-page">
+            <button className="news-detail-back" onClick={() => navigate('/news')}>
                 ← Back to News
             </button>
 
-            <div className="announcement-detail-card">
-                <div className="announcement-detail-header">
-                    <h1 className="announcement-detail-title">{item.title}</h1>
-                    <div className="announcement-detail-meta">
-                        <p className="announcement-detail-date">{formattedDate}</p>
+            <div className="news-detail-card">
+                <div className="news-detail-header">
+                    <h1 className="news-detail-title">{item.title}</h1>
+                    <div className="news-detail-meta">
+                        <p className="news-detail-date">{formattedDate}</p>
                         <a
                             href={item.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="announcement-detail-source-link"
+                            className="news-detail-source-link"
                         >
                             View on Steam ↗
                         </a>
                     </div>
                 </div>
 
-                <div className="announcement-detail-divider" />
+                <div className="news-detail-divider" />
 
                 <div
-                    className="announcement-markdown"
+                    className="news-markdown"
                     // Content is sanitized in formatSteamContent (scripts, event
                     // handlers, and javascript: URIs are stripped) before render.
                     dangerouslySetInnerHTML={{ __html: formatSteamContent(item.contents) }}
