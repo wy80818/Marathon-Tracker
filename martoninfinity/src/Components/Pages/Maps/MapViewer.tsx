@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import type { ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 
@@ -10,6 +9,8 @@ import Error from "../Error/Error";
 import type { Marker } from "../../../Data/MapsData";
 import { maps } from "../../../Data/MapsData";
 import MapCanvas from "./MapCanvas";
+import MapSidebar from "./MapSidebar";
+import MarkerPopup from "./MarkerPopup";
 
 const WRAPPER_STYLE = { width: "100%", height: "100%" };
 const CONTENT_STYLE = { pointerEvents: "auto" as const };
@@ -26,7 +27,6 @@ const MapViewer = () => {
     const [scale, setScale] = useState(0.85);
     const [isHoveringMap, setIsHoveringMap] = useState(false);
     const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
-    const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
     const [visibleMarkers, setVisibleMarkers] = useState<Record<string, boolean>>({});
     const [imageReady, setImageReady] = useState(false);
     const [transformKey, setTransformKey] = useState(0);
@@ -36,16 +36,6 @@ const MapViewer = () => {
     const transformRef = useRef<ReactZoomPanPinchRef>(null);
 
     const currentMap = maps.find(m => m.id === displayedMapId)!;
-    const markerTypes = [...new Set(currentMap.markers.map(m => m.type))];
-
-    const groupedMarkers = currentMap.markerGroups.reduce(
-        (acc, group) => {
-            if (!acc[group.category]) acc[group.category] = [];
-            acc[group.category].push(group);
-            return acc;
-        },
-        {} as Record<string, typeof currentMap.markerGroups>
-    );
 
     const getPopupPosition = (marker: Marker) => {
         const canvas = mapCanvasRef.current;
@@ -59,18 +49,6 @@ const MapViewer = () => {
         };
     };
 
-    const showAllMarkers = () => {
-        const all: Record<string, boolean> = {};
-        markerTypes.forEach(type => { all[type] = true; });
-        setVisibleMarkers(all);
-    };
-
-    const hideAllMarkers = () => {
-        const all: Record<string, boolean> = {};
-        markerTypes.forEach(type => { all[type] = false; });
-        setVisibleMarkers(all);
-    };
-
     // Updates map when URL changes
     useEffect(() => {
         if (!mapId) return;
@@ -79,6 +57,10 @@ const MapViewer = () => {
         if (exists && mapId !== selectedMapId) {
             setSelectedMapId(mapId);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally
+        // one-directional (URL -> state). Adding selectedMapId here would make
+        // this effect re-fire the instant setSelectedMapId is called from the
+        // sidebar onClick, before the router has updated `mapId`, reverting the click.
     }, [mapId]);
 
     // Resets marker filters on map change.
@@ -90,17 +72,9 @@ const MapViewer = () => {
 
         setVisibleMarkers(defaults);
         setSelectedMarker(null);
-    }, [displayedMapId]);
-
-    // Sidebar categories
-    useEffect(() => {
-        const initial: Record<string, boolean> = {};
-
-        Object.keys(groupedMarkers).forEach(category => {
-            initial[category] = true;
-        });
-
-        setOpenCategories(initial);
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- currentMap is a
+        // pure lookup (maps.find) over displayedMapId against a static `maps`
+        // array, so it can't change independently of displayedMapId.
     }, [displayedMapId]);
 
     // Map fade out transition
@@ -118,19 +92,32 @@ const MapViewer = () => {
         return () => clearTimeout(timer);
     }, [selectedMapId, displayedMapId]);
 
-
     // Map fade in transition
     useEffect(() => {
+        let cancelled = false;
         const img = new Image();
         img.src = currentMap.image;
-
         img.onload = () => {
+            if (cancelled) return;
             requestAnimationFrame(() => {
                 transformRef.current?.resetTransform(0);
                 setImageReady(true);
             });
         };
+        return () => { cancelled = true; };
     }, [currentMap.image]);
+
+    // Close marker popup on Escape
+    useEffect(() => {
+        if (!selectedMarker) return;
+
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === "Escape") setSelectedMarker(null);
+        };
+
+        window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
+    }, [selectedMarker]);
 
     // Error page
     if (mapId && !mapExists) {
@@ -147,93 +134,17 @@ const MapViewer = () => {
     return (
         <div className="map-window">
             <div className="map-layout">
-                <div className="map-side-column">
-                    <button type="button" className="map-back" onClick={() => navigate("/maps")}>
-                        ← Back to Maps
-                    </button>
-                    <div className="map-sidebar">
-                        <h2>Maps</h2>
-                        <div className="map-list">
-                            {maps.map(map => (
-                                <button
-                                    key={map.id}
-                                    type="button"
-                                    className={`map-button ${selectedMapId === map.id ? "active" : ""}`}
-                                    onClick={() => {
-                                        setSelectedMapId(map.id);
-                                        navigate(`/maps/${map.id}`, { replace: true });
-                                    }}
-                                >
-                                    <p>{map.name}</p>
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="map-key">
-                        <div className="map-key-header">
-                            <h2>Markers</h2>
-                            <div className="marker-controls">
-                                <button type="button" onClick={showAllMarkers}>Show All</button>/
-                                <button type="button" onClick={hideAllMarkers}>Hide All</button>
-                            </div>
-                        </div>
-                        <div className="map-key-content">
-                            {Object.entries(groupedMarkers).map(([category, groups]) => {
-                                const total = groups.length;
-                                const shown = groups.filter(g => visibleMarkers[g.type]).length;
-                                return (
-                                    <div className="marker-category" key={category}>
-                                        <div className="marker-category-header">
-                                            <div
-                                                className={`marker-category-title ${openCategories[category] ? "open" : "closed"}`}
-                                                onClick={() =>
-                                                    setOpenCategories(prev => ({
-                                                        ...prev,
-                                                        [category]: !prev[category]
-                                                    }))
-                                                }
-                                            >
-                                                <span>{openCategories[category] ? "ls /" : "/"}{category}</span>
-                                                <span className="marker-category-count">{shown}/{total}</span>
-                                            </div>
-                                            <div className="category-controls">
-                                                <button type="button" onClick={() => setVisibleMarkers(prev => {
-                                                    const u = { ...prev };
-                                                    groups.forEach(g => (u[g.type] = true));
-                                                    return u;
-                                                })}>Show All</button>/
-                                                <button type="button" onClick={() => setVisibleMarkers(prev => {
-                                                    const u = { ...prev };
-                                                    groups.forEach(g => (u[g.type] = false));
-                                                    return u;
-                                                })}>Hide All</button>
-                                            </div>
-                                        </div>
-                                        {openCategories[category] && (
-                                            <div className="marker-list">
-                                                {groups.map(group => (
-                                                    <div
-                                                        key={group.type}
-                                                        className={`marker-toggle ${visibleMarkers[group.type] ? "active" : ""}`}
-                                                        onClick={() =>
-                                                            setVisibleMarkers(prev => ({
-                                                                ...prev,
-                                                                [group.type]: !(prev[group.type] ?? true)
-                                                            }))
-                                                        }
-                                                    >
-                                                        <img src={group.icon} width={24} height={24} alt={group.defaultLabel} />
-                                                        <span>{group.defaultLabel}</span>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                </div>
+                <MapSidebar
+                    currentMap={currentMap}
+                    selectedMapId={selectedMapId}
+                    onSelectMap={(id) => {
+                        setSelectedMapId(id);
+                        navigate(`/maps/${id}`, { replace: true });
+                    }}
+                    visibleMarkers={visibleMarkers}
+                    setVisibleMarkers={setVisibleMarkers}
+                    onBack={() => navigate("/maps")}
+                />
 
                 <div ref={containerRef} className="map-container">
                     <div style={{
@@ -249,9 +160,7 @@ const MapViewer = () => {
                             minScale={0.7}
                             maxScale={8}
                             smooth
-                            wheel={{
-                                step: 0.005
-                            }}
+                            wheel={{ step: 0.005 }}
                             doubleClick={{ step: 1.5 }}
                             velocityAnimation={{
                                 animationTime: 300,
@@ -262,95 +171,57 @@ const MapViewer = () => {
                                 setTransformKey(prev => prev + 1);
                             }}
                         >
-                            {
-                                <div
-                                    className=".map-img"
-                                    style={{ position: "relative", width: "100%", height: "100%" }}
-                                    onMouseEnter={() => setIsHoveringMap(true)}
-                                    onMouseLeave={() => setIsHoveringMap(false)}
-                                >
-                                    <TransformComponent wrapperStyle={WRAPPER_STYLE} contentStyle={CONTENT_STYLE}>
-                                        <MapCanvas
-                                            ref={mapCanvasRef}
-                                            map={currentMap}
-                                            scale={scale}
-                                            onMouseMove={setCursorPos}
-                                            visibleMarkers={visibleMarkers}
-                                            selectedMarker={selectedMarker}
-                                            onMarkerClick={setSelectedMarker}
+                            <div
+                                className="map-img"
+                                style={{ position: "relative", width: "100%", height: "100%" }}
+                                onMouseEnter={() => setIsHoveringMap(true)}
+                                onMouseLeave={() => setIsHoveringMap(false)}
+                            >
+                                <TransformComponent wrapperStyle={WRAPPER_STYLE} contentStyle={CONTENT_STYLE}>
+                                    <MapCanvas
+                                        ref={mapCanvasRef}
+                                        map={currentMap}
+                                        scale={scale}
+                                        onMouseMove={setCursorPos}
+                                        visibleMarkers={visibleMarkers}
+                                        selectedMarker={selectedMarker}
+                                        onMarkerClick={setSelectedMarker}
+                                    />
+                                </TransformComponent>
+
+                                {selectedMarker && (() => {
+                                    const pos = getPopupPosition(selectedMarker);
+                                    const container = containerRef.current;
+                                    const isRightSide = container
+                                        ? (pos.left / container.getBoundingClientRect().width) > 0.5
+                                        : false;
+                                    return (
+                                        <MarkerPopup
+                                            marker={selectedMarker}
+                                            left={pos.left}
+                                            top={pos.top}
+                                            isRightSide={isRightSide}
+                                            transformKey={transformKey}
+                                            onClose={() => setSelectedMarker(null)}
                                         />
-                                    </TransformComponent>
+                                    );
+                                })()}
 
-                                    {selectedMarker && (() => {
-                                        const pos = getPopupPosition(selectedMarker);
-                                        const container = containerRef.current;
-                                        const isRightSide = container
-                                            ? (pos.left / container.getBoundingClientRect().width) > 0.5
-                                            : false;
-                                        return (
-                                            <div
-                                                className="marker-overlay"
-                                                data-transform-key={transformKey}
-                                                style={{
-                                                    left: pos.left,
-                                                    top: pos.top,
-                                                    transform: isRightSide
-                                                        ? "translate(calc(-100% - 20px), -50%)"
-                                                        : "translate(20px, -50%)"
-                                                }}
-                                            >
-                                                <div className="marker-overlay-card" onClick={e => e.stopPropagation()}>
-                                                    <div className="marker-overlay-header">
-                                                        <img src={selectedMarker.icon} width={28} height={28} alt={selectedMarker.label} />
-                                                        <h4>{selectedMarker.label}</h4>
-                                                    </div>
-                                                    <ReactMarkdown
-                                                        components={{
-                                                            strong: ({ children }) => ( // **critical detail**
-                                                                <strong style={{ color: 'var(--color-red)', fontStyle: 'normal' }}>{children}</strong>
-                                                            ),
-                                                            em: ({ children }) => ( // *item*
-                                                                <strong style={{ color: 'var(--color-lime)', fontStyle: 'normal' }}>{children}</strong>
-                                                            ),
-                                                            code: ({ children }) => ( // \`location\` 
-                                                                <strong style={{ color: 'var(--color-cyan)', fontStyle: 'normal' }}>{children}</strong>
-                                                            )
-                                                        }}
-                                                    >
-                                                        {selectedMarker.description}
-                                                    </ReactMarkdown>
-                                                    <button
-                                                        type="button"
-                                                        className="marker-overlay-close"
-                                                        onClick={() => setSelectedMarker(null)}
-                                                    >×</button>
-                                                </div>
-                                            </div>
-                                        );
-                                    })()}
-
-                                    <div className="zoom-buttons">
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                transformRef.current?.centerView(0.85, 300);
-                                            }}
-                                        >
-                                            Reset
-                                        </button>
-                                    </div>
-
-                                    {isHoveringMap && (
-                                        <div style={{
-                                            position: "absolute", top: "10px", left: "10px", zIndex: 10,
-                                            background: "rgba(0,0,0,0.7)", color: "white",
-                                            padding: "6px 10px", borderRadius: "6px", fontFamily: "monospace"
-                                        }}>
-                                            x: {cursorPos.x}<br />y: {cursorPos.y}
-                                        </div>
-                                    )}
+                                <div className="zoom-buttons">
+                                    <button
+                                        type="button"
+                                        onClick={() => transformRef.current?.centerView(0.85, 300)}
+                                    >
+                                        Reset
+                                    </button>
                                 </div>
-                            }
+
+                                {isHoveringMap && (
+                                    <div className="map-cursor-debug">
+                                        x: {cursorPos.x}<br />y: {cursorPos.y}
+                                    </div>
+                                )}
+                            </div>
                         </TransformWrapper>
                     </div>
                 </div>

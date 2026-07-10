@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useSyncExternalStore } from 'react'
 
 export interface SteamNewsItem {
     gid: string
@@ -15,74 +15,72 @@ interface SteamNewsResponse {
     }
 }
 
-// Module-level cache so navigating between the list and an article
-// (or landing directly on /news/:gid) doesn't trigger duplicate fetches.
-let cachedNews: SteamNewsItem[] | null = null
-let inFlightRequest: Promise<SteamNewsItem[]> | null = null
+interface NewsState {
+    news: SteamNewsItem[]
+    loading: boolean
+    error: string | null
+    loaded: boolean // distinct from news.length — a legitimately empty
+    // result set should still count as "fetched", not
+    // trigger a refetch on the next mount
+}
 
-async function fetchNews(): Promise<SteamNewsItem[]> {
-    if (cachedNews) return cachedNews
+let state: NewsState = { news: [], loading: true, error: null, loaded: false }
+const listeners = new Set<() => void>()
+
+function setState(next: Partial<NewsState>) {
+    state = { ...state, ...next }
+    listeners.forEach((listener) => listener())
+}
+
+function subscribe(listener: () => void) {
+    listeners.add(listener)
+    return () => listeners.delete(listener)
+}
+
+function getSnapshot() {
+    return state
+}
+
+let inFlightRequest: Promise<void> | null = null
+
+async function fetchNews(): Promise<void> {
+    if (state.loaded) return
     if (inFlightRequest) return inFlightRequest
 
     inFlightRequest = (async () => {
-        const response = await fetch('/api/steam-news?_=' + Date.now())
+        try {
+            const response = await fetch('/api/steam-news?_=' + Date.now())
 
-        if (!response.ok) {
-            throw new Error('Failed to fetch news')
+            if (!response.ok) {
+                throw new Error('Failed to fetch news')
+            }
+
+            const data = (await response.json()) as SteamNewsResponse
+
+            const filtered = data.appnews.newsitems.filter(
+                (item) => item.feedlabel === 'Community Announcements'
+            )
+
+            setState({ news: filtered, loading: false, loaded: true, error: null })
+        } catch (err) {
+            setState({
+                loading: false,
+                error: err instanceof Error ? err.message : 'An unknown error occurred',
+            })
+        } finally {
+            inFlightRequest = null
         }
-
-        const data = (await response.json()) as SteamNewsResponse
-
-        const filtered = data.appnews.newsitems.filter(
-            (item) => item.feedlabel === 'Community Announcements'
-        )
-
-        cachedNews = filtered
-        return filtered
     })()
 
-    try {
-        return await inFlightRequest
-    } finally {
-        inFlightRequest = null
-    }
+    return inFlightRequest
 }
 
 export function useSteamNews() {
-    const [news, setNews] = useState<SteamNewsItem[]>(cachedNews ?? [])
-    const [loading, setLoading] = useState(!cachedNews)
-    const [error, setError] = useState<string | null>(null)
+    const snapshot = useSyncExternalStore(subscribe, getSnapshot)
 
     useEffect(() => {
-        if (cachedNews) {
-            setNews(cachedNews)
-            setLoading(false)
-            return
-        }
-
-        let cancelled = false
-
         fetchNews()
-            .then((items) => {
-                if (!cancelled) setNews(items)
-            })
-            .catch((err) => {
-                if (!cancelled) {
-                    setError(
-                        err instanceof Error
-                            ? err.message
-                            : 'An unknown error occurred'
-                    )
-                }
-            })
-            .finally(() => {
-                if (!cancelled) setLoading(false)
-            })
-
-        return () => {
-            cancelled = true
-        }
     }, [])
 
-    return { news, loading, error }
+    return snapshot
 }

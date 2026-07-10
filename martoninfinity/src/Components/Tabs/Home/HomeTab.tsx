@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { announcements } from "../../../Data/AnnouncementsData";
 import "./HomeTab.css";
 
@@ -12,7 +12,7 @@ interface Announcement {
 function HomeTab() {
     const navigate = useNavigate();
 
-    const sorted = [...(announcements as Announcement[])].sort(
+    const sorted = (announcements as Announcement[]).toSorted(
         (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 
@@ -29,10 +29,10 @@ function HomeTab() {
                 <div className="announcements">
                     <span className="announcements-label">// announcements</span>
                     {sorted.slice(0, 3).map(item => (
-                        <div
+                        <Link
                             key={item.id}
+                            to={`/announcements/${item.id}`}
                             className="announcement-bubble"
-                            onClick={() => navigate(`/announcements/${item.id}`)}
                         >
                             <p className="bubble-title">{item.title}</p>
                             <p className="bubble-date">{new Date(item.date + "T00:00:00").toLocaleDateString("en-US", {
@@ -43,7 +43,7 @@ function HomeTab() {
                             <p className="bubble-desc">
                                 {item.description.length > 100 ? item.description.slice(0, 100) + "…" : item.description}
                             </p>
-                        </div>
+                        </Link>
                     ))}
                     {hasMore && (
                         <button

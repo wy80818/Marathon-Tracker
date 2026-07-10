@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, createContext, useContext, useEffect, useMemo, useRef, useState, useLayoutEffect } from "react";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { items, categories, rarities, type categoryType, type rarityType } from "../../../Data/ItemsData";
@@ -19,11 +19,14 @@ const defaultFilters: Filters = {
     rarity: "All",
 };
 
-const sortedItems = [...items].sort((a, b) => a.name.localeCompare(b.name));
+const sortedItems = items.toSorted((a, b) => a.name.localeCompare(b.name));
 
 const SCRAMBLE_CHARS = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
 const DECRYPT_DURATION_MS = 1000;
 const DecryptAllContext = createContext(0);
+
+const randomChar = () =>
+    SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
 
 function Spoiler({ children }: { children?: React.ReactNode }) {
     const [revealed, setRevealed] = useState(false);
@@ -37,9 +40,6 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
     const prevSignalRef = useRef(decryptAllSignal);
 
     const originalText = typeof children === "string" ? children : "";
-
-    const randomChar = () =>
-        SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
 
     const clearIdleTimers = () => {
         idleIntervalsRef.current.forEach(clearInterval);
@@ -76,6 +76,7 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
 
         return () => clearIdleTimers();
     }, [revealed, decrypting, originalText]);
+
 
     const startDecrypt = () => {
         if (revealed || decrypting) return;
@@ -154,7 +155,20 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
     };
 
     return (
-        <del onClick={startDecrypt} style={style}>
+        <del
+            role="button"
+            tabIndex={revealed ? -1 : 0}
+            aria-pressed={revealed}
+            aria-label={revealed ? undefined : "Spoiler, click or press Enter to reveal"}
+            onClick={startDecrypt}
+            onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    startDecrypt();
+                }
+            }}
+            style={style}
+        >
             {chars.length ? chars.join("") : originalText}
         </del>
     );
@@ -192,16 +206,30 @@ function ItemsTab() {
     }, [filters, search]);
 
     // Handle fade effects
-    const handleGridScroll = () => {
+    const handleGridScroll = useCallback(() => {
         const el = gridScrollRef.current;
         if (!el) return;
         setAtTop(el.scrollTop < 4);
         setAtBottom(el.scrollHeight - el.scrollTop - el.clientHeight < 4);
-    };
+    }, []); // only touches a ref + stable setters — no reactive values to depend on
+
+    useLayoutEffect(() => {
+        // eslint-disable-next-line react-doctor/no-chain-state-updates -- not a
+        // pure state->state chain; atTop/atBottom require scrollTop/scrollHeight/
+        // clientHeight, which only exist after the filtered list is committed to
+        // the DOM. Can't be computed during render. useLayoutEffect (not useEffect)
+        // avoids the one-frame flicker of a stale fade indicator.
+        handleGridScroll();
+    }, [filteredItems, handleGridScroll]);
 
     useEffect(() => {
-        handleGridScroll();
-    }, [filteredItems]);
+        if (!selectedItem) return;
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === "Escape") setSelectedItem(null);
+        };
+        window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
+    }, [selectedItem]);
 
     return (
         <div className="tab-content-inner">
@@ -265,6 +293,10 @@ function ItemsTab() {
             </div>
 
             {selectedItem && (
+                // eslint-disable-next-line react-doctor/no-static-element-interactions, react-doctor/click-events-have-key-events -- background
+                // click-away convenience, not a standalone widget; an explicit keyboard-accessible
+                // close button already exists (item-modal-close). A role/key-handler here would
+                // announce the entire modal as one giant interactive element and pollute the tab order.
                 <div className="item-modal-overlay" onClick={() => setSelectedItem(null)}>
                     <div className="item-modal" onClick={(e) => e.stopPropagation()}>
                         <button type="button" className="item-modal-close" onClick={() => setSelectedItem(null)}>

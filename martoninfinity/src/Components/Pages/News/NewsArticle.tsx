@@ -2,6 +2,8 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useSteamNews, type SteamNewsItem } from '../../Functions/SteamNews/useSteamNews'
 import { formatSteamContent } from '../../Functions/SteamNews/formatSteamContent'
 
+import DOMPurify from 'dompurify'
+
 import './NewsArticle.css'
 import Error from "../Error/Error";
 
@@ -85,7 +87,7 @@ function NewsArticle() {
                     className="news-markdown"
                     // Content is sanitized in formatSteamContent (scripts, event
                     // handlers, and javascript: URIs are stripped) before render.
-                    dangerouslySetInnerHTML={{ __html: formatSteamContent(item.contents) }}
+                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(formatSteamContent(item.contents)) }}
                 />
             </div>
         </div>

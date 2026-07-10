@@ -82,6 +82,10 @@ function highlightMatches(text: string, query: string): React.ReactNode {
 
     return parts.map((part, i) =>
         part.toLowerCase() === trimmed.toLowerCase()
+            // eslint-disable-next-line react-doctor/no-array-index-as-key -- parts
+            // is rebuilt fresh from text.split() every call (not a persisted/
+            // reorderable list), and <mark>/text nodes carry no component state,
+            // so there's nothing an index key could cause to go stale.
             ? <mark key={i} className="news-search-highlight">{part}</mark>
             : part
     )

@@ -11,6 +11,8 @@
 // (very common — "Changes:\n[*]Fix A\n[*]Fix B" with no blank line) doesn't
 // break the list apart.
 
+import DOMPurify from 'dompurify'
+
 function convertListBlock(inner: string, ordered: boolean): string {
     const items = inner
         .split(/\[\*\]/)
@@ -149,22 +151,24 @@ function convertBBCode(text: string): string {
     return out
 }
 
-function sanitizeHtml(html: string): string {
-    let safe = html
 
-    // Remove script/style/iframe/object/embed blocks entirely
-    safe = safe.replace(/<(script|style|iframe|object|embed)[^>]*>[\s\S]*?<\/\1>/gi, '')
-    safe = safe.replace(/<(script|style|iframe|object|embed)[^>]*\/?>/gi, '')
+const ALLOWED_TAGS = [
+    'p', 'br', 'strong', 'em', 'u', 's', 'blockquote',
+    'h1', 'h2', 'h3', 'h4',
+    'ul', 'ol', 'li',
+    'a', 'img',
+    'table', 'tr', 'td',
+]
 
-    // Strip inline event handlers (onclick=, onerror=, etc.)
-    safe = safe.replace(/\son\w+\s*=\s*"[^"]*"/gi, '')
-    safe = safe.replace(/\son\w+\s*=\s*'[^']*'/gi, '')
+const ALLOWED_ATTR = ['href', 'src', 'target', 'rel', 'class', 'alt', 'loading']
 
-    // Neutralize javascript: URIs in href/src
-    safe = safe.replace(/(href|src)\s*=\s*"javascript:[^"]*"/gi, '$1="#"')
-    safe = safe.replace(/(href|src)\s*=\s*'javascript:[^']*'/gi, "$1='#'")
-
-    return safe
+export function sanitizeHtml(html: string): string {
+    return DOMPurify.sanitize(html, {
+        ALLOWED_TAGS,
+        ALLOWED_ATTR,
+        ALLOWED_URI_REGEXP: /^(?:https?|mailto):/i, // no javascript:/data: URIs
+        ADD_ATTR: ['target', 'rel'],
+    })
 }
 
 const BLOCK_TAG_LINE = /^\s*<(ul|ol|h1|h2|h3|h4|blockquote|img|table)\b/i
