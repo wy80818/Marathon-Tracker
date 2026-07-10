@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useMemo, useState } from 'react'
 import { useSteamNews } from '../../Functions/SteamNews/useSteamNews'
 
 import './NewsTab.css'
@@ -62,8 +63,53 @@ function cleanSteamDescription(text: string) {
     return cleaned || 'Read the full update'
 }
 
+// Escapes regex special characters so the raw search query can be dropped
+// safely into a RegExp (otherwise typing e.g. "3.24" or "(beta)" would
+// throw or match unintended patterns)
+function escapeRegExp(str: string) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+// Splits text around every match of `query` and wraps matches in <mark>.
+// Returns the original string untouched (as a single-element array) when
+// the query is empty, so the common no-search-yet case skips the split work.
+function highlightMatches(text: string, query: string): React.ReactNode {
+    const trimmed = query.trim()
+    if (!trimmed) return text
+
+    const parts = text.split(new RegExp(`(${escapeRegExp(trimmed)})`, 'gi'))
+    if (parts.length === 1) return text
+
+    return parts.map((part, i) =>
+        part.toLowerCase() === trimmed.toLowerCase()
+            ? <mark key={i} className="news-search-highlight">{part}</mark>
+            : part
+    )
+}
+
 function NewsTab() {
     const { news, loading, error } = useSteamNews()
+    const [query, setQuery] = useState('')
+
+    // Clean descriptions once per news list, not once per render/keystroke
+    const newsWithPreview = useMemo(
+        () => news.map((item) => ({
+            ...item,
+            preview: cleanSteamDescription(item.contents).slice(0, 220),
+        })),
+        [news]
+    )
+
+    const filteredNews = useMemo(() => {
+        const trimmed = query.trim().toLowerCase()
+        if (!trimmed) return newsWithPreview
+
+        return newsWithPreview.filter(
+            (item) =>
+                item.title.toLowerCase().includes(trimmed) ||
+                item.preview.toLowerCase().includes(trimmed)
+        )
+    }, [newsWithPreview, query])
 
     if (loading) {
         return (
@@ -123,47 +169,74 @@ function NewsTab() {
                 <h2>News</h2>
             </div>
 
-            <div className="news-list">
-                {news.map((item, index) => (
-                    <Link
-                        key={item.gid}
-                        to={`/news/${item.gid}`}
-                        state={{ item }}
-                        className="news-item"
-                        style={{
-                            animationDelay: `${index * 0.05}s`,
-                        }}
+            <div className="news-search">
+                <input
+                    type="text"
+                    className="news-search-input"
+                    placeholder="Search news..."
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    aria-label="Search news"
+                />
+                {query && (
+                    <button
+                        type="button"
+                        className="news-search-clear"
+                        onClick={() => setQuery('')}
+                        aria-label="Clear search"
                     >
-                        <div className="news-item-left">
-                            {String(index + 1).padStart(2, '0')}
-                        </div>
+                        ×
+                    </button>
+                )}
+            </div>
 
-                        <div className="news-item-right">
-                            <div className="news-item-top">
-                                <h3>{item.title}</h3>
-
-                                <span>
-                                    {new Date(
-                                        item.date * 1000
-                                    ).toLocaleDateString('en-US', {
-                                        year: 'numeric',
-                                        month: 'short',
-                                        day: 'numeric',
-                                    })}
-                                </span>
+            {filteredNews.length === 0 ? (
+                <p className="news-search-empty">
+                    No results for "{query}"
+                </p>
+            ) : (
+                <div className="news-list">
+                    {filteredNews.map((item, index) => (
+                        <Link
+                            key={item.gid}
+                            to={`/news/${item.gid}`}
+                            state={{ item }}
+                            className="news-item"
+                            style={{
+                                animationDelay: `${index * 0.05}s`,
+                            }}
+                        >
+                            <div className="news-item-left">
+                                {String(index + 1).padStart(2, '0')}
                             </div>
 
-                            <p>
-                                {cleanSteamDescription(item.contents).slice(0, 220)}
-                            </p>
+                            <div className="news-item-right">
+                                <div className="news-item-top">
+                                    <h3>{highlightMatches(item.title, query)}</h3>
 
-                            <span className="news-item-read">
-                                Read full article →
-                            </span>
-                        </div>
-                    </Link>
-                ))}
-            </div>
+                                    <span>
+                                        {new Date(
+                                            item.date * 1000
+                                        ).toLocaleDateString('en-US', {
+                                            year: 'numeric',
+                                            month: 'short',
+                                            day: 'numeric',
+                                        })}
+                                    </span>
+                                </div>
+
+                                <p>
+                                    {highlightMatches(item.preview, query)}
+                                </p>
+
+                                <span className="news-item-read">
+                                    Read full article →
+                                </span>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            )}
         </div>
     )
 }

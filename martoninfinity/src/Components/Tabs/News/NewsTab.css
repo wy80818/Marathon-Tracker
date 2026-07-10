@@ -105,6 +105,69 @@
     margin: 0;
 }
 
+/* Search */
+
+.news-search {
+    position: relative;
+    margin: 1.25rem 0;
+}
+
+.news-search-input {
+    width: 100%;
+    background: var(--color-darker-bg);
+    border: 1px solid rgba(1, 255, 255, 0.15);
+    border-radius: 6px;
+    padding: 10px 36px 10px 14px;
+    font-family: "Fira Code", monospace;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.9);
+    transition: border-color 0.2s ease;
+}
+
+    .news-search-input::placeholder {
+        color: rgba(255, 255, 255, 0.35);
+    }
+
+    .news-search-input:focus {
+        outline: none;
+        border-color: var(--color-cyan);
+    }
+
+.news-search-clear {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--color-cyan);
+    opacity: 0.6;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 2px 4px;
+    transition: opacity 0.2s ease;
+}
+
+    .news-search-clear:hover {
+        opacity: 1;
+    }
+
+.news-search-empty {
+    font-family: "Fira Code", monospace;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.news-search-highlight {
+    background: rgba(194, 254, 11, 0.35);
+    color: inherit;
+    border-radius: 2px;
+    padding: 0 1px;
+}
+
 
 /* List */
 
@@ -241,4 +304,3 @@
         transform: translateY(0);
     }
 }
-
