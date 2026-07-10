@@ -96,7 +96,7 @@ label,
 .app-header {
     background: var(--color-lime);
     color: #000000;
-    padding: var(--space-md) var(--space-lg);
+    padding: var(--space-xs) var(--space-sm);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     font-family: "Playfair Display", serif;
 }
