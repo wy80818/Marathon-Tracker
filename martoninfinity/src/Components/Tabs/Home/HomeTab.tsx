@@ -47,6 +47,7 @@ function HomeTab() {
                     ))}
                     {hasMore && (
                         <button
+                            type="button"
                             className="announcements-toggle"
                             onClick={() => navigate("/announcements")}
                         >

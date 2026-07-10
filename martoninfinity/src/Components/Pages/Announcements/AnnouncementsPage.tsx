@@ -19,7 +19,7 @@ function AnnouncementsPage() {
     return (
         <div className="announcements-page">
             <div className="announcements-page-header">
-                <button className="announcements-back" onClick={() => navigate("/")}>
+                <button type="button" className="announcements-back" onClick={() => navigate("/")}>
                     ← Back to Home
                 </button>
                 <div className="announcements-page-title">

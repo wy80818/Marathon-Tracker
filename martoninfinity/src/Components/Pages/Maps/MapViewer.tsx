@@ -148,7 +148,7 @@ const MapViewer = () => {
         <div className="map-window">
             <div className="map-layout">
                 <div className="map-side-column">
-                    <button className="map-back" onClick={() => navigate("/maps")}>
+                    <button type="button" className="map-back" onClick={() => navigate("/maps")}>
                         ← Back to Maps
                     </button>
                     <div className="map-sidebar">
@@ -157,6 +157,7 @@ const MapViewer = () => {
                             {maps.map(map => (
                                 <button
                                     key={map.id}
+                                    type="button"
                                     className={`map-button ${selectedMapId === map.id ? "active" : ""}`}
                                     onClick={() => {
                                         setSelectedMapId(map.id);
@@ -172,8 +173,8 @@ const MapViewer = () => {
                         <div className="map-key-header">
                             <h2>Markers</h2>
                             <div className="marker-controls">
-                                <button onClick={showAllMarkers}>Show All</button>/
-                                <button onClick={hideAllMarkers}>Hide All</button>
+                                <button type="button" onClick={showAllMarkers}>Show All</button>/
+                                <button type="button" onClick={hideAllMarkers}>Hide All</button>
                             </div>
                         </div>
                         <div className="map-key-content">
@@ -196,12 +197,12 @@ const MapViewer = () => {
                                                 <span className="marker-category-count">{shown}/{total}</span>
                                             </div>
                                             <div className="category-controls">
-                                                <button onClick={() => setVisibleMarkers(prev => {
+                                                <button type="button" onClick={() => setVisibleMarkers(prev => {
                                                     const u = { ...prev };
                                                     groups.forEach(g => (u[g.type] = true));
                                                     return u;
                                                 })}>Show All</button>/
-                                                <button onClick={() => setVisibleMarkers(prev => {
+                                                <button type="button" onClick={() => setVisibleMarkers(prev => {
                                                     const u = { ...prev };
                                                     groups.forEach(g => (u[g.type] = false));
                                                     return u;
@@ -221,7 +222,7 @@ const MapViewer = () => {
                                                             }))
                                                         }
                                                     >
-                                                        <img src={group.icon} width={24} height={24} />
+                                                        <img src={group.icon} width={24} height={24} alt={group.defaultLabel} />
                                                         <span>{group.defaultLabel}</span>
                                                     </div>
                                                 ))}
@@ -300,7 +301,7 @@ const MapViewer = () => {
                                             >
                                                 <div className="marker-overlay-card" onClick={e => e.stopPropagation()}>
                                                     <div className="marker-overlay-header">
-                                                        <img src={selectedMarker.icon} width={28} height={28} />
+                                                        <img src={selectedMarker.icon} width={28} height={28} alt={selectedMarker.label} />
                                                         <h4>{selectedMarker.label}</h4>
                                                     </div>
                                                     <ReactMarkdown
@@ -319,6 +320,7 @@ const MapViewer = () => {
                                                         {selectedMarker.description}
                                                     </ReactMarkdown>
                                                     <button
+                                                        type="button"
                                                         className="marker-overlay-close"
                                                         onClick={() => setSelectedMarker(null)}
                                                     >×</button>
@@ -329,6 +331,7 @@ const MapViewer = () => {
 
                                     <div className="zoom-buttons">
                                         <button
+                                            type="button"
                                             onClick={() => {
                                                 transformRef.current?.centerView(0.85, 300);
                                             }}

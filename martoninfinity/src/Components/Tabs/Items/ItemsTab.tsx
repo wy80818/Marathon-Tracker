@@ -238,6 +238,7 @@ function ItemsTab() {
                     {filteredItems.map((it) => (
                         <button
                             key={it.id}
+                            type="button"
                             className={`item-card rarity-${it.rarity.toLowerCase()}`}
                             onClick={() => setSelectedItem(it)}
                         >
@@ -266,7 +267,7 @@ function ItemsTab() {
             {selectedItem && (
                 <div className="item-modal-overlay" onClick={() => setSelectedItem(null)}>
                     <div className="item-modal" onClick={(e) => e.stopPropagation()}>
-                        <button className="item-modal-close" onClick={() => setSelectedItem(null)}>
+                        <button type="button" className="item-modal-close" onClick={() => setSelectedItem(null)}>
                             ×
                         </button>
 
@@ -297,6 +298,7 @@ function ItemsTab() {
                                         <span className="item-modal-sources-label">Sources</span>
                                         {hasSpoilers && (
                                             <button
+                                                type="button"
                                                 className="decrypt-all-btn"
                                                 onClick={() => setDecryptAllSignal((s) => s + 1)}
                                             >

@@ -21,7 +21,7 @@ function NewsArticle() {
     if (!stateItem && loading) {
         return (
             <div className="news-detail-page">
-                <button className="news-detail-back" onClick={() => navigate('/news')}>
+                <button type="button" className="news-detail-back" onClick={() => navigate('/news')}>
                     ← Back to News
                 </button>
                 <p className="news-detail-not-found">Loading article...</p>
@@ -32,7 +32,7 @@ function NewsArticle() {
     if (!stateItem && error) {
         return (
             <div className="news-detail-page">
-                <button className="news-detail-back" onClick={() => navigate('/news')}>
+                <button type="button" className="news-detail-back" onClick={() => navigate('/news')}>
                     ← Back to news
                 </button>
                 <p className="news-detail-not-found">{error}</p>
@@ -59,7 +59,7 @@ function NewsArticle() {
 
     return (
         <div className="news-detail-page">
-            <button className="news-detail-back" onClick={() => navigate('/news')}>
+            <button type="button" className="news-detail-back" onClick={() => navigate('/news')}>
                 ← Back to News
             </button>
 

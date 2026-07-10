@@ -1,3 +1,4 @@
+/* react-doctor-disable deslop/unused-file */
 const STEAM_NEWS_URL =
     'ISteamNews/GetNewsForApp/v2/?appid=3065800&count=100&maxlength=0&format=json'
 

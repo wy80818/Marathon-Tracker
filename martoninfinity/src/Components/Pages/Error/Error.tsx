@@ -26,7 +26,7 @@ function Error({
                 <p className="error-message">{message}</p>
                 <div className="error-divider" />
                 <p className="error-sub">{sub}</p>
-                <button className="announcements-back" onClick={() => navigate(backlink)}>
+                <button type="button" className="announcements-back" onClick={() => navigate(backlink)}>
                     ← {backmsg}
                 </button>
             </div>

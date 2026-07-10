@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "doctor": "npx react-doctor@latest"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
@@ -17,7 +18,6 @@
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.18.0",
     "react-zoom-pan-pinch": "^4.0.3",
-    "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
