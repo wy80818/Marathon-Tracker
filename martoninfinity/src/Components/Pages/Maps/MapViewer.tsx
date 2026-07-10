@@ -57,13 +57,14 @@ const MapViewer = () => {
         if (exists && mapId !== selectedMapId) {
             setSelectedMapId(mapId);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally
-        // one-directional (URL -> state). Adding selectedMapId here would make
+        // intentionally one-directional (URL -> state). Adding selectedMapId here would make
         // this effect re-fire the instant setSelectedMapId is called from the
         // sidebar onClick, before the router has updated `mapId`, reverting the click.
+        // react-doctor-disable-next-line react-doctor/exhaustive-deps 
     }, [mapId]);
 
     // Resets marker filters on map change.
+    
     useEffect(() => {
         const defaults: Record<string, boolean> = {};
         currentMap.markers.forEach(marker => {
@@ -72,9 +73,10 @@ const MapViewer = () => {
 
         setVisibleMarkers(defaults);
         setSelectedMarker(null);
-        // eslint-disable-next-line react-hooks/exhaustive-deps -- currentMap is a
-        // pure lookup (maps.find) over displayedMapId against a static `maps`
+         
+        // currentMapis a pure lookup (maps.find) over displayedMapId against a static `maps`
         // array, so it can't change independently of displayedMapId.
+        // react-doctor-disable-next-line react-doctor/exhaustive-deps 
     }, [displayedMapId]);
 
     // Map fade out transition

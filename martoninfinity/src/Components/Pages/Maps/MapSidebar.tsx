@@ -26,15 +26,16 @@ function MapSidebar({
         {} as Record<string, typeof currentMap.markerGroups>
     );
 
-    // Sidebar categories — reopen everything whenever the displayed map changes
+    
     useEffect(() => {
         const initial: Record<string, boolean> = {};
         Object.keys(groupedMarkers).forEach(category => {
             initial[category] = true;
         });
         setOpenCategories(initial);
-        // eslint-disable-next-line react-hooks/exhaustive-deps -- groupedMarkers
+        // Sidebar categories — reopen everything whenever the displayed map changes
         // is derived purely from currentMap, so currentMap.id alone determines this.
+        // react-doctor-disable-next-line react-doctor/exhaustive-deps -- groupedMarkers
     }, [currentMap.id]);
 
     const showAllMarkers = () => {

@@ -213,12 +213,13 @@ function ItemsTab() {
         setAtBottom(el.scrollHeight - el.scrollTop - el.clientHeight < 4);
     }, []); // only touches a ref + stable setters — no reactive values to depend on
 
+    // react-doctor-disable-next-line react-doctor/no-chain-state-updates, react-doctor/exhaustive-deps -- not a
+    // pure state->state chain; atTop/atBottom require scrollTop/scrollHeight/
+    // clientHeight, which only exist after the filtered list is committed to
+    // the DOM. handleGridScroll is a stable useCallback (empty deps, ref-only)
+    // so filteredItems is the only real trigger. useLayoutEffect (not useEffect)
+    // avoids the one-frame flicker of a stale fade indicator.
     useLayoutEffect(() => {
-        // eslint-disable-next-line react-doctor/no-chain-state-updates -- not a
-        // pure state->state chain; atTop/atBottom require scrollTop/scrollHeight/
-        // clientHeight, which only exist after the filtered list is committed to
-        // the DOM. Can't be computed during render. useLayoutEffect (not useEffect)
-        // avoids the one-frame flicker of a stale fade indicator.
         handleGridScroll();
     }, [filteredItems, handleGridScroll]);
 
@@ -293,10 +294,10 @@ function ItemsTab() {
             </div>
 
             {selectedItem && (
-                // eslint-disable-next-line react-doctor/no-static-element-interactions, react-doctor/click-events-have-key-events -- background
-                // click-away convenience, not a standalone widget; an explicit keyboard-accessible
+                // background click-away convenience, not a standalone widget; an explicit keyboard-accessible
                 // close button already exists (item-modal-close). A role/key-handler here would
                 // announce the entire modal as one giant interactive element and pollute the tab order.
+                // react-doctor-disable-next-line react-doctor/no-static-element-interactions, react-doctor/click-events-have-key-events
                 <div className="item-modal-overlay" onClick={() => setSelectedItem(null)}>
                     <div className="item-modal" onClick={(e) => e.stopPropagation()}>
                         <button type="button" className="item-modal-close" onClick={() => setSelectedItem(null)}>

@@ -80,15 +80,16 @@ function highlightMatches(text: string, query: string): React.ReactNode {
     const parts = text.split(new RegExp(`(${escapeRegExp(trimmed)})`, 'gi'))
     if (parts.length === 1) return text
 
-    return parts.map((part, i) =>
-        part.toLowerCase() === trimmed.toLowerCase()
-            // eslint-disable-next-line react-doctor/no-array-index-as-key -- parts
-            // is rebuilt fresh from text.split() every call (not a persisted/
-            // reorderable list), and <mark>/text nodes carry no component state,
-            // so there's nothing an index key could cause to go stale.
-            ? <mark key={i} className="news-search-highlight">{part}</mark>
-            : part
-    )
+    return parts.map((part, i) => {
+        if (part.toLowerCase() !== trimmed.toLowerCase()) return part
+
+        
+        // parts is rebuilt fresh from text.split() every call (not a persisted/
+        // reorderable list), and <mark>/text nodes carry no component state,
+        // so there's nothing an index key could cause to go stale.
+        // react-doctor-disable-next-line react-doctor/no-array-index-as-key
+        return <mark key={i} className="news-search-highlight">{part}</mark>
+    })
 }
 
 function NewsTab() {

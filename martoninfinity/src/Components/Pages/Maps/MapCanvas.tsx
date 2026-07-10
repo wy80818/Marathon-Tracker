@@ -49,10 +49,10 @@ function MapCanvas({
     map, scale, onMouseMove, visibleMarkers, selectedMarker, onMarkerClick, ref
 }: Props) {
     return (
-        // eslint-disable-next-line react-doctor/no-static-element-interactions, react-doctor/click-events-have-key-events -- background
-        // click-away convenience, not a standalone widget; an explicit keyboard-accessible
+        // background click-away convenience, not a standalone widget; an explicit keyboard-accessible
         // close button already exists (marker-overlay-close). A role/key-handler here would
         // announce the entire map as one giant interactive element and pollute the tab order.
+        // react-doctor-disable-next-line react-doctor/no-static-element-interactions, react-doctor/click-events-have-key-events
         <div
             ref={ref}
             style={{ position: "relative", display: "inline-block" }}
