@@ -245,9 +245,7 @@ const MapViewer = () => {
                             ref={transformRef}
                             initialScale={0.85}
                             centerOnInit
-                            limitToBounds
-                            centerZoomedOut
-                            minScale={0.85}
+                            minScale={0.7}
                             maxScale={8}
                             smooth
                             wheel={{
@@ -310,10 +308,10 @@ const MapViewer = () => {
                                                             strong: ({ children }) => ( // **critical detail**
                                                                 <strong style={{ color: 'var(--color-red)', fontStyle: 'normal' }}>{children}</strong>
                                                             ),
-                                                            em: ({ children }) => ( // *item* = Item
+                                                            em: ({ children }) => ( // *item*
                                                                 <strong style={{ color: 'var(--color-lime)', fontStyle: 'normal' }}>{children}</strong>
                                                             ),
-                                                            code: ({ children }) => ( // \`location\`
+                                                            code: ({ children }) => ( // \`location\` 
                                                                 <strong style={{ color: 'var(--color-cyan)', fontStyle: 'normal' }}>{children}</strong>
                                                             )
                                                         }}
