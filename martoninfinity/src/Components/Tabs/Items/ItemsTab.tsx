@@ -124,10 +124,21 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
         });
     };
 
+    // startDecrypt is a plain function recreated every render, so it can't be
+    // safely added to the deps array below (the effect would then fire on every
+    // render instead of only when decryptAllSignal actually changes). Keep a ref
+    // pointing at the latest version, updated every render, and call through
+    // the ref — this satisfies exhaustive-deps without ever invoking a stale
+    // closure.
+    const startDecryptRef = useRef(startDecrypt);
+    useLayoutEffect(() => {
+        startDecryptRef.current = startDecrypt;
+    });
+
     useEffect(() => {
         if (decryptAllSignal !== prevSignalRef.current) {
             prevSignalRef.current = decryptAllSignal;
-            startDecrypt();
+            startDecryptRef.current(); // <-- was `startDecrypt()`
         }
     }, [decryptAllSignal]);
 
@@ -140,6 +151,7 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
 
     const style: React.CSSProperties = {
         fontFamily: 'inherit',
+        fontSize: 'inherit',
         color: revealed ? 'inherit' : '#0ff',
         textShadow: revealed ? 'none' : '0 0 8px #0ff, 0 0 2px #0ff',
         backgroundColor: revealed ? 'transparent' : 'rgba(0, 20, 20, 0.6)',
@@ -152,25 +164,24 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
         whiteSpace: 'pre-wrap',
         overflowWrap: 'break-word',
         wordBreak: 'break-word',
+        // reset browser button chrome so it still reads as inline text, not a widget
+        border: 'none',
+        margin: 0,
+        padding: 0,
+        display: 'inline',
+        font: 'inherit',
     };
 
     return (
-        <del
-            role="button"
-            tabIndex={revealed ? -1 : 0}
-            aria-pressed={revealed}
+        <button
+            type="button"
             aria-label={revealed ? undefined : "Spoiler, click or press Enter to reveal"}
             onClick={startDecrypt}
-            onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    startDecrypt();
-                }
-            }}
+            disabled={revealed}
             style={style}
         >
             {chars.length ? chars.join("") : originalText}
-        </del>
+        </button>
     );
 }
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { maps, type GameMap } from "../../../Data/MapsData";
 
 interface Props {
@@ -14,6 +14,7 @@ function MapSidebar({
     currentMap, selectedMapId, onSelectMap, visibleMarkers, setVisibleMarkers, onBack
 }: Props) {
     const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
+    const [prevMapId, setPrevMapId] = useState(currentMap.id);
 
     const markerTypes = [...new Set(currentMap.markers.map(m => m.type))];
 
@@ -26,17 +27,17 @@ function MapSidebar({
         {} as Record<string, typeof currentMap.markerGroups>
     );
 
-    
-    useEffect(() => {
+    // Adjust state during render instead of in an effect: when the displayed
+    // map changes, reopen every category immediately, in the same commit,
+    // rather than flashing the previous map's open/closed state for a frame.
+    if (currentMap.id !== prevMapId) {
+        setPrevMapId(currentMap.id);
         const initial: Record<string, boolean> = {};
         Object.keys(groupedMarkers).forEach(category => {
             initial[category] = true;
         });
         setOpenCategories(initial);
-        // Sidebar categories — reopen everything whenever the displayed map changes
-        // is derived purely from currentMap, so currentMap.id alone determines this.
-        // react-doctor-disable-next-line react-doctor/exhaustive-deps -- groupedMarkers
-    }, [currentMap.id]);
+    }
 
     const showAllMarkers = () => {
         const all: Record<string, boolean> = {};
