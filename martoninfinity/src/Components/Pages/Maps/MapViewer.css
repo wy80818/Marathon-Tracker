@@ -109,7 +109,7 @@
     font-family: "Fira Code", monospace;
     font-size: var(--font-xs);
     letter-spacing: 0.08em;
-    padding: clamp(4px, 1vw, 8px) clamp(8px, 1.5vw, 12px);
+    padding: 6px 12px;
     opacity: 0.7;
     transition: all 0.2s ease;
     white-space: nowrap;
@@ -439,7 +439,7 @@
     background: rgba(20, 20, 20, 0.95);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: var(--border-radius-md);
-    padding: clamp(10px, 1.5vw, 16px) clamp(40px, 3vw, 48px) clamp(10px, 1.5vw, 16px) clamp(12px, 1.5vw, 20px);
+    padding: 10px;
     width: var(--overlay-width);
     color: white;
     box-shadow: 0 10px 30px rgba(0,0,0,0.4);
@@ -450,7 +450,7 @@
 
     .marker-overlay-card p {
         margin: 0;
-        font-size: var(--font-sm);
+        font-size: var(--font-xs);
         color: #cfcfcf;
         line-height: 1.4;
     }
@@ -459,12 +459,12 @@
     display: flex;
     align-items: center;
     gap: var(--gap-sm);
-    margin-bottom: var(--space-sm);
+    margin-bottom: 5px;
 }
 
     .marker-overlay-header h4 {
         margin: 0;
-        font-size: var(--font-base);
+        font-size: var(--font-sm);
         font-weight: 600;
     }
 
@@ -559,7 +559,7 @@
 
     .map-back {
         padding: clamp(6px, 1.2vw, 10px) clamp(10px, 1.5vw, 14px);
-        font-size: var(--font-xs);
+        font-size: var(--font-base);
     }
 
     .map-layout {
@@ -575,6 +575,7 @@
 
     .map-back {
         order: 1;
+        
     }
 
     .map-sidebar {
@@ -632,6 +633,22 @@
         font-size: var(--font-sm);
     }
 
+    .marker-controls {
+        font-size: var(--font-base);
+    }
+
+        .marker-controls button {
+            font-size: var(--font-base);
+        }
+
+    .category-controls {
+        font-size: var(--font-base);
+    }
+
+        .category-controls button {
+            font-size: var(--font-base);
+        }
+
     .marker-overlay {
         position: fixed !important;
         left: clamp(8px, 2vw, 12px) !important;
@@ -645,13 +662,20 @@
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;
-        padding: clamp(12px, 1.5vw, 16px) clamp(44px, 5vw, 52px) clamp(12px, 1.5vw, 16px) clamp(14px, 1.5vw, 20px);
+        padding: 10px;
         border-radius: var(--border-radius-lg);
         animation: markerSlideUp 0.16s ease-out;
     }
 
+        .marker-overlay-card p {
+            margin: 0;
+            font-size: var(--font-xl);
+            color: #cfcfcf;
+            line-height: 1.4;
+        }
+
     .marker-overlay-header h4 {
-        font-size: var(--font-lg);
+        font-size: var(--font-2xl);
     }
 
     .marker-overlay-close {
