@@ -63,6 +63,24 @@ function cleanSteamDescription(text: string) {
     return cleaned || 'Read the full update'
 }
 
+
+// Truncates to maxLength, backing off to the last whole word so we don't
+// cut mid-word, and only appends the ellipsis when text was actually cut
+function truncatePreview(text: string, maxLength: number) {
+    if (text.length <= maxLength) return text
+
+    const sliced = text.slice(0, maxLength)
+    const lastSpace = sliced.lastIndexOf(' ')
+
+    // Only back off to the last space if it doesn't chop off too much
+    // (avoids a tiny stub for previews with one very long word)
+    const trimmed = lastSpace > maxLength * 0.6
+        ? sliced.slice(0, lastSpace)
+        : sliced
+
+    return trimmed.trimEnd() + '…'
+}
+
 // Escapes regex special characters so the raw search query can be dropped
 // safely into a RegExp (otherwise typing e.g. "3.24" or "(beta)" would
 // throw or match unintended patterns)
@@ -100,7 +118,7 @@ function NewsTab() {
     const newsWithPreview = useMemo(
         () => news.map((item) => ({
             ...item,
-            preview: cleanSteamDescription(item.contents).slice(0, 220),
+            preview: truncatePreview(cleanSteamDescription(item.contents), 220),
         })),
         [news]
     )
@@ -121,15 +139,23 @@ function NewsTab() {
             <div className="news-page">
                 <div className="news-header">
                     <span className="news-label">
-                        // Steam Updates
+                    // Steam Updates
                     </span>
                     <h2>News</h2>
                 </div>
 
-                <p className="news-loading-text">
-                    <span className="news-spinner" />
-                    Loading latest updates...
-                </p>
+                <div className="news-loading">
+                    <span className="news-loading-status">
+                        <span className="news-loading-dot" />
+                        Fetching latest updates
+                        <span className="news-loading-ellipsis">
+                            <span>.</span><span>.</span><span>.</span>
+                        </span>
+                    </span>
+                    <div className="news-loading-bar">
+                        <div className="news-loading-bar-fill" />
+                    </div>
+                </div>
 
                 <div className="news-list">
                     {Array.from({ length: 4 }).map((_, index) => (
