@@ -92,7 +92,7 @@
     color: rgba(255, 255, 255, 0.85);
     font-size: 1rem;
     line-height: 1.7;
-/*    max-width: 65ch;*/
+    /*    max-width: 65ch;*/
 }
 
     /* Paragraphs & spacing */
@@ -218,6 +218,155 @@
         margin: 1.75em 0;
     }
 
+    /* Tables */
+    .news-markdown table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        border-collapse: collapse;
+        margin: 1.2em 0;
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(1, 255, 255, 0.15);
+        border-radius: 6px;
+    }
+
+        .news-markdown table tbody,
+        .news-markdown table tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            white-space: normal;
+        }
+
+    .news-markdown td {
+        padding: 0.6em 0.9em;
+        border-bottom: 1px solid rgba(1, 255, 255, 0.1);
+        border-right: 1px solid rgba(1, 255, 255, 0.08);
+        text-align: left;
+        vertical-align: top;
+        font-size: 0.92em;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+        .news-markdown td:last-child {
+            border-right: none;
+        }
+
+    .news-markdown tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Header row — Steam's [td] doesn't distinguish header vs body cells,
+       so the parser always outputs a plain <tr><td>; style the first row
+       to read as a header */
+    .news-markdown tr:first-child td {
+        background: rgba(1, 255, 255, 0.06);
+        font-family: "Fira Code", monospace;
+        font-size: 0.78em;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--color-cyan);
+        font-weight: 700;
+        border-bottom: 1px solid rgba(1, 255, 255, 0.2);
+    }
+
+    .news-markdown tr:not(:first-child):hover td {
+        background: rgba(1, 255, 255, 0.04);
+    }
+
+    /* YouTube preview */
+    .news-markdown a.yt-preview {
+        position: relative;
+        display: block;
+        max-width: 100%;
+        margin: 1.2em 0;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid rgba(1, 255, 255, 0.15);
+        background: rgba(0, 0, 0, 0.3);
+        text-decoration: none;
+        transition: border-color 0.2s ease, opacity 0.2s ease;
+    }
+
+        .news-markdown a.yt-preview:hover {
+            border-color: rgba(1, 255, 255, 0.4);
+        }
+
+        .news-markdown a.yt-preview img {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin: 0;
+            border-radius: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .news-markdown a.yt-preview:hover img {
+            opacity: 0.75;
+        }
+
+        /* Play button overlay */
+        .news-markdown a.yt-preview::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 56px;
+            height: 40px;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(1, 255, 255, 0.4);
+            border-radius: 8px;
+            transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .news-markdown a.yt-preview:hover::after {
+            background-color: rgba(1, 255, 255, 0.15);
+            border-color: var(--color-cyan);
+            transform: translate(-50%, -50%) scale(1.08);
+        }
+
+        /* Triangle "play" glyph, drawn with borders */
+        .news-markdown a.yt-preview::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            transform: translate(-40%, -50%);
+            border-style: solid;
+            border-width: 9px 0 9px 16px;
+            border-color: transparent transparent transparent var(--color-cyan);
+            z-index: 1;
+            transition: border-left-color 0.2s ease;
+        }
+
+    /* Dynamic link cards (non-YouTube, e.g. Steam store links) */
+    .news-markdown a.dynamic-link {
+        display: block;
+        width: fit-content;
+        max-width: 100%;
+        margin: 1.2em 0;
+        padding: 0.6em 1em;
+        border: 1px solid rgba(1, 255, 255, 0.2);
+        border-radius: 6px;
+        background: rgba(1, 255, 255, 0.05);
+        font-family: "Fira Code", monospace;
+        font-size: 0.85em;
+        color: var(--color-cyan);
+        text-decoration: none;
+        word-break: break-all;
+        transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+        .news-markdown a.dynamic-link:hover {
+            background: rgba(1, 255, 255, 0.1);
+            border-color: rgba(1, 255, 255, 0.4);
+            text-decoration: underline;
+        }
+
 .news-detail-not-found {
     font-family: "Fira Code", monospace;
     font-size: 13px;
@@ -242,6 +391,11 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 0.35rem;
+    }
+
+    .news-markdown td {
+        padding: 0.5em 0.7em;
+        font-size: 0.85em;
     }
 }
 

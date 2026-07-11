@@ -1,5 +1,6 @@
-import { forwardRef } from "react";
 import type { Marker, GameMap } from "../../../Data/MapsData.ts";
+
+import "./MapCanvas.css"
 
 interface Props {
     map: GameMap;
@@ -8,33 +9,20 @@ interface Props {
     visibleMarkers: Record<string, boolean>;
     selectedMarker: Marker | null;
     onMarkerClick: (marker: Marker | null) => void;
+    ref?: React.Ref<HTMLDivElement>;
 }
 
 const renderMarkerContent = (marker: Marker, isSelected: boolean) => {
     if (marker.type === "poiLarge" || marker.type === "poiSmall") {
         const large = marker.type === "poiLarge";
         return (
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <span style={{
-                    display: "block",
-                    color: "white",
-                    fontSize: large ? "10px" : "7px",
-                    fontWeight: large ? 700 : 500,
-                    fontFamily: "'Segoe UI', system-ui, sans-serif",
-                    letterSpacing: large ? "0.12em" : "0.06em",
-                    textTransform: "uppercase",
-                    whiteSpace: "nowrap",
-                    userSelect: "none",
-                    padding: large ? "3px 9px" : "1px 5px",
-                    borderRadius: "1px",
-                    backgroundColor: large ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0.1)",
-                    backdropFilter: "blur(4px)",
-                    border: `1px solid ${large ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.1)"}`,
-                    opacity: isSelected ? 1 : large ? 0.9 : 0.7,
-                    boxShadow: isSelected
-                        ? "0 0 0 1px rgba(255,255,255,0.4), 0 2px 8px rgba(0,0,0,0.6)"
-                        : "0 2px 6px rgba(0,0,0,0.5)",
-                }}>
+            <div className="marker-label-wrapper">
+                <span
+                    className={
+                        `marker-label ${large ? "marker-label--large" : "marker-label--small"}` +
+                        (isSelected ? " marker-label--selected" : "")
+                    }
+                >
                     {marker.label}
                 </span>
             </div>
@@ -57,10 +45,14 @@ const renderMarkerContent = (marker: Marker, isSelected: boolean) => {
     );
 };
 
-export const MapCanvas = forwardRef<HTMLDivElement, Props>(({
-    map, scale, onMouseMove, visibleMarkers, selectedMarker, onMarkerClick
-}, ref) => {
+function MapCanvas({
+    map, scale, onMouseMove, visibleMarkers, selectedMarker, onMarkerClick, ref
+}: Props) {
     return (
+        // background click-away convenience, not a standalone widget; an explicit keyboard-accessible
+        // close button already exists (marker-overlay-close). A role/key-handler here would
+        // announce the entire map as one giant interactive element and pollute the tab order.
+        // react-doctor-disable-next-line react-doctor/no-static-element-interactions, react-doctor/click-events-have-key-events
         <div
             ref={ref}
             style={{ position: "relative", display: "inline-block" }}
@@ -80,29 +72,39 @@ export const MapCanvas = forwardRef<HTMLDivElement, Props>(({
                 style={{ display: "block", width: "100%", height: "auto" }}
             />
 
-            {map.markers
-                .filter(marker => visibleMarkers[marker.type])
-                .map(marker => (
-                    <div
+            {map.markers.reduce<React.ReactNode[]>((acc, marker) => {
+                if (!visibleMarkers[marker.type]) return acc;
+
+                acc.push(
+                    <button
+                        type="button"
                         key={marker.id}
                         onClick={(e) => {
                             e.stopPropagation();
                             onMarkerClick(selectedMarker?.id === marker.id ? null : marker);
                         }}
+                        aria-label={marker.label}
+                        aria-pressed={selectedMarker?.id === marker.id}
                         style={{
                             position: "absolute",
                             left: `${marker.x * 100}%`,
                             top: `${marker.y * 100}%`,
                             transform: `translate(-50%, -50%) scale(${1 / scale})`,
                             transformOrigin: "center",
-                            cursor: 'url("/cursors/pointer.svg") 2 0, pointer'
+                            cursor: 'url("/cursors/pointer.svg") 2 0, pointer',
+                            background: "none",
+                            border: "none",
+                            padding: 0,
                         }}
                     >
                         {renderMarkerContent(marker, selectedMarker?.id === marker.id)}
-                    </div>
-                ))}
+                    </button>
+                );
+
+                return acc;
+            }, [])}
         </div>
     );
-});
+}
 
 export default MapCanvas;

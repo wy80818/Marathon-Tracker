@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { announcements } from "../../../Data/AnnouncementsData";
 import "./AnnouncementsPage.css";
 
@@ -12,14 +12,14 @@ interface Announcement {
 function AnnouncementsPage() {
     const navigate = useNavigate();
 
-    const sorted = [...(announcements as Announcement[])].sort(
+    const sorted = (announcements as Announcement[]).toSorted(
         (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 
     return (
         <div className="announcements-page">
             <div className="announcements-page-header">
-                <button className="announcements-back" onClick={() => navigate("/")}>
+                <button type="button" className="announcements-back" onClick={() => navigate("/")}>
                     ← Back to Home
                 </button>
                 <div className="announcements-page-title">
@@ -30,11 +30,11 @@ function AnnouncementsPage() {
 
             <div className="announcements-page-list">
                 {sorted.map((item, index) => (
-                    <div
+                    <Link
                         key={item.id}
+                        to={`/announcements/${item.id}`}
                         className="announcements-page-bubble"
                         style={{ animationDelay: `${index * 0.05}s` }}
-                        onClick={() => navigate(`/announcements/${item.id}`)}
                     >
                         <div className="announcements-page-bubble-left">
                             <span className="announcements-page-index">{String(index + 1).padStart(2, '0')}</span>
@@ -53,7 +53,7 @@ function AnnouncementsPage() {
                             </p>
                             <span className="announcements-page-read-more">read more →</span>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>

@@ -11,6 +11,8 @@
 // (very common — "Changes:\n[*]Fix A\n[*]Fix B" with no blank line) doesn't
 // break the list apart.
 
+import DOMPurify from 'dompurify'
+
 function convertListBlock(inner: string, ordered: boolean): string {
     const items = inner
         .split(/\[\*\]/)
@@ -25,6 +27,9 @@ function convertListBlock(inner: string, ordered: boolean): string {
 
 function convertBBCode(text: string): string {
     let out = text
+
+    // Resolve Steam's clan-image CDN placeholder before anything else touches it
+    out = out.replace(/\{STEAM_CLAN_IMAGE\}/g, 'https://clan.cloudflare.steamstatic.com/images')
 
     // Headings
     out = out.replace(/\[h1\](.*?)\[\/h1\]/gis, '<h1>$1</h1>')
@@ -47,13 +52,61 @@ function convertBBCode(text: string): string {
         `<blockquote><em>${author} wrote:</em><br>${inner.trim().replace(/\s*\n+\s*/g, '<br />')}</blockquote>`
     )
 
+    // Dynamic links — [dynamiclink href="URL"][/dynamiclink]. Content is always
+    // empty (Steam relies on the store/social embed to render itself), so we
+    // generate the display ourselves. YouTube hrefs get the same thumbnail
+    // preview as [previewyoutube]; everything else becomes a plain link card.
+    out = out.replace(
+        /\[dynamiclink\s+href\s*=\s*(?:"|&quot;)([^"]*?)(?:"|&quot;)\]\s*\[\/dynamiclink\]/gis,
+        (_m, hrefRaw) => {
+            const href = hrefRaw.trim()
+            const ytMatch = href.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/i)
+            if (ytMatch) {
+                const videoId = ytMatch[1]
+                return `<a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" rel="noopener noreferrer" class="yt-preview">` +
+                    `<img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" loading="lazy" alt="YouTube video preview" ` +
+                    `onerror="this.onerror=null;this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg'" />` +
+                    `</a>`
+            }
+            return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="dynamic-link">${href}</a>`
+        }
+    )
+
     // Links
-    out = out.replace(/\[url=(.*?)\](.*?)\[\/url\]/gis, '<a href="$1" target="_blank" rel="noopener noreferrer">$2</a>')
+    // Links — supports [url=URL]...[/url] and [url="URL"]...[/url] (Steam uses both)
+    out = out.replace(/\[url=(.*?)\](.*?)\[\/url\]/gis, (_m, url, label) => {
+        const cleanUrl = url.trim().replace(/^["']|["']$/, '').replace(/["']$/, '')
+        return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${label}</a>`
+    })
     out = out.replace(/\[url\](.*?)\[\/url\]/gis, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>')
 
     // Images
-    out = out.replace(/\[img\](.*?)\[\/img\]/gis, '<img src="$1" loading="lazy" />')
+    out = out.replace(/\[img(?:\s+src\s*=\s*(?:"|&quot;)([^"]*?)(?:"|&quot;)|\s+src\s*=\s*'([^']*?)')?\](.*?)\[\/img\]/gis,
+        (_m, dq, sq, inner) => {
+            const src = (dq ?? sq ?? inner ?? '').trim()
+            return src ? `<img src="${src}" loading="lazy" />` : ''
+        }
+    )
 
+    out = out.replace(/\[previewyoutube=(?:"|&quot;)?([\w-]+)(?:;[^"\]]*)?(?:"|&quot;)?\]([\s\S]*?)\[\/previewyoutube\]/gi,
+        (_m, videoId) =>
+            `<a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" rel="noopener noreferrer" class="yt-preview">` +
+            `<img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" loading="lazy" alt="YouTube video preview" ` +
+            `onerror="this.onerror=null;this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg'" />` +
+            `</a>`
+    )
+
+    // Tables — [table equalcells="1" colwidth=",,,,"][tr][td]...[/td][/tr][/table]
+    // Attributes (equalcells, colwidth) are layout hints from Steam's editor;
+    // we drop them and let CSS handle table styling.
+    out = out.replace(/\[table[^\]]*\]/gi, '<table>')
+    out = out.replace(/\[\/table\]/gi, '</table>')
+    out = out.replace(/\[tr\]/gi, '<tr>')
+    out = out.replace(/\[\/tr\]/gi, '</tr>')
+    out = out.replace(/\[td\]/gi, '<td>')
+    out = out.replace(/\[\/td\]/gi, '</td>')
+
+    // Youtube links
     out = out.replace(/\[previewyoutube=(?:"|&quot;)?([\w-]+)(?:;[^"\]]*)?(?:"|&quot;)?\]([\s\S]*?)\[\/previewyoutube\]/gi,
         (_m, videoId) =>
             `<a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" rel="noopener noreferrer" class="yt-preview">` +
@@ -98,25 +151,27 @@ function convertBBCode(text: string): string {
     return out
 }
 
-function sanitizeHtml(html: string): string {
-    let safe = html
 
-    // Remove script/style/iframe/object/embed blocks entirely
-    safe = safe.replace(/<(script|style|iframe|object|embed)[^>]*>[\s\S]*?<\/\1>/gi, '')
-    safe = safe.replace(/<(script|style|iframe|object|embed)[^>]*\/?>/gi, '')
+const ALLOWED_TAGS = [
+    'p', 'br', 'strong', 'em', 'u', 's', 'blockquote',
+    'h1', 'h2', 'h3', 'h4',
+    'ul', 'ol', 'li',
+    'a', 'img',
+    'table', 'tr', 'td',
+]
 
-    // Strip inline event handlers (onclick=, onerror=, etc.)
-    safe = safe.replace(/\son\w+\s*=\s*"[^"]*"/gi, '')
-    safe = safe.replace(/\son\w+\s*=\s*'[^']*'/gi, '')
+const ALLOWED_ATTR = ['href', 'src', 'target', 'rel', 'class', 'alt', 'loading']
 
-    // Neutralize javascript: URIs in href/src
-    safe = safe.replace(/(href|src)\s*=\s*"javascript:[^"]*"/gi, '$1="#"')
-    safe = safe.replace(/(href|src)\s*=\s*'javascript:[^']*'/gi, "$1='#'")
-
-    return safe
+export function sanitizeHtml(html: string): string {
+    return DOMPurify.sanitize(html, {
+        ALLOWED_TAGS,
+        ALLOWED_ATTR,
+        ALLOWED_URI_REGEXP: /^(?:https?|mailto):/i, // no javascript:/data: URIs
+        ADD_ATTR: ['target', 'rel'],
+    })
 }
 
-const BLOCK_TAG_LINE = /^\s*<(ul|ol|h1|h2|h3|h4|blockquote|img)\b/i
+const BLOCK_TAG_LINE = /^\s*<(ul|ol|h1|h2|h3|h4|blockquote|img|table)\b/i
 const STAGED_BULLET_LINE = /^\s*<flli>([\s\S]*)<\/flli>\s*$/i
 const PLAIN_BULLET_LINE = /^\s*([-•*])\s+(.*)$/
 

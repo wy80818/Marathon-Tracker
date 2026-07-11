@@ -1,3 +1,7 @@
+// react-doctor-disable-next-line deslop/unused-file
+/*  Vercel serverless function
+   (api/ directory), invoked via HTTP routing convention at /api/steam-news,
+   not via import. Consumed by src/Components/Functions/SteamNews/useSteamNews.ts. */
 const STEAM_NEWS_URL =
     'ISteamNews/GetNewsForApp/v2/?appid=3065800&count=100&maxlength=0&format=json'
 
@@ -40,6 +44,7 @@ export async function GET() {
             },
         })
     } catch (err) {
+        // console.log(err)
         return new Response(
             JSON.stringify({ error: 'Failed to fetch Steam news' }),
             { status: 502, headers: { "Content-Type": "application/json" } }

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, createContext, useContext, useEffect, useMemo, useRef, useState, useLayoutEffect } from "react";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { items, categories, rarities, type categoryType, type rarityType } from "../../../Data/ItemsData";
@@ -19,11 +19,14 @@ const defaultFilters: Filters = {
     rarity: "All",
 };
 
-const sortedItems = [...items].sort((a, b) => a.name.localeCompare(b.name));
+const sortedItems = items.toSorted((a, b) => a.name.localeCompare(b.name));
 
 const SCRAMBLE_CHARS = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
 const DECRYPT_DURATION_MS = 1000;
 const DecryptAllContext = createContext(0);
+
+const randomChar = () =>
+    SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
 
 function Spoiler({ children }: { children?: React.ReactNode }) {
     const [revealed, setRevealed] = useState(false);
@@ -37,9 +40,6 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
     const prevSignalRef = useRef(decryptAllSignal);
 
     const originalText = typeof children === "string" ? children : "";
-
-    const randomChar = () =>
-        SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
 
     const clearIdleTimers = () => {
         idleIntervalsRef.current.forEach(clearInterval);
@@ -76,6 +76,7 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
 
         return () => clearIdleTimers();
     }, [revealed, decrypting, originalText]);
+
 
     const startDecrypt = () => {
         if (revealed || decrypting) return;
@@ -123,10 +124,21 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
         });
     };
 
+    // startDecrypt is a plain function recreated every render, so it can't be
+    // safely added to the deps array below (the effect would then fire on every
+    // render instead of only when decryptAllSignal actually changes). Keep a ref
+    // pointing at the latest version, updated every render, and call through
+    // the ref — this satisfies exhaustive-deps without ever invoking a stale
+    // closure.
+    const startDecryptRef = useRef(startDecrypt);
+    useLayoutEffect(() => {
+        startDecryptRef.current = startDecrypt;
+    });
+
     useEffect(() => {
         if (decryptAllSignal !== prevSignalRef.current) {
             prevSignalRef.current = decryptAllSignal;
-            startDecrypt();
+            startDecryptRef.current(); // <-- was `startDecrypt()`
         }
     }, [decryptAllSignal]);
 
@@ -139,6 +151,7 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
 
     const style: React.CSSProperties = {
         fontFamily: 'inherit',
+        fontSize: 'inherit',
         color: revealed ? 'inherit' : '#0ff',
         textShadow: revealed ? 'none' : '0 0 8px #0ff, 0 0 2px #0ff',
         backgroundColor: revealed ? 'transparent' : 'rgba(0, 20, 20, 0.6)',
@@ -151,12 +164,24 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
         whiteSpace: 'pre-wrap',
         overflowWrap: 'break-word',
         wordBreak: 'break-word',
+        // reset browser button chrome so it still reads as inline text, not a widget
+        border: 'none',
+        margin: 0,
+        padding: 0,
+        display: 'inline',
+        font: 'inherit',
     };
 
     return (
-        <del onClick={startDecrypt} style={style}>
+        <button
+            type="button"
+            aria-label={revealed ? undefined : "Spoiler, click or press Enter to reveal"}
+            onClick={startDecrypt}
+            disabled={revealed}
+            style={style}
+        >
             {chars.length ? chars.join("") : originalText}
-        </del>
+        </button>
     );
 }
 
@@ -192,16 +217,31 @@ function ItemsTab() {
     }, [filters, search]);
 
     // Handle fade effects
-    const handleGridScroll = () => {
+    const handleGridScroll = useCallback(() => {
         const el = gridScrollRef.current;
         if (!el) return;
         setAtTop(el.scrollTop < 4);
         setAtBottom(el.scrollHeight - el.scrollTop - el.clientHeight < 4);
-    };
+    }, []); // only touches a ref + stable setters — no reactive values to depend on
+
+    // react-doctor-disable-next-line react-doctor/no-chain-state-updates, react-doctor/exhaustive-deps -- not a
+    // pure state->state chain; atTop/atBottom require scrollTop/scrollHeight/
+    // clientHeight, which only exist after the filtered list is committed to
+    // the DOM. handleGridScroll is a stable useCallback (empty deps, ref-only)
+    // so filteredItems is the only real trigger. useLayoutEffect (not useEffect)
+    // avoids the one-frame flicker of a stale fade indicator.
+    useLayoutEffect(() => {
+        handleGridScroll();
+    }, [filteredItems, handleGridScroll]);
 
     useEffect(() => {
-        handleGridScroll();
-    }, [filteredItems]);
+        if (!selectedItem) return;
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === "Escape") setSelectedItem(null);
+        };
+        window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
+    }, [selectedItem]);
 
     return (
         <div className="tab-content-inner">
@@ -238,6 +278,7 @@ function ItemsTab() {
                     {filteredItems.map((it) => (
                         <button
                             key={it.id}
+                            type="button"
                             className={`item-card rarity-${it.rarity.toLowerCase()}`}
                             onClick={() => setSelectedItem(it)}
                         >
@@ -264,9 +305,13 @@ function ItemsTab() {
             </div>
 
             {selectedItem && (
+                // background click-away convenience, not a standalone widget; an explicit keyboard-accessible
+                // close button already exists (item-modal-close). A role/key-handler here would
+                // announce the entire modal as one giant interactive element and pollute the tab order.
+                // react-doctor-disable-next-line react-doctor/no-static-element-interactions, react-doctor/click-events-have-key-events
                 <div className="item-modal-overlay" onClick={() => setSelectedItem(null)}>
                     <div className="item-modal" onClick={(e) => e.stopPropagation()}>
-                        <button className="item-modal-close" onClick={() => setSelectedItem(null)}>
+                        <button type="button" className="item-modal-close" onClick={() => setSelectedItem(null)}>
                             ×
                         </button>
 
@@ -297,6 +342,7 @@ function ItemsTab() {
                                         <span className="item-modal-sources-label">Sources</span>
                                         {hasSpoilers && (
                                             <button
+                                                type="button"
                                                 className="decrypt-all-btn"
                                                 onClick={() => setDecryptAllSignal((s) => s + 1)}
                                             >

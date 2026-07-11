@@ -124,6 +124,7 @@ function TabLayout() {
                             return (
                                 <button
                                     key={tab.path}
+                                    type="button"
                                     aria-label={tab.ariaLabel}
                                     className={`tab-button ${isActive ? 'active' : ''}`}
                                     onClick={() => navigate(tab.path)}

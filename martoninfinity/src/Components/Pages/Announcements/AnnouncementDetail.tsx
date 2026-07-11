@@ -39,7 +39,7 @@ function AnnouncementDetail() {
 
     return (
         <div className="announcement-detail-page">
-            <button className="announcements-back" onClick={() => navigate("/announcements")}>
+            <button type="button" className="announcements-back" onClick={() => navigate("/announcements")}>
                 ← Back to Announcements
             </button>
 
