@@ -308,7 +308,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         type: "poiLarge",
         icon: POIIcon,
         defaultLabel: "Point of Interest",
-        defaultDescription: "",
+        defaultDescription: "Major map location",
         markers: [
             { x: 0.426, y: 0.557, label: "Algae Ponds" },
             { x: 0.34, y: 0.786, label: "Maintenance" },
@@ -324,7 +324,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         type: "poiSmall",
         icon: POIIcon,
         defaultLabel: "Area",
-        defaultDescription: "",
+        defaultDescription: "Minor map location",
         markers: [
             { x: 0.386, y: 0.499, label: "Intersection" },
             { x: 0.158, y: 0.502, label: "West Gate" },
@@ -484,11 +484,34 @@ export const markerGroups_Outpost: MarkerGroup[] = [
         ]
     },
     {
+        category: "map_objectives",
+        type: "supplyDrop",
+        icon: supplyDropIcon,
+        defaultLabel: "Restricted Supply Drop",
+        defaultDescription: "Supply Drop location. Once activated, Runners must wait until it arrives in which 4 containers mostly containing *weapon attachments* \
+            get deployed. Beware of Supply Drop Ship thrusters when it arrives and leaves. Requires *1 Supply Clearance Code*.",
+        markers: [
+            { x: 0.504, y: 0.443 }
+        ]
+    },
+    {
+        category: "map_objectives",
+        type: "DCON",
+        icon: DCONIcon,
+        defaultLabel: "DCON",
+        defaultDescription: "DCON location necessary for progressing contract objectives that require depositing items into.",
+        markers: [
+            { x: 0.477, y: 0.745 },
+            { x: 0.68, y: 0.401 },
+            { x: 0.39, y: 0.299 }
+        ]
+    },
+    {
         category: "points_of_interest",
         type: "poiLarge",
         icon: POIIcon,
         defaultLabel: "Point of Interest",
-        defaultDescription: "",
+        defaultDescription: "Major map location",
         markers: [
             { x: 0.522, y: 0.584, label: "Pinwheel Base" },
             { x: 0.485, y: 0.45, label: "Flight Control" },
@@ -503,7 +526,7 @@ export const markerGroups_Outpost: MarkerGroup[] = [
         type: "poiSmall",
         icon: POIIcon,
         defaultLabel: "Area",
-        defaultDescription: "",
+        defaultDescription: "Minor map location",
         markers: [
             { x: 0.385, y: 0.586, label: "Drone Wing" },
             { x: 0.585, y: 0.717, label: "Command Wing" },
@@ -698,7 +721,7 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         type: "poiLarge",
         icon: POIIcon,
         defaultLabel: "Point of Interest",
-        defaultDescription: "",
+        defaultDescription: "Major map location",
         markers: [
             { x: 0.465, y: 0.269, label: "North Relay" },
             { x: 0.647, y: 0.671, label: "South Relay" },
@@ -712,7 +735,7 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         type: "poiSmall",
         icon: POIIcon,
         defaultLabel: "Area",
-        defaultDescription: "",
+        defaultDescription: "Minor map location",
         markers: [
             { x: 0.477, y: 0.469, label: "Data Wall" },
             { x: 0.536, y: 0.622, label: "Ravine" },
@@ -890,7 +913,7 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
         type: "poiLarge",
         icon: POIIcon,
         defaultLabel: "Point of Interest",
-        defaultDescription: "",
+        defaultDescription: "Major map location",
         markers: [
             { x: 0.321, y: 0.331, label: "Cargo" },
             { x: 0.5, y: 0.172, label: "Steerage" },
@@ -906,7 +929,7 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
         type: "poiSmall",
         icon: POIIcon,
         defaultLabel: "Area",
-        defaultDescription: "",
+        defaultDescription: "Minor map location",
         markers: [
             { x: 0.511, y: 0.493, label: "Panoptacon" },
             { x: 0.323, y: 0.489, label: "Cold Storage" },

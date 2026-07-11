@@ -63,5 +63,21 @@ Hopefully the API will provide this information.
 
 In the future I will improve upon patch notes tab.
 `
+    },
+    {
+        id: 5,
+        title: "WebDev",
+        date: "2026-07-11",
+        description: `
+News Tab is functionally complete!
+
+The news is pulled directly from the Steam's public API.
+
+There is a search function that looks for keyworks in the shorthand description and the titles.
+
+If there were to be more futures in the future, it would probably be allowing date search and more news outlets
+
+(Probably not Twitter/X since it's paid, but maybe Bluesky?)
+`
     }
 ];

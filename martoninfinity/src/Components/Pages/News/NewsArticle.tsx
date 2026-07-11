@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useSteamNews, type SteamNewsItem } from '../../Functions/SteamNews/useSteamNews'
 import { formatSteamContent } from '../../Functions/SteamNews/formatSteamContent'
@@ -7,18 +8,85 @@ import DOMPurify from 'dompurify'
 import './NewsArticle.css'
 import Error from "../Error/Error";
 
+// Pulls the 11-char video ID out of any common YouTube URL shape
+// (watch?v=, youtu.be/, or an already-embedded /embed/ link)
+function extractYouTubeId(url: string): string | null {
+    const match = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/)
+    return match ? match[1] : null
+}
+
+// Replaces a clicked .yt-preview thumbnail with a real YouTube embed, so
+// the video plays inline on this page instead of opening a new tab. Uses
+// YouTube's own player UI (controls, progress bar, fullscreen, share) as-is.
+// Returns a cleanup function to remove the fullscreenchange listener.
+function mountYouTubeEmbed(link: HTMLAnchorElement): (() => void) | undefined {
+    const videoId = extractYouTubeId(link.href)
+    if (!videoId) {
+        window.open(link.href, '_blank', 'noopener,noreferrer')
+        return
+    }
+
+    const wrapper = document.createElement('div')
+    wrapper.className = 'yt-embed-wrapper'
+    wrapper.innerHTML = `
+        <iframe
+            src="https://www.youtube.com/embed/${videoId}?autoplay=1"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+        ></iframe>
+    `
+    link.replaceWith(wrapper)
+
+    // Some browsers mis-layout the embedded YouTube player when fullscreen
+    // is triggered via the 'f' keyboard shortcut inside the iframe (as
+    // opposed to clicking their fullscreen button), leaving a blank/broken
+    // frame. Forcing a reflow on our wrapper after any fullscreen change
+    // clears up stale layout in the cases where that's the cause.
+    function handleFullscreenChange() {
+        void wrapper.offsetHeight // reading layout forces a reflow
+    }
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange)
+}
+
 function NewsArticle() {
     const { gid } = useParams<{ gid: string }>()
     const location = useLocation()
     const navigate = useNavigate()
 
-    // Fast path: Link passed the item via router state (no refetch needed)
     const stateItem = (location.state as { item?: SteamNewsItem } | null)?.item
-
-    // Fallback: direct navigation / page refresh has no state, so fall back
-    // to the shared (cached) news fetch and find the item by gid.
     const { news, loading, error } = useSteamNews()
     const item = stateItem ?? news.find((n) => n.gid === gid)
+
+    // Ref + effect must run unconditionally (before any early return) so
+    // hook order stays stable across the loading/error/not-found branches
+    const contentRef = useRef<HTMLDivElement>(null)
+    const embedCleanupsRef = useRef<Array<() => void>>([])
+
+    useEffect(() => {
+        const container = contentRef.current
+        if (!container) return
+
+        function handleClick(e: MouseEvent) {
+            const link = (e.target as HTMLElement).closest('a.yt-preview') as HTMLAnchorElement | null
+            if (!link) return
+
+            e.preventDefault()
+            const cleanup = mountYouTubeEmbed(link)
+            if (cleanup) embedCleanupsRef.current.push(cleanup)
+        }
+
+        container.addEventListener('click', handleClick)
+        return () => {
+            container.removeEventListener('click', handleClick)
+            embedCleanupsRef.current.forEach((fn) => fn())
+            embedCleanupsRef.current = []
+        }
+    }, [item?.contents])
 
     if (!stateItem && loading) {
         return (
@@ -84,9 +152,8 @@ function NewsArticle() {
                 <div className="news-detail-divider" />
 
                 <div
+                    ref={contentRef}
                     className="news-markdown"
-                    // Content is sanitized in formatSteamContent (scripts, event
-                    // handlers, and javascript: URIs are stripped) before render.
                     dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(formatSteamContent(item.contents)) }}
                 />
             </div>
