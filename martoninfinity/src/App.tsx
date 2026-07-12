@@ -54,22 +54,32 @@ function TabLayout() {
     const [scrollState, setScrollState] = useState({ left: false, right: false })
 
     // Hide and show tabs when scrolling down and up respectively
+    // Hide and show tabs when scrolling down and up respectively — only once past the header
     useEffect(() => {
         let lastY = window.scrollY;
         let currentOffset = 0;
 
         const handleScroll = () => {
             const tabsEl = document.querySelector<HTMLElement>(".tabs-wrapper");
+            const headerEl = document.querySelector<HTMLElement>(".app-header");
             if (!tabsEl) return;
 
+            const headerHeight = headerEl?.offsetHeight ?? 0;
             const tabsHeight = tabsEl.offsetHeight;
             const currentY = window.scrollY;
-            const delta = currentY - lastY;
 
+            // Still within the header — keep tabs pinned fully visible
+            if (currentY < headerHeight) {
+                currentOffset = 0;
+                tabsEl.style.transform = `translateY(0px)`;
+                lastY = currentY;
+                return;
+            }
+
+            const delta = currentY - lastY;
             if (Math.abs(delta) < 2) return; // ignore tiny scroll jitter
 
             currentOffset = Math.min(tabsHeight, Math.max(0, currentOffset + delta));
-
             tabsEl.style.transform = `translateY(-${currentOffset}px)`;
 
             lastY = currentY;
