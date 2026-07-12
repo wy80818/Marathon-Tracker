@@ -1,4 +1,4 @@
-import { type Runner, isValidRunner } from "./Runners"
+import { type Runner } from "./Runners"
 
 export const RUNNERS = [
     {
