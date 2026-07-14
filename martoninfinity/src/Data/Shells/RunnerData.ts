@@ -1,13 +1,13 @@
 import { type Runner } from "./Runners"
 
-import AssassinIcon from "../../assets/RunnerIcons/assa.png"
-import DestroyerIcon from "../../assets/RunnerIcons/destr.png"
+import AssassinIcon from "../../assets/RunnerIcons/assassin.png"
+import DestroyerIcon from "../../assets/RunnerIcons/destroyer.png"
 import ReconIcon from "../../assets/RunnerIcons/recon.png"
 import RookIcon from "../../assets/RunnerIcons/rook.png"
-import SentinelIcon from "../../assets/RunnerIcons/sent.png"
-import ThiefIcon from "../../assets/RunnerIcons/thie.png"
-import TriageIcon from "../../assets/RunnerIcons/tria.png"
-import VandalIcon from "../../assets/RunnerIcons/vand.png"
+import SentinelIcon from "../../assets/RunnerIcons/sentinel.png"
+import ThiefIcon from "../../assets/RunnerIcons/thief.png"
+import TriageIcon from "../../assets/RunnerIcons/triage.png"
+import VandalIcon from "../../assets/RunnerIcons/vandal.png"
 
 
 export const RUNNERS = [
