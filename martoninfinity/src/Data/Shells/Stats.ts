@@ -33,5 +33,9 @@ export function getStatLabel(key: RunnerStatKey): RunnerStatName {
     return STAT_CONFIG[key].label
 }
 
+export function getStatDescription(key: RunnerStatKey): string {
+    return STAT_CONFIG[key].description
+}
+
 // Handy for building stat-selector UIs, iterating in display order, etc.
 export const STAT_KEYS = Object.keys(STAT_CONFIG) as RunnerStatKey[]

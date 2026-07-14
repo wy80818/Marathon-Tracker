@@ -10,13 +10,3 @@ export interface Runner {
     baseStats: RunnerStats
     abilities: Ability[]     // must contain >= 1 "prime" and >= 1 "tactical" | "trait"
 }
-
-// TypeScript can't enforce "at least one ultimate + at least one tactical/passive"
-// at the type level for a plain array, so we check it at build/dev time instead.
-export function isValidRunner(runner: Runner): boolean {
-    const hasUltimate = runner.abilities.some(a => a.type === "prime")
-    const hasTacticalOrPassive = runner.abilities.some(
-        a => a.type === "tactical" || a.type === "trait"
-    )
-    return hasUltimate && hasTacticalOrPassive
-}

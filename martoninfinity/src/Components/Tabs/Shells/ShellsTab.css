@@ -1,0 +1,96 @@
+.shell-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: var(--space-md, 14px);
+    padding: 10px 10px 24px 4px;
+}
+
+.shell-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 3 / 4;
+    background-color: var(--color-darker-bg);
+    border: 2px solid transparent;
+    border-radius: 4px;
+    padding: 10px 8px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    cursor: url("/cursors/pointer.svg") 2 0, pointer;
+}
+
+    .shell-card:hover,
+    .shell-card:focus-visible {
+        border-color: var(--color-cyan);
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(1, 255, 255, 0.2);
+    }
+
+    .shell-card:focus-visible {
+        outline: 2px solid var(--color-lime);
+        outline-offset: 2px;
+    }
+
+.shell-image {
+    width: 70%;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+    .shell-image img {
+        max-width: 100%;
+        max-height: 100%;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+    }
+
+.shell-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: rgba(1, 255, 255, 0.05);
+    border: 1px dashed rgba(1, 255, 255, 0.2);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-cyan);
+    opacity: 0.4;
+    font-family: "Fira Code", monospace;
+    font-weight: 600;
+}
+
+.shell-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.shell-name {
+    font-family: "Fira Code", monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-text-light);
+    letter-spacing: 0.03em;
+    background: rgba(1, 255, 255, 0.05);
+    border: 1px solid rgba(1, 255, 255, 0.12);
+    border-radius: 3px;
+    padding: 2px 7px;
+}
+
+.shell-role {
+    font-family: "Fira Code", monospace;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+    clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+    background: rgba(1, 255, 255, 0.08);
+    color: var(--color-cyan);
+}

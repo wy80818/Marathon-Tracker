@@ -64,7 +64,6 @@ const MapViewer = () => {
     }, [mapId]);
 
     // Resets marker filters on map change.
-    
     useEffect(() => {
         const defaults: Record<string, boolean> = {};
         currentMap.markers.forEach(marker => {

@@ -77,7 +77,9 @@ async function fetchNews(): Promise<void> {
 
 export function useSteamNews() {
     const snapshot = useSyncExternalStore(subscribe, getSnapshot)
-
+    // fetchNews is a deduped module-level singleton (see inFlightRequest + state.loaded guards above),
+    // not a per-instance fetch; no race/double-fire/leak is possible here.
+    // react-doctor-disable-next-line react-doctor/no-fetch-in-effect
     useEffect(() => {
         fetchNews()
     }, [])

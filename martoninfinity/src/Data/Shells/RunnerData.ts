@@ -5,6 +5,8 @@ export const RUNNERS = [
         id: "sentinel",
         name: "Sentinel",
         role: "Reinforcement",
+        bio: "",
+        portraitPath: "",
         baseStats: {  // Remember to put base stats for Sentinel
             heatCapacity: 0,
             agility: 0,
@@ -28,18 +30,21 @@ export const RUNNERS = [
                     You and your allies gain increased weapon stability and reload speed while standing near the device. \
                     Has a limited number of projectiles to fire — keep a steady eye on the count.",
                 type: "prime",
+                iconPath: "",
             },
             {
                 id: "sentinel-snare-mine",
                 name: "Snare Mine",
                 description: "Toss a proximity-triggered mine which detonates into several immobilizing submunitions when enemies get too close.",
                 type: "tactical",
+                iconPath: "",
             },
             {
                 id: "sentinel-prey-tracker",
                 name: "Prey Tracker",
                 description: "Activates a motion tracking system in your HUD that shows moving enemies on radar within a conical zone in front of you.",
                 type: "trait",
+                iconPath: "",
             },
             {
                 id: "sentinel-castle-doctrine",
@@ -47,6 +52,7 @@ export const RUNNERS = [
                 description: "You ready and reload SMGs, Pistols, and Shotguns more quickly based on the number of nearby hostiles. \
                     When you take splash damage, your Hardware, Firewall, and Self-Repair Speed are increased for a short time.",
                 type: "trait",
+                iconPath: "",
             },
         ],
     },
@@ -54,6 +60,8 @@ export const RUNNERS = [
         id: "destroyer",
         name: "Destroyer",
         role: "Offense",
+        bio: "",
+        portraitPath: "",
         baseStats: {
             heatCapacity: 15,
             agility: 10,
@@ -76,6 +84,7 @@ export const RUNNERS = [
                 description: "Activate your shoulder-mounted missile pods. \
                     Dealing sustained damage to targets launches homing missiles, Immobilizing and dealing damage upon impact.",
                 type: "prime",
+                iconPath: "",
             },
             {
                 id: "destroyer-riot-barricade",
@@ -83,18 +92,21 @@ export const RUNNERS = [
                 description: "Toggle an energy barricade that blocks incoming damage, draining tactical ability energy over time. \
                     Taking damage drains additional energy.",
                 type: "tactical",
+                iconPath: "",
             },
             {
                 id: "destroyer-prey-tracker",
                 name: "Thruster",
                 description: "Activate by pressing the jump button while airborne to fire boosters that thrust you in the direction you are moving.",
                 type: "trait",
+                iconPath: "",
             },
             {
                 id: "destroy-tactical-sprint",
                 name: "Tactical Sprint",
                 description: "Double-press sprint to move faster at the cost of generating additional heat.",
                 type: "trait",
+                iconPath: "",
             },
         ],
     },
@@ -102,6 +114,8 @@ export const RUNNERS = [
         id: "assassin",
         name: "Assassin",
         role: "Stealth",
+        bio: "",
+        portraitPath: "",
         baseStats: {
             heatCapacity: 10,
             agility: 20,
@@ -123,6 +137,7 @@ export const RUNNERS = [
                 name: "Smoke Screen",
                 description: "Throw a smoke disc that emits a line of smoke fields in front of you",
                 type: "prime",
+                iconPath: "",
             },
             {
                 id: "assassin-active-camo",
@@ -130,12 +145,14 @@ export const RUNNERS = [
                 description: "Activate your shell's camouflage systems, pulling a shroud of invisibility over yourself. \
                     Performing offensive actions, taking damage, and using abilities or consumables briefly disrupts your invisibility.",
                 type: "tactical",
+                iconPath: "",
             },
             {
                 id: "assassin-shadow-dive",
                 name: "Shadow Dive",
                 description: "Activate while airborne to slam a smoke disc into the ground.",
                 type: "trait",
+                iconPath: "",
             },
             {
                 id: "assassin-shroud",
@@ -143,6 +160,7 @@ export const RUNNERS = [
                 description: "Your shell automatically activates its camouflage systems when entering any smoke field, making you invisible. \
                     Invisibility persists for a short time after leaving the smoke field.",
                 type: "trait",
+                iconPath: "",
             },
         ],
     },
@@ -150,6 +168,8 @@ export const RUNNERS = [
         id: "recon",
         name: "Recon",
         role: "Intelligence",
+        bio: "",
+        portraitPath: "",
         baseStats: {
             heatCapacity: 20,
             agility: 15,
@@ -172,24 +192,28 @@ export const RUNNERS = [
                 description: "Activate your shell's advanced detection systems, releasing a series of sonar pulses that reveal the location of nearby hostiles. \
                     Pings distinguish between enemy Runner and enemy UESC targets. Signal Jammed runners display UESC ping navpoints instead of Runner navpoints.",
                 type: "prime",
+                iconPath: "",
             },
             {
                 id: "recon-tracker-drone",
                 name: "Tracker Drone",
                 description: "Deploy a mechanized microbot that tracks down nearby hostiles and explodes, Overheating any targets caught in the blast.",
                 type: "tactical",
+                iconPath: "",
             },
             {
                 id: "recon-interrogation",
                 name: "Interrogation",
                 description: "When pinged by a hostile Runner, you automatically receive a warning on your shell's HUD. Performing a finish on a runner pings their crew.",
                 type: "trait",
+                iconPath: "",
             },
             {
                 id: "recon-stalker-protocol",
                 name: "Stalker Protocol",
                 description: "After breaking a target's shields, they leave behind a lingering holographic trail for a short time.",
                 type: "trait",
+                iconPath: "",
             },
         ],
     },
@@ -197,6 +221,8 @@ export const RUNNERS = [
         id: "vandal",
         name: "Vandal",
         role: "Mobility",
+        bio: "",
+        portraitPath: "",
         baseStats: {
             heatCapacity: 25,
             agility: 30,
@@ -219,6 +245,7 @@ export const RUNNERS = [
                 description: "Overcharge your movement systems, reducing the heat generated from your movement abilities while increasing your movement speed and weapon dexterity and cleansing \
                     any old heat buildup.",
                 type: "prime",
+                iconPath: "",
             },
             {
                 id: "vandal-disrupt-cannon",
@@ -226,18 +253,21 @@ export const RUNNERS = [
                 description: "Transform your arm into a cannon and fire a high-powered energy projectile that deals damage and pushes targets away. \
                     Overcharge your arm cannon greatly increasing the size and damage of the blast.",
                 type: "tactical",
+                iconPath: "",
             },
             {
                 id: "vandal-microjets",
                 name: "Microjets",
                 description: "Activate while airborne to perform another jump at the cost of generating additional heat",
                 type: "trait",
+                iconPath: "",
             },
             {
                 id: "vandal-power-slide",
                 name: "Power Slide",
                 description: "Grants a supercharged slide that generates additional heat.",
                 type: "trait",
+                iconPath: "",
             },
         ],
     },
@@ -245,6 +275,8 @@ export const RUNNERS = [
         id: "thief",
         name: "Thief",
         role: "Observation",
+        bio: "",
+        portraitPath: "",
         baseStats: {
             heatCapacity: 15,
             agility: 20,
@@ -270,12 +302,14 @@ export const RUNNERS = [
                     Drone can be exited and later entered again as long as it is still online. \
                     One placeable-utility of each type (Claymore, Frostmine, etc.) can be placed on the drone.",
                 type: "prime",
+                iconPath: "",
             },
             {
                 id: "thief-grapple-device",
                 name: "Grapple Device",
                 description: "Launch a grapple device in the aimed direction, propelling yourself toward it.",
                 type: "tactical",
+                iconPath: "",
             },
             {
                 id: "thief-x-ray-visor",
@@ -284,12 +318,14 @@ export const RUNNERS = [
                     Containers are revealed through walls, while hostiles require line of sight. \
                     While active, aiming at a hostile for a short time will EMP them for a short period of time.",
                 type: "trait",
+                iconPath: "",
             },
             {
                 id: "thief-the-finer-things",
                 name: "The Finer Things",
                 description: "Gain increased weapon handling and accelerated Grapple Device recharge rate based on the number of items in your Backpack.",
                 type: "trait",
+                iconPath: "",
             },
         ],
     },
@@ -297,6 +333,8 @@ export const RUNNERS = [
         id: "triage",
         name: "Triage",
         role: "Medic",
+        bio: "",
+        portraitPath: "",
         baseStats: {
             heatCapacity: 10,
             agility: 10,
@@ -319,6 +357,7 @@ export const RUNNERS = [
                 description: "Ready your shell's emergency defibrillator systems. \
                     Lock on to downed crew members or hostile targets and fire your Reboot+ device at them, which revives crew members and EMPs hostiles.",
                 type: "prime",
+                iconPath: "",
             },
             {
                 id: "triage-med-drone",
@@ -326,12 +365,14 @@ export const RUNNERS = [
                 description: "Deploy a floating medical drone that attaches to crew members and restores health or recharges shields, \
                     and prevents them from bleeding out while downed.",
                 type: "tactical",
+                iconPath: "",
             },
             {
                 id: "triage-shareware-exe",
                 name: "Shareware.exe",
                 description: "Benefits from medical consumables are shared between crew members with Med-Drone attached to them.",
                 type: "trait",
+                iconPath: "",
             },
             {
                 id: "triage-battery-overcharge",
@@ -339,6 +380,7 @@ export const RUNNERS = [
                 description: "Divert energy from your cooling systems to boost the performance of your weapons at the cost of generating additional heat. \
                     While active, breaking a target's shield with a volt weapon EMPs them",
                 type: "trait",
+                iconPath: "",
             },
         ],
     },
@@ -346,6 +388,8 @@ export const RUNNERS = [
         id: "rook",
         name: "Rook",
         role: "Scavenger",
+        bio: "",
+        portraitPath: "",
         baseStats: {
             heatCapacity: -5,
             agility: 5,
@@ -367,6 +411,7 @@ export const RUNNERS = [
                 name: "Recuperation",
                 description: "Activate your prototype frame's emergency repair system to slowly restore health. Interrupted when you take damage.",
                 type: "prime",
+                iconPath: "",
             },
             {
                 id: "rook-signal-mask",
@@ -374,6 +419,7 @@ export const RUNNERS = [
                 description: "Activate a temporary holodisplay mask to deceive UESC forces, making them unaware of your presence. \
                     Disrupted when you sprint, take damage, and attack.",
                 type: "tactical",
+                iconPath: "",
             }
         ],
     }

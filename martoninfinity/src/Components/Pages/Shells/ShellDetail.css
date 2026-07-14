@@ -1,0 +1,392 @@
+.shell-detail-page {
+    width: 100%;
+    min-height: 100%;
+    padding: var(--space-lg);
+    font-family: "Fira Code", monospace;
+    color: var(--color-text-light);
+}
+
+.shell-detail-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2xl);
+}
+
+.shell-detail-sidebar {
+    flex: 0 0 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 0.4rem;
+    position: sticky;
+    top: var(--space-lg);
+}
+
+.shell-detail-image {
+    width: 100%;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.4rem;
+}
+
+    .shell-detail-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.shell-detail-sidebar h1 {
+    font-family: "Playfair Display", serif;
+    font-size: var(--font-4xl);
+    color: var(--color-lime);
+    text-shadow: 0 0 8px rgba(194, 254, 11, 0.3);
+    margin: 0;
+    line-height: 1.1;
+}
+
+.shell-detail-role {
+    font-size: var(--font-xs);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--color-cyan);
+    opacity: 0.75;
+}
+
+.shell-detail-bio {
+    font-size: var(--font-sm);
+    opacity: 0.8;
+    line-height: 1.6;
+}
+
+.shell-detail-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+    max-width: 100%;
+}
+
+.shell-detail-back {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    font-family: "Fira Code", monospace;
+    font-size: var(--font-xs);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-cyan);
+    background: rgba(1, 255, 255, 0.05);
+    border: 1px solid rgba(1, 255, 255, 0.25);
+    border-radius: 6px;
+    padding: 6px 12px;
+    text-decoration: none;
+    cursor: url("/cursors/pointer.svg") 2 0, pointer;
+    transition: all 0.15s ease;
+}
+
+    .shell-detail-back:hover,
+    .shell-detail-back:focus-visible {
+        border-color: var(--color-cyan);
+        background: rgba(1, 255, 255, 0.12);
+        box-shadow: 0 0 8px rgba(1, 255, 255, 0.2);
+    }
+
+    .shell-detail-back:focus-visible {
+        outline: 2px solid var(--color-lime);
+        outline-offset: 2px;
+    }
+
+.shell-detail-nav-shells {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 6px;
+    min-width: 0; /* required for a flex child to actually shrink and scroll
+        instead of forcing the whole nav row to overflow the page */
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    /* small vertical padding so the focus outline on the first/last link
+        isn't clipped by the scroll container */
+    padding: 2px 2px 6px;
+    margin: -2px -2px -6px;
+}
+
+    .shell-detail-nav-shells::-webkit-scrollbar {
+        display: none;
+    }
+
+.shell-detail-nav-shell-link {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    font-family: "Fira Code", monospace;
+    font-size: var(--font-xs);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--color-text-light);
+    opacity: 0.65;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 5px 10px;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: url("/cursors/pointer.svg") 2 0, pointer;
+    transition: all 0.15s ease;
+}
+
+    .shell-detail-nav-shell-link:hover,
+    .shell-detail-nav-shell-link:focus-visible {
+        opacity: 1;
+        border-color: rgba(1, 255, 255, 0.3);
+        background: rgba(1, 255, 255, 0.08);
+        color: var(--color-cyan);
+    }
+
+    .shell-detail-nav-shell-link:focus-visible {
+        outline: 2px solid var(--color-lime);
+        outline-offset: 2px;
+    }
+
+    .shell-detail-nav-shell-link.active {
+        opacity: 1;
+        color: var(--color-lime);
+        border-color: rgba(194, 254, 11, 0.4);
+        background: rgba(194, 254, 11, 0.08);
+        cursor: default;
+    }
+
+/* Its own column between the sidebar and the ability content — fixed
+   width like the sidebar, sticky for the same reason (long ability text
+   next to it can scroll well past stat-list height). */
+.shell-detail-stats {
+    flex: 0 0 300px;
+    position: sticky;
+    top: var(--space-lg);
+}
+
+.shell-detail-stats-label {
+    display: block;
+    font-size: var(--font-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-cyan);
+    opacity: 0.6;
+    margin-bottom: 0.5rem;
+}
+
+.shell-stat-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* single column now that stats have
+        their own narrower rail rather than sharing width with abilities */
+}
+
+.shell-detail-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.shell-ability {
+    margin-bottom: var(--space-md);
+}
+
+.shell-ability-type-label {
+    display: block;
+    font-size: var(--font-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-cyan);
+    opacity: 0.6;
+    margin-bottom: 2px;
+}
+
+.shell-ability-name {
+    font-weight: 600;
+    color: var(--color-lime);
+}
+
+.shell-ability-description {
+    font-size: var(--font-sm);
+    opacity: 0.85;
+    line-height: 1.6;
+    margin-top: 2px;
+}
+
+.shell-ability {
+    margin-top: 6px;
+}
+
+.shell-ability-name {
+    font-weight: 600;
+    color: var(--color-lime);
+}
+
+.shell-ability-description {
+    font-size: var(--font-sm);
+    opacity: 0.85;
+    line-height: 1.6;
+    margin-top: 2px;
+}
+
+.shell-stat-row {
+    display: grid;
+    grid-template-columns: 140px 100px 36px;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--font-sm);
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(1, 255, 255, 0.08);
+}
+
+.shell-stat-label-wrap {
+    position: relative;
+    display: inline-flex;
+    min-width: 0;
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: url("/cursors/pointer.svg") 2 0, pointer;
+}
+
+.shell-stat-label {
+    opacity: 0.85;
+    white-space: nowrap;
+}
+
+    .shell-stat-label:hover {
+        color: var(--color-cyan);
+        font-weight: bold;
+    }
+
+.shell-stat-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 0;
+    z-index: 10;
+    width: 220px;
+    padding: 8px 10px;
+    background: var(--color-darker-bg);
+    border: 1px solid rgba(1, 255, 255, 0.25);
+    border-radius: 6px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    text-align: left;
+    white-space: normal;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    /* hide immediately when the mouse leaves / focus drops */
+    transition: opacity 0.15s ease, visibility 0s linear 0.15s;
+}
+
+    .shell-stat-tooltip strong {
+        display: block;
+        font-size: var(--font-xs);
+        color: var(--color-lime);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin-bottom: 4px;
+    }
+
+    .shell-stat-tooltip p {
+        font-size: var(--font-xs);
+        color: var(--color-text-light);
+        opacity: 0.85;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+.shell-stat-label-wrap:hover .shell-stat-tooltip {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    /* wait a beat before showing, so it doesn't flash in on quick mouse-overs */
+    transition-delay: 0.4s;
+}
+
+.shell-stat-label-wrap:focus-visible .shell-stat-tooltip {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+}
+
+.shell-stat-bar-track {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    margin-left: 10px;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.shell-stat-bar-fill {
+    height: 100%;
+    background: var(--color-lime);
+    box-shadow: 0 0 6px rgba(194, 254, 11, 0.4);
+    transition: width 0.2s ease;
+}
+
+    .shell-stat-bar-fill.underflow {
+        background: var(--color-red);
+        box-shadow: 0 0 6px rgba(255, 13, 26, 0.4);
+    }
+
+.shell-stat-value {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 3px;
+    color: var(--color-lime);
+    font-variant-numeric: tabular-nums;
+}
+
+.shell-stat-flag {
+    font-size: 8px;
+    line-height: 1;
+}
+
+    .shell-stat-flag.overflow {
+        color: var(--color-lime);
+    }
+
+    .shell-stat-flag.underflow {
+        color: var(--color-red);
+    }
+
+@media (max-width: 900px) {
+    .shell-detail-layout {
+        flex-direction: column;
+    }
+
+    .shell-detail-sidebar,
+    .shell-detail-stats {
+        flex: initial;
+        width: 100%;
+        position: static;
+    }
+
+    .shell-detail-sidebar {
+        align-items: center;
+        text-align: center;
+    }
+
+    .shell-detail-image {
+        width: 160px;
+    }
+}

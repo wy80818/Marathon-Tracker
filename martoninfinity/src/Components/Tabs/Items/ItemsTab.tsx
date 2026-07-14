@@ -54,6 +54,10 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
     };
 
     // Idle scramble before click — each character flickers on its own independent interval
+    // 
+    // Early return fires before any setInterval is created, so there's nothing to clean up on that path; the
+    // timers created below are cleaned up by the `return () => clearIdleTimers()` at the end.
+    // react-doctor-disable-next-line react-doctor/effect-needs-cleanup
     useEffect(() => {
         if (revealed || decrypting) return;
 

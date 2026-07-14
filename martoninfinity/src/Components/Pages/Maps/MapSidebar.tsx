@@ -34,7 +34,7 @@ function MapSidebar({
         setPrevMapId(currentMap.id);
         const initial: Record<string, boolean> = {};
         Object.keys(groupedMarkers).forEach(category => {
-            initial[category] = true;
+            initial[category] = false;
         });
         setOpenCategories(initial);
     }
