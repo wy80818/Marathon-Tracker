@@ -54,6 +54,10 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
     };
 
     // Idle scramble before click — each character flickers on its own independent interval
+    // 
+    // Early return fires before any setInterval is created, so there's nothing to clean up on that path; the
+    // timers created below are cleaned up by the `return () => clearIdleTimers()` at the end.
+    // react-doctor-disable-next-line react-doctor/effect-needs-cleanup
     useEffect(() => {
         if (revealed || decrypting) return;
 
@@ -185,6 +189,34 @@ function Spoiler({ children }: { children?: React.ReactNode }) {
     );
 }
 
+// Escapes regex special characters so the raw search query can be dropped
+// safely into a RegExp (otherwise typing e.g. "3.24" or "(beta)" would
+// throw or match unintended patterns)
+function escapeRegExp(str: string) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+// Splits text around every match of `query` and wraps matches in <mark>.
+// Returns the original string untouched when the query is empty, so the
+// common no-search-yet case skips the split work.
+function highlightMatches(text: string, query: string): React.ReactNode {
+    const trimmed = query.trim()
+    if (!trimmed) return text
+
+    const parts = text.split(new RegExp(`(${escapeRegExp(trimmed)})`, 'gi'))
+    if (parts.length === 1) return text
+
+    return parts.map((part, i) => {
+        if (part.toLowerCase() !== trimmed.toLowerCase()) return part
+
+        // parts is rebuilt fresh from text.split() every call (not a persisted/
+        // reorderable list), and <mark>/text nodes carry no component state,
+        // so there's nothing an index key could cause to go stale.
+        // react-doctor-disable-next-line react-doctor/no-array-index-as-key
+        return <mark key={i} className="item-search-highlight">{part}</mark>
+    })
+}
+
 function ItemsTab() {
     const [filters, setFilters] = useState<Filters>(defaultFilters);
     const [search, setSearch] = useState("");
@@ -290,7 +322,7 @@ function ItemsTab() {
                                 )}
                             </div>
                             <div className="item-info">
-                                <span className="item-name">{it.name}</span>
+                                <span className="item-name">{highlightMatches(it.name, search)}</span>
                                 <span className={`item-rarity rarity-tag-${it.rarity.toLowerCase()}`}>
                                     {it.rarity}
                                 </span>

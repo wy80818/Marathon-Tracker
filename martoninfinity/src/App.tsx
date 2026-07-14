@@ -3,7 +3,7 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import './App.css'
 
 import marathonLogo from './assets/Miscellaneous/Marathon_Logo_WordMark_Green.png'
-// import RunnerIcon from './assets/TabIcons/RunnerIcon.svg?react'
+import RunnerIcon from './assets/TabIcons/RunnerIcon.svg?react'
 // import WeaponIcon from './assets/TabIcons/SwordIcon.svg?react'
 import HomeIcon from './assets/TabIcons/HomeIcon.svg?react'
 import NewsIcon from './assets/TabIcons/NewsIcon.svg?react'
@@ -26,6 +26,8 @@ import AnnouncementsPage from './Components/Pages/Announcements/AnnouncementsPag
 import AnnouncementDetail from './Components/Pages/Announcements/AnnouncementDetail';
 import MapViewerPage from './Components/Pages/Maps/MapViewer';
 import NewsArticle from './Components/Pages/News/NewsArticle'
+import ShellDetail from './Components/Pages/Shells/ShellDetail'
+
 
 interface TabConfig {
     path: string
@@ -39,7 +41,7 @@ const TABS: TabConfig[] = [
     { path: '/', label: 'Home', ariaLabel: 'Go to Home tab', iconSvg: HomeIcon, component: HomeTab },
     { path: '/news', label: 'News', ariaLabel: 'Go to News tab', iconSvg: NewsIcon, component: NewsTab },
     { path: '/player-lookup', label: 'Player Lookup', ariaLabel: 'Go to Player Lookup tab', iconSvg: Placeholder, component: PlayerLookupTab },
-    { path: '/shells', label: 'Shells', ariaLabel: 'Go to Shells tab', iconSvg: Placeholder, component: ShellsTab },
+    { path: '/shells', label: 'Shells', ariaLabel: 'Go to Shells tab', iconSvg: RunnerIcon, component: ShellsTab },
     { path: '/weapons', label: 'Weapons', ariaLabel: 'Go to Weapons tab', iconSvg: Placeholder, component: WeaponsTab },
     { path: '/items', label: 'Items', ariaLabel: 'Go to Items tab', iconSvg: ItemIcon, component: ItemsTab },
     { path: '/maps', label: 'Maps', ariaLabel: 'Go to Maps tab', iconSvg: MapIcon, component: MapsTab },
@@ -54,22 +56,32 @@ function TabLayout() {
     const [scrollState, setScrollState] = useState({ left: false, right: false })
 
     // Hide and show tabs when scrolling down and up respectively
+    // Hide and show tabs when scrolling down and up respectively — only once past the header
     useEffect(() => {
         let lastY = window.scrollY;
         let currentOffset = 0;
 
         const handleScroll = () => {
             const tabsEl = document.querySelector<HTMLElement>(".tabs-wrapper");
+            const headerEl = document.querySelector<HTMLElement>(".app-header");
             if (!tabsEl) return;
 
+            const headerHeight = headerEl?.offsetHeight ?? 0;
             const tabsHeight = tabsEl.offsetHeight;
             const currentY = window.scrollY;
-            const delta = currentY - lastY;
 
+            // Still within the header — keep tabs pinned fully visible
+            if (currentY < headerHeight) {
+                currentOffset = 0;
+                tabsEl.style.transform = `translateY(0px)`;
+                lastY = currentY;
+                return;
+            }
+
+            const delta = currentY - lastY;
             if (Math.abs(delta) < 2) return; // ignore tiny scroll jitter
 
             currentOffset = Math.min(tabsHeight, Math.max(0, currentOffset + delta));
-
             tabsEl.style.transform = `translateY(-${currentOffset}px)`;
 
             lastY = currentY;
@@ -167,6 +179,7 @@ function App() {
                 <Route path="/news/:gid" element={<NewsArticle />} />
                 <Route path="/player-lookup" element={<TabLayout />} />
                 <Route path="/shells" element={<TabLayout />} />
+                <Route path="/shells/:shellId" element={<ShellDetail />} />
                 <Route path="/weapons" element={<TabLayout />} />
                 <Route path="/items" element={<TabLayout />} />
                 <Route path="/maps" element={<TabLayout />} />

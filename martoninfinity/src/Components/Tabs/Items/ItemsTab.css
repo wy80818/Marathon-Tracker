@@ -62,6 +62,13 @@
         box-shadow: 0 0 0 3px rgba(1, 255, 255, 0.1), 0 0 10px rgba(1, 255, 255, 0.15);
     }
 
+.item-search-highlight {
+    background: rgba(194, 254, 11, 0.35);
+    color: inherit;
+    border-radius: 2px;
+    padding: 0 1px;
+}
+
 /* Item Grid */
 .category-grid-viewport {
     position: relative;

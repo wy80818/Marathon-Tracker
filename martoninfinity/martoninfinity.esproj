@@ -9,7 +9,9 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="src\assets\AbilityIcons\Assassin\" />
     <Folder Include="src\Components\Functions\SteamNews\" />
+    <Folder Include="src\Components\Pages\Shells\" />
     <Folder Include="src\Components\Pages\News\" />
   </ItemGroup>
 </Project>
