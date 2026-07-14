@@ -10,6 +10,9 @@
     display: flex;
     align-items: flex-start;
     gap: var(--space-2xl);
+    background: var(--color-darker-bg);
+    padding: 30px;
+    border-radius: 6px;
 }
 
 .shell-detail-sidebar {
