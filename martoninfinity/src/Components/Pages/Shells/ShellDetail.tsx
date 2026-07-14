@@ -43,7 +43,7 @@ function ShellDetail() {
             return acc
         },
         {}
-    )
+    ) 
 
     return (
         <div className="shell-detail-page">
