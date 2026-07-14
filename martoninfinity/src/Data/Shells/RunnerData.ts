@@ -233,7 +233,7 @@ export const RUNNERS = [
                 iconPath: "",
             },
         ],
-    },
+    }, 
     {
         id: "vandal",
         name: "Vandal",
