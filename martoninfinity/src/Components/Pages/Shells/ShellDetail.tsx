@@ -29,12 +29,20 @@ function ShellDetail() {
         )
     }
 
-    const abilitiesByType = runner.abilities.reduce<Record<AbilityType, typeof runner.abilities>>(
+    interface Ability {
+        readonly id: string
+        readonly name: string
+        readonly description: string
+        readonly type: AbilityType
+        readonly iconPath: string
+    }
+
+    const abilitiesByType = runner.abilities.reduce<Partial<Record<AbilityType, Ability[]>>>(
         (acc, a) => {
             (acc[a.type] ??= []).push(a)
             return acc
         },
-        {} as Record<AbilityType, typeof runner.abilities>
+        {}
     )
 
     return (
