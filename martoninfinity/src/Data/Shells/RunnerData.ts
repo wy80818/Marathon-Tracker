@@ -60,7 +60,7 @@ export const RUNNERS = [
             },
             {
                 id: "sentinel-castle-doctrine",
-                name: "Prey Tracker",
+                name: "Castle Doctrine",
                 description: "You ready and reload submachine guns, shotguns, and pistols more quickly based on the number of nearby hostiles. \
                     When you take splash damage, your Hardware, Firewall, and Self-Repair Speed are increased for a short time.",
                 type: "trait",
@@ -157,7 +157,7 @@ export const RUNNERS = [
             },
             {
                 id: "assassin-active-camo",
-                name: "Riot Barricade",
+                name: "Active Camo",
                 description: "Activate your shell's camouflage systems, pulling a shroud of invisibility over yourself. \
                     Performing offensive actions, taking damage, and using abilities or consumables briefly disrupts your invisibility.",
                 type: "tactical",
