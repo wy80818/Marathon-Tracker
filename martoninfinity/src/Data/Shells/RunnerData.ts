@@ -1,55 +1,67 @@
 import { type Runner } from "./Runners"
 
+import AssassinIcon from "../../assets/RunnerIcons/assa.png"
+import DestroyerIcon from "../../assets/RunnerIcons/destr.png"
+import ReconIcon from "../../assets/RunnerIcons/recon.png"
+import RookIcon from "../../assets/RunnerIcons/rook.png"
+import SentinelIcon from "../../assets/RunnerIcons/sent.png"
+import ThiefIcon from "../../assets/RunnerIcons/thie.png"
+import TriageIcon from "../../assets/RunnerIcons/tria.png"
+import VandalIcon from "../../assets/RunnerIcons/vand.png"
+
+
 export const RUNNERS = [
     {
         id: "sentinel",
         name: "Sentinel",
-        role: "Reinforcement",
-        bio: "",
-        portraitPath: "",
-        baseStats: {  // Remember to put base stats for Sentinel
-            heatCapacity: 0,
-            agility: 0,
-            lootSpeed: 0,
-            fallResistance: 0,
-            meleeDamage: 0,
-            finisherSiphon: 0,
-            primeRecovery: 0,
-            tacticalRecovery: 0,
-            selfRepairSpeed: 0,
-            reviveSpeed: 0,
-            hardware: 0,
-            firewall: 0,
-            pingDuration: 0,
+        role: "Defensive Strategist",
+        bio: "Sentinels are defenders. \
+            Customized tech and devices create a range of offensive and defensive advantages when exploring hostile zones. \
+            Their Defender Systems hold ground and Snare Mines entrap rival threats. \
+            Every gadget in a Sentinel's arsenal is tuned to control encounters.",
+        portraitPath: SentinelIcon,
+        baseStats: {
+            heatCapacity: 5,
+            agility: 10,
+            lootSpeed: 10,
+            fallResistance: 5,
+            meleeDamage: 20,
+            finisherSiphon: 15,
+            primeRecovery: 10,
+            tacticalRecovery: 15,
+            selfRepairSpeed: 15,
+            reviveSpeed: 5,
+            hardware: 20,
+            firewall: 20,
+            pingDuration: 5,
         },
         abilities: [
             {
                 id: "sentinel-defender-system",
                 name: "Defender System",
-                description: "Deploy a defensive platform that harmlessly neutralizes incoming explosives. \
-                    You and your allies gain increased weapon stability and reload speed while standing near the device. \
-                    Has a limited number of projectiles to fire — keep a steady eye on the count.",
+                description: "Deploy an automated defensive platform that intercepts incoming explosives. \
+                        You and your crew gain increased weapon stability and reload speed when standing near the device.",
                 type: "prime",
                 iconPath: "",
             },
             {
                 id: "sentinel-snare-mine",
                 name: "Snare Mine",
-                description: "Toss a proximity-triggered mine which detonates into several immobilizing submunitions when enemies get too close.",
+                description: "Deploy a stationary mine that releases a salvo of Immobilizing submunitions when hostiles approach.",
                 type: "tactical",
                 iconPath: "",
             },
             {
                 id: "sentinel-prey-tracker",
                 name: "Prey Tracker",
-                description: "Activates a motion tracking system in your HUD that shows moving enemies on radar within a conical zone in front of you.",
+                description: "Activate your shell's motion tracker system. which reveals the position of any moving hostile in the direction you're looking.",
                 type: "trait",
                 iconPath: "",
             },
             {
                 id: "sentinel-castle-doctrine",
                 name: "Prey Tracker",
-                description: "You ready and reload SMGs, Pistols, and Shotguns more quickly based on the number of nearby hostiles. \
+                description: "You ready and reload submachine guns, shotguns, and pistols more quickly based on the number of nearby hostiles. \
                     When you take splash damage, your Hardware, Firewall, and Self-Repair Speed are increased for a short time.",
                 type: "trait",
                 iconPath: "",
@@ -59,9 +71,13 @@ export const RUNNERS = [
     {
         id: "destroyer",
         name: "Destroyer",
-        role: "Offense",
-        bio: "",
-        portraitPath: "",
+        role: "Combat Specialist",
+        bio: "Destroyers seek conflict.\
+                Advanced weapons systems, \
+                a personal defense barricade, and increased movement abilities allow \
+                Destroyers to take the fight to any threat or rival they encounter during a run.\
+                ",
+        portraitPath: DestroyerIcon,
         baseStats: {
             heatCapacity: 15,
             agility: 10,
@@ -81,23 +97,21 @@ export const RUNNERS = [
             {
                 id: "destroyer-search-and-destroy",
                 name: "Search and Destroy",
-                description: "Activate your shoulder-mounted missile pods. \
-                    Dealing sustained damage to targets launches homing missiles, Immobilizing and dealing damage upon impact.",
+                description: "Activate your shoulder-mounted missile pods. Dealing sustained damage to targets launches homing missiles, Immobilizing and dealing damage upon impact.",
                 type: "prime",
                 iconPath: "",
             },
             {
                 id: "destroyer-riot-barricade",
                 name: "Riot Barricade",
-                description: "Toggle an energy barricade that blocks incoming damage, draining tactical ability energy over time. \
-                    Taking damage drains additional energy.",
+                description: "Toggle an energy barricade that blocks incoming damage, draining tactical ability energy over time. Taking damage drains additional energy.",
                 type: "tactical",
                 iconPath: "",
             },
             {
                 id: "destroyer-prey-tracker",
                 name: "Thruster",
-                description: "Activate by pressing the jump button while airborne to fire boosters that thrust you in the direction you are moving.",
+                description: "Activate while airborne to fire boosters that thrust you in the direction you are moving.",
                 type: "trait",
                 iconPath: "",
             },
@@ -113,9 +127,11 @@ export const RUNNERS = [
     {
         id: "assassin",
         name: "Assassin",
-        role: "Stealth",
-        bio: "",
-        portraitPath: "",
+        role: "Shadow Agent",
+        bio: "Assasins are lethal shadows. \
+                Active Camo and synthetic smoke deployment allows for unseen strikes or the perfect cover \
+                during hostile engagements. The ability to move undetected makes Assassins valued allies and lethal enemies.",
+        portraitPath: AssassinIcon,
         baseStats: {
             heatCapacity: 10,
             agility: 20,
@@ -135,7 +151,7 @@ export const RUNNERS = [
             {
                 id: "assassin-smoke-screen",
                 name: "Smoke Screen",
-                description: "Throw a smoke disc that emits a line of smoke fields in front of you",
+                description: "Throw a smoke disc that emits a line of smoke fields in front of you, disrupting the optics of those who step inside.",
                 type: "prime",
                 iconPath: "",
             },
@@ -150,7 +166,7 @@ export const RUNNERS = [
             {
                 id: "assassin-shadow-dive",
                 name: "Shadow Dive",
-                description: "Activate while airborne to slam a smoke disc into the ground.",
+                description: "Activate while airborne to slam a smoke disc into the ground, deploying a smoke field.",
                 type: "trait",
                 iconPath: "",
             },
@@ -167,9 +183,11 @@ export const RUNNERS = [
     {
         id: "recon",
         name: "Recon",
-        role: "Intelligence",
-        bio: "",
-        portraitPath: "",
+        role: "Intel Specialist",
+        bio: "Recons use intel as a weapon. \
+                Everything about Recon shells is geared toward identifying threats and providing insight into enemy locations and movements: \
+                Mark hostiles. Track wounded targets. Deploy a tracker drone to engage threats in unexpected ways.",
+        portraitPath: ReconIcon,
         baseStats: {
             heatCapacity: 20,
             agility: 15,
@@ -189,8 +207,7 @@ export const RUNNERS = [
             {
                 id: "recon-echo-pulse",
                 name: "Echo Pulse",
-                description: "Activate your shell's advanced detection systems, releasing a series of sonar pulses that reveal the location of nearby hostiles. \
-                    Pings distinguish between enemy Runner and enemy UESC targets. Signal Jammed runners display UESC ping navpoints instead of Runner navpoints.",
+                description: "Activate your shell's advanced detection systems, releasing a series of sonar pulses that reveal the location of nearby hostiles.",
                 type: "prime",
                 iconPath: "",
             },
@@ -220,9 +237,12 @@ export const RUNNERS = [
     {
         id: "vandal",
         name: "Vandal",
-        role: "Mobility",
-        bio: "",
-        portraitPath: "",
+        role: "Combat Anarchist",
+        bio: "Vandals are troublemakers. \
+                Amplified movement abilities help cover ground at incredible speeds, changing any encounter in their favor. \
+                Microjets allow a secondary jump to reach higher grouned. And a built-in Disrupt Cannon provides instant offense or defense when it is charged \
+                and ready to fire.",
+        portraitPath: VandalIcon,
         baseStats: {
             heatCapacity: 25,
             agility: 30,
@@ -242,8 +262,7 @@ export const RUNNERS = [
             {
                 id: "vandal-amplify",
                 name: "Amplify",
-                description: "Overcharge your movement systems, reducing the heat generated from your movement abilities while increasing your movement speed and weapon dexterity and cleansing \
-                    any old heat buildup.",
+                description: "Overcharge your movement systems, reducing the heat generated from your movement abilities while increasing your movement speed and weapon dexterity.",
                 type: "prime",
                 iconPath: "",
             },
@@ -274,9 +293,11 @@ export const RUNNERS = [
     {
         id: "thief",
         name: "Thief",
-        role: "Observation",
-        bio: "",
-        portraitPath: "",
+        role: "Covert Acquisitions",
+        bio: "A Thief always keeps their eyes on the prize. \
+                Use enhanced visors and piloted drones to remotely locate and acquire valuable loot. Steal from a zone or rival Runners. \
+                Then make an escape or push the advantage with the Thief's deployable grapple device.",
+        portraitPath: ThiefIcon,
         baseStats: {
             heatCapacity: 15,
             agility: 20,
@@ -296,11 +317,10 @@ export const RUNNERS = [
             {
                 id: "thief-pickpocket-drone",
                 name: "Pickpocket Drone",
-                description: "Deploy a remotely piloted drone with a limited lifespan, healthbar and signal distance. \
-                    Can be fired to force targets to drop their highest valued item in their inventory. \
-                    Can also be used to pick up rarity-highlighted items from the ground which gets placed into a 2x4 drone inventory. \
-                    Drone can be exited and later entered again as long as it is still online. \
-                    One placeable-utility of each type (Claymore, Frostmine, etc.) can be placed on the drone.",
+                description: "Deploy a remotely piloted drone with a limited lifespan. While piloting the drone: \
+                    Fire a hooked tether that can eject the highest-value item from target inventories collect and store loose loot, and open doors. \
+                    Exit the drone and return to your shell. At any point while the drone is still active, activate the ability again to continue piloting \
+                    the drone.",
                 type: "prime",
                 iconPath: "",
             },
@@ -332,9 +352,12 @@ export const RUNNERS = [
     {
         id: "triage",
         name: "Triage",
-        role: "Medic",
-        bio: "",
-        portraitPath: "",
+        role: "Field Medic",
+        bio: "Triage saves lives. \
+                Deployable healing drones and onboard reboot abilities allow Triage Runners and their crews to keep \
+                running after taking damage. Men health and shields and even reboot crewmates at a distance to survive and \
+                fight again and again.",
+        portraitPath: TriageIcon,
         baseStats: {
             heatCapacity: 10,
             agility: 10,
@@ -388,8 +411,9 @@ export const RUNNERS = [
         id: "rook",
         name: "Rook",
         role: "Scavenger",
-        bio: "",
-        portraitPath: "",
+        bio: "ROOK's basic frame cannot be upgraded, but remains as dangerous as your skills and patience allow. \
+                While deployed as ROOK, contracts and associated objectives cannot be progressed.",
+        portraitPath: RookIcon,
         baseStats: {
             heatCapacity: -5,
             agility: 5,

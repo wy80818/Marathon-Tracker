@@ -268,11 +268,14 @@
 .shell-stat-label {
     opacity: 0.85;
     white-space: nowrap;
+    background: none;
+    border-radius: 3px;
+    padding: 3px;
+
 }
 
     .shell-stat-label:hover {
-        color: var(--color-cyan);
-        font-weight: bold;
+        background: rgb(0, 0, 0, 0.33)
     }
 
 .shell-stat-tooltip {
@@ -282,7 +285,7 @@
     z-index: 10;
     width: 220px;
     padding: 8px 10px;
-    background: var(--color-darker-bg);
+    background: var(--color-dark-bg);
     border: 1px solid rgba(1, 255, 255, 0.25);
     border-radius: 6px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);

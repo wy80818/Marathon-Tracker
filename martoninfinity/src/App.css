@@ -3,8 +3,8 @@
     --color-lime: #c2fe0b;
     --color-cyan: #01ffff;
     --color-red: #ff0d1a;
-    --color-dark-bg: #262c3f;
-    --color-darker-bg: #0e111c;
+    --color-dark-bg: #293048;
+    --color-darker-bg: #1b1f2f;
     --color-text-light: #e0e0e0;
     /* Responsive Spacing - scales with viewport */
     --space-xs: clamp(0.25rem, 1vw, 0.5rem);

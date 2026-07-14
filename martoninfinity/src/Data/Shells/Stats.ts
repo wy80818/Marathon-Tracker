@@ -3,21 +3,21 @@
 // and the RunnerStats interface all derive from this object — nothing
 // else to keep in sync by hand.
 export const STAT_CONFIG = {
-    heatCapacity: { label: "Heat Capacity", description: "How much heat (stamina) can be used before getting overheated." },
-    agility: { label: "Agility", description: "How fast your shell can move as well as jump height." },
-    lootSpeed: { label: "Loot Speed", description: "How fast items get revealed when looting." },
-    fallResistance: { label: "Fall Resistance", description: "Increases distance in which your shell will start registering fall damage, as well as reducing it." },
-    meleeDamage: { label: "Melee Damage", description: "How much damage the knife does, as well as quick melee (which is far less)." },
-    finisherSiphon: { label: "Finisher Siphon", description: "Amount of shield charge gained when performaing a finisher move." },
-    primeRecovery: { label: "Prime Recovery", description: "How much time it takes to recovery your prime ability." },
-    tacticalRecovery: { label: "Tactical Recovery", description: "How much time it takes to recovery your tactical ability." },
-    selfRepairSpeed: { label: "Self-Repair Speed", description: "How fast health/shield is gained through any healing source." },
-    reviveSpeed: { label: "Revive Speed", description: "How fast you can revive teammates, as well as yourself (which is far more)." },
-    hardware: { label: "Hardware", description: "Reduces duration of physical status effects." },
-    firewall: { label: "Firewall", description: "Reduces duration of electronic status effects." },
-    pingDuration: { label: "Ping Duration", description: "How long pings last on enemies." },
+    heatCapacity: { label: "Heat Capacity", description: "Increases the number of movement actions (sprinting, sliding) you can perform before overheating." },
+    agility: { label: "Agility", description: "Increases your movement speed and jump height." },
+    lootSpeed: { label: "Loot Speed", description: "Increases how quickly items are revealed when looting containers." },
+    meleeDamage: { label: "Melee Damage", description: "Increases the damage of your melee and knife attacks." },
+    primeRecovery: { label: "Prime Recovery", description: "Reduces the cooldown of your prime ability." },
+    tacticalRecovery: { label: "Tactical Recovery", description: "Reduces the cooldown of your tactical and trait abilities." },
+    selfRepairSpeed: { label: "Self-Repair Speed", description: "Increases how quickly your consumables restore missing health or shields." },
+    finisherSiphon: { label: "Finisher Siphon", description: "Increases the amount your shields recharge after you perform a funisher on a downed Runner." },
+    reviveSpeed: { label: "Revive Speed", description: "Increases how quicky you can self-revive or revive downed crew members." },
+    hardware: { label: "Hardware", description: "Reduces the duration of status effects that debilitate your Runner's physical chassis (Immobilize, Overheat, Toxin, Frost)." },
+    firewall: { label: "Firewall", description: "Reduces the duration of status effects that degrade your Runner's electronic systems (EMP, Hack)." },
+    fallResistance: { label: "Fall Resistance", description: "Reduces the amount of damage you take after falling." },
+    pingDuration: { label: "Ping Duration", description: "Increases how long your pings persist on hostile targets." },
 } as const satisfies Record<string, { label: string, description: string }>
-
+    
 export type RunnerStatKey = keyof typeof STAT_CONFIG
 export type RunnerStatName = (typeof STAT_CONFIG)[RunnerStatKey]["label"]
 
