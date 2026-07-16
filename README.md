@@ -12,10 +12,10 @@ Accessible on https://marton-dev-777.vercel.app/
 
 Sample images, subject to change:
 
-<img width="1918" height="982" alt="image" src="https://github.com/user-attachments/assets/b0a9eb61-c5d2-47ff-8f37-e423108c78f8" />
+<img width="1895" height="1023" alt="image" src="https://github.com/user-attachments/assets/e630086b-f210-425d-a723-7c0a711a9560" />
 
-<img width="1918" height="987" alt="image" src="https://github.com/user-attachments/assets/387ad959-bacd-4327-9166-3c0889d87fca" />
+<img width="1918" height="1007" alt="image" src="https://github.com/user-attachments/assets/77ef43e8-e026-41c6-b208-3408e60f07f9" />
 
-<img width="1917" height="971" alt="image" src="https://github.com/user-attachments/assets/88ab3cc2-9d81-47f6-badc-1a0b5faffb9b" />
+<img width="1918" height="1002" alt="image" src="https://github.com/user-attachments/assets/3fa96d85-7b8f-4375-ab0d-cb12e7be2783" />
 
-<img width="1917" height="962" alt="image" src="https://github.com/user-attachments/assets/7011ab91-25f1-42d8-aaaa-bd2e4e3d9a73" />
+<img width="1918" height="977" alt="image" src="https://github.com/user-attachments/assets/d093c880-fe81-4acd-ba99-9cedf4236b09" />
