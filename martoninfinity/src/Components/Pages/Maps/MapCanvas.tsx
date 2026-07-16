@@ -85,6 +85,20 @@ const MemoMarkerButton = memo(MarkerButton);
 function MapCanvas({
     map, scale, onMouseMove, visibleMarkers, selectedMarker, onMarkerClick, ref
 }: Props) {
+    const markerButtons: React.ReactNode[] = [];
+    for (const marker of map.markers) {
+        if (!visibleMarkers[marker.type]) continue;
+        markerButtons.push(
+            <MemoMarkerButton
+                key={marker.id}
+                marker={marker}
+                isSelected={selectedMarker?.id === marker.id}
+                scale={scale}
+                onMarkerClick={onMarkerClick}
+            />
+        );
+    }
+
     return (
         // background click-away convenience, not a standalone widget; an explicit keyboard-accessible
         // close button already exists (marker-overlay-close). A role/key-handler here would
@@ -115,17 +129,7 @@ function MapCanvas({
                 }}
             />
 
-            {map.markers
-                .filter(marker => visibleMarkers[marker.type])
-                .map(marker => (
-                    <MemoMarkerButton
-                        key={marker.id}
-                        marker={marker}
-                        isSelected={selectedMarker?.id === marker.id}
-                        scale={scale}
-                        onMarkerClick={onMarkerClick}
-                    />
-                ))}
+            {markerButtons}
         </div>
     );
 }
