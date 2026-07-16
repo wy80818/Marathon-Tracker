@@ -55,7 +55,6 @@ function TabLayout() {
     const tabsListRef = useRef<HTMLDivElement>(null)
     const [scrollState, setScrollState] = useState({ left: false, right: false })
 
-    // Hide and show tabs when scrolling down and up respectively
     // Hide and show tabs when scrolling down and up respectively — only once past the header
     useEffect(() => {
         let lastY = window.scrollY;
@@ -162,14 +161,24 @@ function TabLayout() {
 }
 
 function App() {
+    const location = useLocation();
+
+    const isMapViewer = location.pathname.startsWith("/maps/");
+
     return (
         <div className="app-container">
-            <header className="app-header">
-                <div className="header-content">
-                    <img src={marathonLogo} alt="Marathon Logo" className="marathon-logo" />
-                    <h1>MARATHON TRACKER</h1>
-                </div>
-            </header>
+            {!isMapViewer && (
+                <header className="app-header">
+                    <div className="header-content">
+                        <img
+                            src={marathonLogo}
+                            alt="Marathon Logo"
+                            className="marathon-logo"
+                        />
+                        <h1>MARATHON TRACKER</h1>
+                    </div>
+                </header>
+            )}
 
             <Routes>
                 <Route path="*" element={<Error />} />
@@ -190,18 +199,30 @@ function App() {
                 <Route path="/announcements/:id" element={<AnnouncementDetail />} />
             </Routes>
 
-            <footer className="footer-content">
-                <div className="footer-left">
-                    <span className="footer-brand">MARATHON TRACKER</span>
-                    <p>An unofficial fan project — not affiliated with Bungie, Inc.</p>
-                </div>
-                <div className="footer-divider" />
-                <div className="footer-right">
-                    <p>Marathon™, Bungie™, and all associated logos, images, and trademarks are property of <a href="https://www.bungie.net" target="_blank" rel="noreferrer">Bungie, Inc.</a></p>
-                </div>
-            </footer>
+            {!isMapViewer && (
+                <footer className="footer-content">
+                    <div className="footer-left">
+                        <span className="footer-brand">MARATHON TRACKER</span>
+                        <p>An unofficial fan project — not affiliated with Bungie, Inc.</p>
+                    </div>
+                    <div className="footer-divider" />
+                    <div className="footer-right">
+                        <p>
+                            Marathon™, Bungie™, and all associated logos, images,
+                            and trademarks are property of{" "}
+                            <a
+                                href="https://www.bungie.net"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                Bungie, Inc.
+                            </a>
+                        </p>
+                    </div>
+                </footer>
+            )}
         </div>
-    )
+    );
 }
 
 export default App

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import type { Marker, GameMap } from "../../../Data/MapsData.ts";
 
 import "./MapCanvas.css"
@@ -45,9 +46,59 @@ const renderMarkerContent = (marker: Marker, isSelected: boolean) => {
     );
 };
 
+interface MarkerButtonProps {
+    marker: Marker;
+    isSelected: boolean;
+    scale: number;
+    onMarkerClick: (marker: Marker | null) => void;
+}
+
+function MarkerButton({ marker, isSelected, scale, onMarkerClick }: MarkerButtonProps) {
+    return (
+        <button
+            type="button"
+            onClick={(e) => {
+                e.stopPropagation();
+                onMarkerClick(isSelected ? null : marker);
+            }}
+            aria-label={marker.label}
+            aria-pressed={isSelected}
+            style={{
+                position: "absolute",
+                left: `${marker.x * 100}%`,
+                top: `${marker.y * 100}%`,
+                transform: `translate(-50%, -50%) scale(${1 / scale})`,
+                transformOrigin: "center",
+                cursor: 'url("/cursors/pointer.svg") 2 0, pointer',
+                background: "none",
+                border: "none",
+                padding: 0,
+            }}
+        >
+            {renderMarkerContent(marker, isSelected)}
+        </button>
+    );
+}
+
+const MemoMarkerButton = memo(MarkerButton);
+
 function MapCanvas({
     map, scale, onMouseMove, visibleMarkers, selectedMarker, onMarkerClick, ref
 }: Props) {
+    const markerButtons: React.ReactNode[] = [];
+    for (const marker of map.markers) {
+        if (!visibleMarkers[marker.type]) continue;
+        markerButtons.push(
+            <MemoMarkerButton
+                key={marker.id}
+                marker={marker}
+                isSelected={selectedMarker?.id === marker.id}
+                scale={scale}
+                onMarkerClick={onMarkerClick}
+            />
+        );
+    }
+
     return (
         // background click-away convenience, not a standalone widget; an explicit keyboard-accessible
         // close button already exists (marker-overlay-close). A role/key-handler here would
@@ -69,42 +120,18 @@ function MapCanvas({
                 src={map.image}
                 alt={map.name}
                 draggable={false}
-                style={{ display: "block", width: "100%", height: "auto" }}
+                style={{
+                    display: "block",
+                    maxWidth: "100%",
+                    maxHeight: "100%",
+                    width: "auto",
+                    height: "auto",
+                }}
             />
 
-            {map.markers.reduce<React.ReactNode[]>((acc, marker) => {
-                if (!visibleMarkers[marker.type]) return acc;
-
-                acc.push(
-                    <button
-                        type="button"
-                        key={marker.id}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onMarkerClick(selectedMarker?.id === marker.id ? null : marker);
-                        }}
-                        aria-label={marker.label}
-                        aria-pressed={selectedMarker?.id === marker.id}
-                        style={{
-                            position: "absolute",
-                            left: `${marker.x * 100}%`,
-                            top: `${marker.y * 100}%`,
-                            transform: `translate(-50%, -50%) scale(${1 / scale})`,
-                            transformOrigin: "center",
-                            cursor: 'url("/cursors/pointer.svg") 2 0, pointer',
-                            background: "none",
-                            border: "none",
-                            padding: 0,
-                        }}
-                    >
-                        {renderMarkerContent(marker, selectedMarker?.id === marker.id)}
-                    </button>
-                );
-
-                return acc;
-            }, [])}
+            {markerButtons}
         </div>
     );
 }
 
-export default MapCanvas;
+export default memo(MapCanvas);

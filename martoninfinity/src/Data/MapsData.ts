@@ -149,7 +149,7 @@ export const markerGroups_DireMarsh: MarkerGroup[] = [
         type: "playerSpawn",
         icon: playerSpawnIcon,
         defaultLabel: "Player Spawn",
-        defaultDescription: "**Potential** Runner Crew spawn point. There are a maximum of **6** crews on this map.",
+        defaultDescription: "**Potential** Runner Crew spawn point. There are **5-6** crews on this map.",
         markers: [
             { x: 0.503, y: 0.814 },
             { x: 0.145, y: 0.437 },
@@ -386,7 +386,7 @@ export const markerGroups_Outpost: MarkerGroup[] = [
         type: "playerSpawn",
         icon: playerSpawnIcon,
         defaultLabel: "Player Spawn",
-        defaultDescription: "**Potential** Runner Crew spawn point. There are a maximum of **4** crews on this map.",
+        defaultDescription: "**Potential** Runner Crew spawn point. There are **3-4** crews on this map.",
         markers: [
             { x: 0.473, y: 0.181 },
             { x: 0.313, y: 0.244 },
@@ -399,7 +399,8 @@ export const markerGroups_Outpost: MarkerGroup[] = [
             { x: 0.535, y: 0.449 },
             { x: 0.324, y: 0.449 },
             { x: 0.582, y: 0.287 },
-            { x: 0.731, y: 0.389 }
+            { x: 0.731, y: 0.389 },
+            { x: 0.513, y: 0.652 }
         ]
     },
     {
@@ -583,7 +584,7 @@ export const markerGroups_Perimiter: MarkerGroup[] = [
         type: "playerSpawn",
         icon: playerSpawnIcon,
         defaultLabel: "Player Spawn",
-        defaultDescription: "**Potential** Runner Crew spawn point. There are a maximum of **5** crews on this map.",
+        defaultDescription: "**Potential** Runner Crew spawn point. There are **4-5** crews on this map.",
         markers: [
             { x: 0.786, y: 0.371 },
             { x: 0.755, y: 0.275 },
@@ -790,7 +791,7 @@ export const markerGroups_CryoArchive: MarkerGroup[] = [
         type: "playerSpawn",
         icon: playerSpawnIcon,
         defaultLabel: "Player Spawn",
-        defaultDescription: "**Potential** Runner Crew spawn point. There are a maximum of **5** crews on this map. The side that ends up not having a \
+        defaultDescription: "**Potential** Runner Crew spawn point. There are **4-5** crews on this map. The side that ends up not having a \
                     Runner Crew spawn will end up with a `Pump Credentials spawn`.",
         markers: [
             { x: 0.718, y: 0.073 },

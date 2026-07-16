@@ -94,3 +94,51 @@
     background: rgba(1, 255, 255, 0.08);
     color: var(--color-cyan);
 }
+
+.shell-image {
+    position: relative; /* anchor for the loading overlay */
+    width: 70%;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+    .shell-image img.shell-portrait {
+        max-width: 100%;
+        max-height: 100%;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+        opacity: 0;
+        transform: scale(0.96);
+        transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+        .shell-image img.shell-portrait.is-loaded {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+.shell-image-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shell-spinner {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid rgba(1, 255, 255, 0.12);
+    border-top-color: var(--color-cyan);
+    box-shadow: 0 0 10px rgba(1, 255, 255, 0.35);
+    animation: shell-spin 0.75s linear infinite;
+}
+
+@keyframes shell-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
