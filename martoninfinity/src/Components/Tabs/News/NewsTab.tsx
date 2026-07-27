@@ -185,7 +185,7 @@ function NewsTab() {
             <Error
                 message="Steam API Error Encountered"
                 sub={"An issue has occured with the Steam API"}
-                backlink="/home"
+                backlink="/"
                 backmsg="Back to Home"
             />
         )

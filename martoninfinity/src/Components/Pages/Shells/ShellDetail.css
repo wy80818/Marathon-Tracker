@@ -166,7 +166,6 @@
         color: var(--color-lime);
         border-color: rgba(194, 254, 11, 0.4);
         background: rgba(194, 254, 11, 0.08);
-        cursor: default;
     }
 
 /* Its own column between the sidebar and the ability content — fixed

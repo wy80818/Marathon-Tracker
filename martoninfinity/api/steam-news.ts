@@ -1,4 +1,4 @@
-// react-doctor-disable-next-line deslop/unused-file
+// react-doctor-disable deslop/unused-file
 /*  Vercel serverless function
    (api/ directory), invoked via HTTP routing convention at /api/steam-news,
    not via import. Consumed by src/Components/Functions/SteamNews/useSteamNews.ts. */

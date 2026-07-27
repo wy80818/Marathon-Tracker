@@ -51,7 +51,7 @@ const TABS: TabConfig[] = [
 function TabLayout() {
     const navigate = useNavigate()
     const location = useLocation()
-    const [tabsOffset] = useState(0)
+    const tabsWrapperRef = useRef<HTMLDivElement>(null)
     const tabsListRef = useRef<HTMLDivElement>(null)
     const [scrollState, setScrollState] = useState({ left: false, right: false })
 
@@ -61,7 +61,7 @@ function TabLayout() {
         let currentOffset = 0;
 
         const handleScroll = () => {
-            const tabsEl = document.querySelector<HTMLElement>(".tabs-wrapper");
+            const tabsEl = tabsWrapperRef.current;
             const headerEl = document.querySelector<HTMLElement>(".app-header");
             if (!tabsEl) return;
 
@@ -119,7 +119,7 @@ function TabLayout() {
         <>
             <div
                 className="tabs-wrapper"
-                style={{ transform: `translateY(${tabsOffset}%)` }}
+                ref={tabsWrapperRef}
             >
                 <div className="tabs-scroll-container">
                     <div className={`tabs-fade tabs-fade--left ${scrollState.left ? 'visible' : ''}`} aria-hidden="true" />

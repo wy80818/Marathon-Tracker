@@ -28,6 +28,7 @@ export interface item {
     sellPrice: string
     description: string
     sources?: string
+    compatibility?: string
 }
 
 // const prestigeCoreSellPrice = "3,000";
@@ -69,7 +70,8 @@ export const items: item[] = [
         image: null,
         rarity: "Superior",
         sellPrice: "600",
-        description: "Self-Repair Speed: 50, Revive Speed: 20"
+        description: "Self-Repair Speed: 50, Revive Speed: 20",
+        compatibility: "**Head**/Body/Leg"
     },
     {
         category: "Core",
@@ -78,7 +80,8 @@ export const items: item[] = [
         image: null,
         rarity: "Prestige",
         sellPrice: "3,000",
-        description: "You receive an alert on your HUD when a hostile Runner is nearby."
+        description: "You receive an alert on your HUD when a hostile Runner is nearby.",
+        compatibility: "**Recon**"
     },
     {
         category: "Salvage",
@@ -88,6 +91,6 @@ export const items: item[] = [
         rarity: "Contraband",
         sellPrice: "8,000",
         description: "A piece of a Compiler's nervous system.",
-        sources: "Guaranteed after killing ~~the Compiler~~ located above the ~~Lab~~, above ~~Cryo Archive~~."
+        sources: "Guaranteed after killing ~~the Compiler~~ located inside ~~Vault 7~~, above ~~Cryo Archive~~."
     }
 ]   

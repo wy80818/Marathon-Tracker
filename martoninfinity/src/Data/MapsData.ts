@@ -30,6 +30,7 @@ import supplyDropIcon from "../assets/Markers/Supply_Drop.png"
 import POIIcon from "../assets/Markers/POI.png"
 import securedResourceIcon from "../assets/Markers/Secured_Resource.png"
 import DCONIcon from "../assets/Markers/DCON.png"
+import MasterClearanceIcon from "../assets/Markers/MasterClearance.png"
 
 // Add new markers here in camelCase
 export type CategoryType =
@@ -38,7 +39,8 @@ export type CategoryType =
     | "monitors_&_stations"
     | "keyrooms"
     | "doors_&_entryways"
-    | "map_objectives";
+    | "map_objectives"
+    | "clearance";
 
 export type MarkerType =
     | "crewExfil"
@@ -60,7 +62,8 @@ export type MarkerType =
     | "securedResource"
     | "poiLarge"
     | "poiSmall"
-    | "DCON";
+    | "DCON"
+    | "clearance";
 
 export interface Marker {
     id: string;
@@ -505,6 +508,19 @@ export const markerGroups_Outpost: MarkerGroup[] = [
             { x: 0.477, y: 0.745 },
             { x: 0.68, y: 0.401 },
             { x: 0.39, y: 0.299 }
+        ]
+    },
+    {
+        category: "clearance",
+        type: "clearance",
+        icon: MasterClearanceIcon,
+        defaultLabel: "Master Clearance Code",
+        defaultDescription: "**Guaranteed** *Master Clearance Code* spawn.",
+        markers: [
+            { x: 0.225, y: 0.509 },
+            { x: 0.520, y: 0.467 },
+            { x: 0.649, y: 0.643 },
+            { x: 0.484, y: 0.636 },
         ]
     },
     {

@@ -27,7 +27,7 @@ function HomeTab() {
                     <p>Any tab with an icon (not a "!") has features implemented that can be used!</p>
                 </div>
                 <div className="announcements">
-                    <span className="announcements-label">// announcements</span>
+                    <span className="announcements-label">// Announcements</span>
                     {sorted.slice(0, 3).map(item => (
                         <Link
                             key={item.id}
