@@ -100,7 +100,7 @@
 .announcements-toggle {
     background: none;
     border: none;
-    cursor: pointer;
+    cursor: url("/cursors/pointer.svg") 2 0, pointer;
     color: var(--color-cyan);
     font-family: "Fira Code", monospace;
     font-size: 11px;

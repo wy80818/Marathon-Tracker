@@ -1,5 +1,5 @@
 {
     "ignore": {
-        "files":  ["api/**"]
+        "deslop/unused-file":  ["api/**"]
     }
 }

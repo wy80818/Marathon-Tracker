@@ -7,6 +7,7 @@ import DOMPurify from 'dompurify'
 
 import './NewsArticle.css'
 import Error from "../Error/Error";
+import BackToTop from '../../Functions/BackToTop/BackToTop'
 
 // Pulls the 11-char video ID out of any common YouTube URL shape
 // (watch?v=, youtu.be/, or an already-embedded /embed/ link)
@@ -157,6 +158,8 @@ function NewsArticle() {
                     dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(formatSteamContent(item.contents)) }}
                 />
             </div>
+
+            <BackToTop />
         </div>
     )
 }

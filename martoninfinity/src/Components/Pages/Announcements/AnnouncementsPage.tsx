@@ -23,7 +23,7 @@ function AnnouncementsPage() {
                     ← Back to Home
                 </button>
                 <div className="announcements-page-title">
-                    <span className="announcements-page-label">// announcements</span>
+                    <span className="announcements-page-label">// Announcements</span>
                     <h2>All Announcements</h2>
                 </div>
             </div>

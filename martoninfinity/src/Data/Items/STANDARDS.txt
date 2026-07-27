@@ -1,0 +1,11 @@
+Compatibility:
+	For implants:
+		Head/Body/Leg
+		Surround one of the three above with double asterisks.
+	For shells:
+		**[Shell Name]**
+
+Sources:
+	"MapName->POIName\n\nMapName->POIName..."
+	
+Use ~~spoiler~~ for a spoiler

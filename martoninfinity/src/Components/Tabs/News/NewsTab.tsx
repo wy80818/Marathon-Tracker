@@ -4,6 +4,7 @@ import { useSteamNews } from '../../Functions/SteamNews/useSteamNews'
 
 import './NewsTab.css'
 import Error from '../../Pages/Error/Error'
+import BackToTop from '../../Functions/BackToTop/BackToTop'
 
 function cleanSteamDescription(text: string) {
     const cleaned = text
@@ -185,7 +186,7 @@ function NewsTab() {
             <Error
                 message="Steam API Error Encountered"
                 sub={"An issue has occured with the Steam API"}
-                backlink="/home"
+                backlink="/"
                 backmsg="Back to Home"
             />
         )
@@ -268,6 +269,8 @@ function NewsTab() {
                     ))}
                 </div>
             )}
+
+            <BackToTop />
         </div>
     )
 }

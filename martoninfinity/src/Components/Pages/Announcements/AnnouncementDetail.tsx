@@ -45,7 +45,7 @@ function AnnouncementDetail() {
 
             <div className="announcement-detail-card">
                 <header className="announcement-detail-header">
-                    <span className="announcements-page-label">// announcement</span>
+                    <span className="announcements-page-label">// Announcement</span>
                     <h1 className="announcement-detail-title">{announcement.title}</h1>
                     <p className="announcement-detail-date">{formattedDate}</p>
                 </header>

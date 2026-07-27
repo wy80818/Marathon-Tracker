@@ -15,7 +15,13 @@ interface Props {
 function MapSidebar({
     currentMap, selectedMapId, onSelectMap, visibleMarkers, setVisibleMarkers, isCollapsed
 }: Props) {
-    const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
+    const [openCategories, setOpenCategories] = useState<Record<string, boolean>>(() => {
+        const initial: Record<string, boolean> = {};
+        currentMap.markerGroups.forEach(group => {
+            initial[group.category] = true;
+        });
+        return initial;
+    });
     const [prevMapId, setPrevMapId] = useState(currentMap.id);
 
     const markerTypes = useMemo(

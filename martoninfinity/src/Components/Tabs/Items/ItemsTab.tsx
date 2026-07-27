@@ -1,8 +1,8 @@
 import { useCallback, createContext, useContext, useEffect, useMemo, useRef, useState, useLayoutEffect } from "react";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { items, categories, rarities, type categoryType, type rarityType } from "../../../Data/ItemsData";
-import type { item } from "../../../Data/ItemsData";
+import { items, categories, rarities, type categoryType, type rarityType } from "../../../Data/Items/ItemsData";
+import type { item } from "../../../Data/Items/ItemsData";
 
 import CreditIcon from "../../../assets/Miscellaneous/Credits.svg?react"
 
@@ -278,7 +278,7 @@ function ItemsTab() {
     return (
         <div className="tab-content-inner">
             <h2>Items</h2>
-            <p>DEV: Holding off on items manually, would probably be better to wait for API</p><br></br> 
+            <p>DEV: Holding off on items manually, would probably be better to wait for API</p><br></br>
             <div className="items-controls">
                 <input
                     type="text"
@@ -368,6 +368,20 @@ function ItemsTab() {
 
                         <div className="item-modal-body">
                             <p className="item-modal-description">{selectedItem.description}</p>
+                            {selectedItem.compatibility && (
+                                <div className="item-modal-compatibility">
+                                    <div className="item-modal-compatibility-header">
+                                        <span className="item-modal-compatibility-label">Compatibility</span>
+                                    </div>
+                                    <ReactMarkdown
+                                        components={{
+                                            strong: ({ children }: { children?: React.ReactNode }) => ( // **selected**
+                                                <strong style={{ color: 'var(--color-lime)', fontStyle: 'normal' }}>{children}</strong>
+                                            )
+                                        }}
+                                    >{selectedItem.compatibility}</ReactMarkdown>
+                                </div>
+                            )}
                             {selectedItem.sources && (
                                 <div className="item-modal-sources">
                                     <div className="item-modal-sources-header">

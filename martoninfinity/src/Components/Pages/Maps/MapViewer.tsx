@@ -210,20 +210,19 @@ const MapViewer = () => {
                 <div className="map-button-group-left">
                     <button
                         type="button"
-                        className="map-btn map-back-btn"
-                        onClick={() => navigate("/maps")}
-                    >
-                        ← Back
-                    </button>
-
-                    <button
-                        type="button"
                         className="map-btn map-sidebar-toggle-btn"
                         onClick={() => setIsSidebarCollapsed(prev => !prev)}
                         aria-expanded={!isSidebarCollapsed}
                         aria-label={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
                     >
                         <span className={`map-toggle-icon ${isSidebarCollapsed ? "" : "flipped"}`}>›</span>
+                    </button>
+                    <button
+                        type="button"
+                        className="map-btn map-back-btn"
+                        onClick={() => navigate("/maps")}
+                    >
+                        ← Back
                     </button>
                 </div>
 
