@@ -165,6 +165,12 @@ function App() {
 
     const isMapViewer = location.pathname.startsWith("/maps/");
 
+    useEffect(() => {
+        if (location.pathname === '/news' || location.pathname.startsWith('/news/')) {
+            window.scrollTo(0, 0)
+        }
+    }, [location.pathname])
+
     return (
         <div className="app-container">
             {!isMapViewer && (

@@ -13,6 +13,7 @@
     <TypeScriptConfiguration Remove="src\assets\AbilityIcons\**" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="src\Components\Functions\BackToTop\" />
     <Folder Include="src\Components\Functions\SteamNews\" />
     <Folder Include="src\Components\Pages\Shells\" />
     <Folder Include="src\Components\Pages\News\" />

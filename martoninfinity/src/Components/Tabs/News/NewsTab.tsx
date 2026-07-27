@@ -4,6 +4,7 @@ import { useSteamNews } from '../../Functions/SteamNews/useSteamNews'
 
 import './NewsTab.css'
 import Error from '../../Pages/Error/Error'
+import BackToTop from '../../Functions/BackToTop/BackToTop'
 
 function cleanSteamDescription(text: string) {
     const cleaned = text
@@ -268,6 +269,8 @@ function NewsTab() {
                     ))}
                 </div>
             )}
+
+            <BackToTop />
         </div>
     )
 }
